@@ -297,19 +297,19 @@ const GestationalCalculator = () => {
         <div className="mt-8 p-4 rounded-lg border-2 border-primary-light bg-blue-50">
           <h3 className="text-lg font-medium text-primary-dark mb-3">Resultados</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card className="bg-white">
+            <Card className="glass parallax bg-white">
               <CardContent className="p-4">
                 <p className="text-sm text-gray-500 mb-1">Idade Gestacional</p>
                 <p className="text-xl font-medium">{results.gestationalAge}</p>
               </CardContent>
             </Card>
-            <Card className="bg-white">
+            <Card className="glass parallax bg-white">
               <CardContent className="p-4">
                 <p className="text-sm text-gray-500 mb-1">Data Provável do Parto</p>
                 <p className="text-xl font-medium">{results.dueDate}</p>
               </CardContent>
             </Card>
-            <Card className="bg-white">
+            <Card className="glass parallax bg-white">
               <CardContent className="p-4">
                 <p className="text-sm text-gray-500 mb-1">Primeiro Trimestre até</p>
                 <p className="text-lg">{results.firstTrimester}</p>
