@@ -31,8 +31,13 @@
   .gradient-bg {
     @apply relative
            bg-[length:400%_400%]
-           bg-gradient-to-br from-blue-100/95 via-purple-50/90 to-pink-100/95
+           bg-gradient-to-br from-blue-100/70 via-purple-50/60 to-pink-100/70
            animate-gradient-shimmer;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-white/30 via-purple-50/20 to-pink-100/30
+           min-h-screen;
   }
 }
 
