@@ -5,14 +5,23 @@
 
 @layer components {
   .glass {
-    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-lg;
+    @apply bg-gradient-to-br from-white/30 to-white/10 
+           backdrop-blur-lg border border-white/20 
+           shadow-[0_8px_32px_0_rgba(31,38,135,0.37)];
   }
   
   .glass-card {
-    @apply rounded-xl glass;
+    @apply rounded-xl glass hover:from-white/40 hover:to-white/20 
+           transition-all duration-300;
   }
 
   .parallax {
-    @apply transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-xl;
+    @apply transition-all duration-300 
+           hover:translate-y-[-5px] hover:scale-[1.02]
+           hover:shadow-xl;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-blue-50/90 to-purple-50/90;
   }
 }

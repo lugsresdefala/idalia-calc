@@ -77,7 +77,7 @@ const GestationalCalculator = () => {
   };
 
   return (
-    <div className="bg-white rounded-b-lg shadow-sm p-6 mb-6">
+    <div className="glass-card gradient-bg p-6 mb-6">
       <h2 className="text-xl font-medium mb-4">Calculadora de Idade Gestacional</h2>
 
       <div className="mb-6">
@@ -294,7 +294,7 @@ const GestationalCalculator = () => {
       )}
 
       {results && (
-        <div className="mt-8 p-4 rounded-lg border-2 border-primary-light bg-blue-50">
+        <div className="mt-8 p-4 rounded-lg glass gradient-bg">
           <h3 className="text-lg font-medium text-primary-dark mb-3">Resultados</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Card className="glass parallax bg-white">
