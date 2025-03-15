@@ -294,9 +294,9 @@ const GestationalCalculator = () => {
       )}
 
       {results && (
-        <div className="mt-8 p-4 rounded-lg glass gradient-bg">
-          <h3 className="text-lg font-medium text-primary-dark mb-3">Resultados</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mt-8 p-6 rounded-xl glass gradient-bg shadow-2xl">
+          <h3 className="text-2xl font-semibold text-primary mb-6 border-b pb-3">Resultados</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card className="glass-card parallax bg-gradient-to-br from-white/80 via-white/60 to-white/40 backdrop-blur-xl">
               <CardContent className="p-6 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10"></div>
