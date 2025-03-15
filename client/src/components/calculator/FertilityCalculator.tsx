@@ -1,25 +1,21 @@
+
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Calendar } from "@/components/ui/calendar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
-import { calculateFertilePeriod } from "@/lib/calculators";
+import { calculateFertilePeriod, type CycleHistory } from "@/lib/calculators";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-
-interface CycleHistory {
-  periodStart: Date;
-  periodLength: number;
-  cycleLength: number;
-}
 
 const FertilityCalculator = () => {
   const [lastPeriodStart, setLastPeriodStart] = useState<string>("");
   const [lastPeriodEnd, setLastPeriodEnd] = useState<string>("");
-  const [cycleLength, setCycleLength] = useState<number>(28);
-  const [previousCycles, setPreviousCycles] = useState<CycleHistory[]>([]);
+  const [cycleHistory, setCycleHistory] = useState<CycleHistory[]>([]);
+  const [currentSelection, setCurrentSelection] = useState<{start?: Date, end?: Date}>({});
   const [results, setResults] = useState<{
     ovulationDay: Date;
     fertileStart: Date;
@@ -30,15 +26,34 @@ const FertilityCalculator = () => {
     fertileWindowConfidence?: string;
   } | null>(null);
 
+  const addCycle = () => {
+    if (currentSelection.start && currentSelection.end) {
+      const newCycle: CycleHistory = {
+        periodStart: currentSelection.start,
+        periodLength: Math.round((currentSelection.end.getTime() - currentSelection.start.getTime()) / (1000 * 60 * 60 * 24)),
+        cycleLength: cycleHistory.length > 0 
+          ? Math.round((currentSelection.start.getTime() - cycleHistory[cycleHistory.length - 1].periodStart.getTime()) / (1000 * 60 * 60 * 24))
+          : 28
+      };
+      
+      setCycleHistory([...cycleHistory, newCycle]);
+      setCurrentSelection({});
+    }
+  };
+
   const handleCalculate = () => {
     if (!lastPeriodStart || !lastPeriodEnd) return;
 
     try {
+      const avgCycleLength = cycleHistory.length > 1
+        ? Math.round(cycleHistory.reduce((acc, cycle) => acc + cycle.cycleLength, 0) / cycleHistory.length)
+        : 28;
+
       const result = calculateFertilePeriod(
         new Date(lastPeriodStart),
         new Date(lastPeriodEnd),
-        cycleLength,
-        previousCycles
+        avgCycleLength,
+        cycleHistory
       );
 
       setResults(result);
@@ -53,100 +68,79 @@ const FertilityCalculator = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
-          <div className="flex items-center">
-            <Label htmlFor="period-start" className="block text-sm font-medium text-gray-700 mb-2">
-              Início da Última Menstruação
-            </Label>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="ml-1 text-gray-400 cursor-help">
-                    <Info className="h-4 w-4 inline" />
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent className="max-w-[200px] text-xs">
-                  Data do primeiro dia da última menstruação
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-          <Input 
-            id="period-start"
-            type="date"
-            value={lastPeriodStart}
-            onChange={(e) => setLastPeriodStart(e.target.value)}
-            className="mt-1 w-full"
-          />
-        </div>
-
-        <div>
-          <div className="flex items-center">
-            <Label htmlFor="period-end" className="block text-sm font-medium text-gray-700 mb-2">
-              Fim da Última Menstruação
-            </Label>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="ml-1 text-gray-400 cursor-help">
-                    <Info className="h-4 w-4 inline" />
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent className="max-w-[200px] text-xs">
-                  Data do último dia da menstruação
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-          <Input 
-            id="period-end"
-            type="date"
-            value={lastPeriodEnd}
-            onChange={(e) => setLastPeriodEnd(e.target.value)}
-            className="mt-1 w-full"
-          />
-        </div>
-
-        <div>
-          <div className="flex items-center">
-            <Label htmlFor="cycle-length" className="block text-sm font-medium text-gray-700 mb-2">
-              Duração do Ciclo
-            </Label>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="ml-1 text-gray-400 cursor-help">
-                    <Info className="h-4 w-4 inline" />
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent className="max-w-[200px] text-xs">
-                  Geralmente entre 21 e 35 dias, com média de 28 dias
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-          <div className="flex items-center">
-            <Input
-              id="cycle-length"
-              type="number"
-              min={21}
-              max={45}
-              value={cycleLength}
-              onChange={(e) => setCycleLength(parseInt(e.target.value) || 28)}
-              className="mt-1 w-24"
+          <Label className="block text-sm font-medium mb-2">Histórico de Ciclos</Label>
+          <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4">
+            <Calendar
+              mode="range"
+              selected={{
+                from: currentSelection.start,
+                to: currentSelection.end
+              }}
+              onSelect={(range) => {
+                if (range?.from) {
+                  setCurrentSelection({
+                    start: range.from,
+                    end: range.to
+                  });
+                }
+              }}
+              className="rounded-md border"
+              disabled={{ after: new Date() }}
             />
-            <span className="ml-2 text-gray-600">dias</span>
+            <Button 
+              onClick={addCycle}
+              disabled={!currentSelection.start || !currentSelection.end}
+              className="mt-4 w-full"
+            >
+              Adicionar Ciclo
+            </Button>
           </div>
         </div>
 
-        <div className="flex items-end">
-          <Button 
-            onClick={handleCalculate}
-            className="px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90"
-          >
-            Calcular
-          </Button>
+        <div>
+          <Label className="block text-sm font-medium mb-2">Último Ciclo</Label>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="last-period-start">Data de Início</Label>
+              <Input
+                id="last-period-start"
+                type="date"
+                value={lastPeriodStart}
+                onChange={(e) => setLastPeriodStart(e.target.value)}
+              />
+            </div>
+            <div>
+              <Label htmlFor="last-period-end">Data de Fim</Label>
+              <Input
+                id="last-period-end"
+                type="date"
+                value={lastPeriodEnd}
+                onChange={(e) => setLastPeriodEnd(e.target.value)}
+              />
+            </div>
+            <Button onClick={handleCalculate} className="w-full">
+              Calcular
+            </Button>
+          </div>
         </div>
       </div>
+
+      {cycleHistory.length > 0 && (
+        <div className="mb-6">
+          <h3 className="text-lg font-medium mb-2">Ciclos Registrados</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {cycleHistory.map((cycle, index) => (
+              <Card key={index}>
+                <CardContent className="p-4">
+                  <p>Início: {format(cycle.periodStart, "dd/MM/yyyy")}</p>
+                  <p>Duração: {cycle.periodLength} dias</p>
+                  <p>Ciclo: {cycle.cycleLength} dias</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
 
       {results && (
         <div className="mt-8 p-4 rounded-lg border-2 border-[#ff4081] bg-pink-50/30 backdrop-blur-sm">
@@ -156,8 +150,8 @@ const FertilityCalculator = () => {
               <CardContent className="p-4">
                 <p className="text-sm text-gray-500 mb-1">Janela Fértil</p>
                 <p className="text-xl font-medium">
-                  {format(results.fertileStart, "dd/MM/yyyy", { locale: ptBR })} a {" "}
-                  {format(results.fertileEnd, "dd/MM/yyyy", { locale: ptBR })}
+                  {format(results.fertileStart, "dd/MM/yyyy")} a {" "}
+                  {format(results.fertileEnd, "dd/MM/yyyy")}
                 </p>
                 <p className="text-sm text-gray-600 mt-2">
                   Período com maiores chances de gravidez
@@ -172,7 +166,7 @@ const FertilityCalculator = () => {
               <CardContent className="p-4">
                 <p className="text-sm text-gray-500 mb-1">Dia Provável da Ovulação</p>
                 <p className="text-xl font-medium text-[#ff4081]">
-                  {format(results.ovulationDay, "dd/MM/yyyy", { locale: ptBR })}
+                  {format(results.ovulationDay, "dd/MM/yyyy")}
                 </p>
                 <p className="text-sm text-gray-600 mt-2">
                   O óvulo permanece viável por aproximadamente 24 horas após a ovulação
@@ -185,8 +179,8 @@ const FertilityCalculator = () => {
             <CardContent className="p-4">
               <p className="text-sm text-gray-500 mb-1">Próxima Menstruação Prevista</p>
               <p className="text-xl font-medium">
-                {format(results.nextPeriodStart, "dd/MM/yyyy", { locale: ptBR })} a {" "}
-                {format(results.nextPeriodEnd, "dd/MM/yyyy", { locale: ptBR })}
+                {format(results.nextPeriodStart, "dd/MM/yyyy")} a {" "}
+                {format(results.nextPeriodEnd, "dd/MM/yyyy")}
               </p>
               {results.fertileWindowConfidence && (
                 <p className="text-sm text-gray-600 mt-2">
