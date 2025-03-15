@@ -15,7 +15,7 @@
   
   .glass-card {
     @apply rounded-2xl glass 
-           hover:from-white/60 hover:via-white/40 hover:to-white/20
+           hover:from-white/70 hover:via-white/50 hover:to-white/30
            transition-all duration-500 hover:scale-[1.02]
            hover:rotate-[0.5deg]
            animate-card-float;
@@ -29,21 +29,22 @@
   }
 
   .gradient-bg {
-    @apply bg-[length:400%_400%]
+    @apply relative
+           bg-[length:400%_400%]
            bg-gradient-to-br from-blue-100/95 via-purple-50/90 to-pink-100/95
            animate-gradient-shimmer;
   }
+}
 
-  @keyframes card-float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-5px); }
-  }
+@keyframes card-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
 
-  @keyframes gradient-shimmer {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+@keyframes gradient-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @layer utilities {
