@@ -297,24 +297,27 @@ const GestationalCalculator = () => {
         <div className="mt-8 p-4 rounded-lg glass gradient-bg">
           <h3 className="text-lg font-medium text-primary-dark mb-3">Resultados</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card className="glass parallax bg-white">
-              <CardContent className="p-4">
-                <p className="text-sm text-gray-500 mb-1">Idade Gestacional</p>
-                <p className="text-xl font-medium">{results.gestationalAge}</p>
+            <Card className="glass-card parallax bg-gradient-to-br from-white/80 via-white/60 to-white/40 backdrop-blur-xl">
+              <CardContent className="p-6 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10"></div>
+                <p className="text-sm text-gray-600 mb-2 relative z-10">Idade Gestacional</p>
+                <p className="text-2xl font-semibold text-primary relative z-10">{results.gestationalAge}</p>
               </CardContent>
             </Card>
-            <Card className="glass parallax bg-white">
-              <CardContent className="p-4">
-                <p className="text-sm text-gray-500 mb-1">Data Provável do Parto</p>
-                <p className="text-xl font-medium">{results.dueDate}</p>
+            <Card className="glass-card parallax bg-gradient-to-br from-white/80 via-white/60 to-white/40 backdrop-blur-xl">
+              <CardContent className="p-6 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-purple-500/10"></div>
+                <p className="text-sm text-gray-600 mb-2 relative z-10">Data Provável do Parto</p>
+                <p className="text-2xl font-semibold text-primary relative z-10">{results.dueDate}</p>
               </CardContent>
             </Card>
-            <Card className="glass parallax bg-white">
-              <CardContent className="p-4">
-                <p className="text-sm text-gray-500 mb-1">Primeiro Trimestre até</p>
-                <p className="text-lg">{results.firstTrimester}</p>
-                <p className="text-sm text-gray-500 mt-2 mb-1">Segundo Trimestre até</p>
-                <p className="text-lg">{results.secondTrimester}</p>
+            <Card className="glass-card parallax bg-gradient-to-br from-white/80 via-white/60 to-white/40 backdrop-blur-xl">
+              <CardContent className="p-6 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10"></div>
+                <p className="text-sm text-gray-600 mb-2 relative z-10">Primeiro Trimestre até</p>
+                <p className="text-xl font-semibold text-primary relative z-10">{results.firstTrimester}</p>
+                <p className="text-sm text-gray-600 mt-3 mb-1 relative z-10">Segundo Trimestre até</p>
+                <p className="text-xl font-semibold text-primary relative z-10">{results.secondTrimester}</p>
               </CardContent>
             </Card>
           </div>
