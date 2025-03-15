@@ -140,7 +140,7 @@ const GestationalCalculator = () => {
             <div className="flex items-end">
               <Button 
                 onClick={handleCalculate}
-                className="px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90"
+                className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-200 font-medium shadow-md"
               >
                 Calcular
               </Button>
@@ -213,7 +213,7 @@ const GestationalCalculator = () => {
           <div className="mt-4">
             <Button 
               onClick={handleCalculate}
-              className="px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90"
+              className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-200 font-medium shadow-md"
             >
               Calcular
             </Button>
@@ -285,7 +285,7 @@ const GestationalCalculator = () => {
           <div className="mt-4">
             <Button 
               onClick={handleCalculate}
-              className="px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90"
+              className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-200 font-medium shadow-md"
             >
               Calcular
             </Button>
