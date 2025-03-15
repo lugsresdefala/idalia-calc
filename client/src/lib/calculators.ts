@@ -32,6 +32,36 @@ export function calculateGestationalAgeFromUltrasound(
 ) {
   // Calculate LMP based on USG measurements
   const totalDays = (usgWeeks * 7) + usgDays;
+
+function calculateCycleVariability(cycles: CycleHistory[]): number {
+  if (cycles.length < 2) return 1;
+  
+  const lengths = cycles.map(c => c.cycleLength);
+  const average = lengths.reduce((a, b) => a + b, 0) / lengths.length;
+  const variance = lengths.reduce((a, b) => a + Math.pow(b - average, 2), 0) / lengths.length;
+  
+  return Math.sqrt(variance) / 2; // Desvio padrão dividido por 2 para ajuste da janela
+}
+
+function calculateAverageLutealPhase(cycles: CycleHistory[]): number | null {
+  if (cycles.length < 3) return null;
+  
+  const lutealPhases = cycles.map(c => c.cycleLength - 14); // Estimativa básica
+  return Math.round(lutealPhases.reduce((a, b) => a + b, 0) / lutealPhases.length);
+}
+
+function predictNextCycle(cycles: CycleHistory[]): number {
+  if (cycles.length < 3) return 28;
+  
+  // Média móvel ponderada dos últimos ciclos
+  const weights = cycles.map((_, i) => i + 1);
+  const weightSum = weights.reduce((a, b) => a + b, 0);
+  
+  return Math.round(
+    cycles.reduce((acc, cycle, i) => acc + (cycle.cycleLength * weights[i]), 0) / weightSum
+  );
+}
+
   const lmpDate = addDays(usgDate, -totalDays);
   
   return calculateGestationalAgeFromLMP(lmpDate);
@@ -53,19 +83,30 @@ export function calculateGestationalAgeFromTransfer(
 
 // Fertility Period Calculator functions
 
+export interface CycleHistory {
+  periodStart: Date;
+  periodLength: number;
+  cycleLength: number;
+}
+
 export function calculateFertilePeriod(
-  lastPeriodStart: Date, 
-  lastPeriodEnd: Date, 
-  cycleLength: number = 28
+  lastPeriodStart: Date,
+  lastPeriodEnd: Date,
+  cycleLength: number = 28,
+  previousCycles: CycleHistory[] = []
 ) {
-  // Calculate ovulation day (typically 14 days before the next period)
-  const ovulationDay = addDays(lastPeriodStart, cycleLength - 14);
+  // Análise de variabilidade do ciclo
+  const cycleVariability = previousCycles.length > 0 
+    ? calculateCycleVariability(previousCycles)
+    : 1;
+
+  // Ajuste do dia da ovulação baseado no histórico
+  const lutealPhaseLength = calculateAverageLutealPhase(previousCycles);
+  const adjustedOvulationDay = addDays(lastPeriodStart, cycleLength - (lutealPhaseLength || 14));
   
-  // Calculate fertile window (5 days before ovulation plus ovulation day)
-  const fertileStart = addDays(ovulationDay, -5);
-  
-  // Ovulation day plus 1 day for egg viability (24 hours)
-  const fertileEnd = addDays(ovulationDay, 1);
+  // Ajuste da janela fértil baseado na variabilidade
+  const fertileWindowStart = addDays(adjustedOvulationDay, -5 - Math.floor(cycleVariability));
+  const fertileWindowEnd = addDays(adjustedOvulationDay, 1 + Math.ceil(cycleVariability));
   
   // Calculate next period
   const nextPeriodStart = addDays(lastPeriodStart, cycleLength);
