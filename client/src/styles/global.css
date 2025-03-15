@@ -5,23 +5,32 @@
 
 @layer components {
   .glass {
-    @apply bg-gradient-to-br from-white/30 to-white/10 
-           backdrop-blur-lg border border-white/20 
-           shadow-[0_8px_32px_0_rgba(31,38,135,0.37)];
+    @apply bg-gradient-to-br from-white/40 to-white/5
+           backdrop-blur-xl border border-white/30
+           shadow-[0_8px_32px_0_rgba(31,38,135,0.45)]
+           hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.55)];
   }
   
   .glass-card {
-    @apply rounded-xl glass hover:from-white/40 hover:to-white/20 
-           transition-all duration-300;
+    @apply rounded-2xl glass hover:from-white/50 hover:to-white/10
+           transition-all duration-300 hover:scale-[1.01]
+           hover:border-white/40;
   }
 
   .parallax {
     @apply transition-all duration-300 
-           hover:translate-y-[-5px] hover:scale-[1.02]
-           hover:shadow-xl;
+           hover:translate-y-[-8px] hover:scale-[1.03]
+           hover:shadow-2xl;
   }
 
   .gradient-bg {
-    @apply bg-gradient-to-br from-blue-50/90 to-purple-50/90;
+    @apply bg-gradient-to-br from-blue-100/95 via-purple-50/90 to-pink-100/95
+           animate-gradient-slow;
+  }
+
+  @keyframes gradient-slow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 }
