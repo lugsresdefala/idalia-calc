@@ -152,7 +152,7 @@ const FertilityCalculator = () => {
     // Adicionar células vazias para os dias antes do primeiro dia do mês
     for (let i = 0; i < startDayOfWeek; i++) {
       days.push(
-        <div key={`empty-${i}`} className="p-2"></div>
+        <div key={`empty-${i}`} className="p-0.5 sm:p-2"></div>
       );
     }
     
@@ -176,7 +176,7 @@ const FertilityCalculator = () => {
       
       const isOvulationDay = isSameDay(currentDate, results.ovulationDay);
       
-      let className = "p-2 border rounded text-center";
+      let className = "p-0.5 sm:p-2 border rounded text-center text-xs sm:text-sm";
       
       if (isPeriodDay) {
         className += " bg-red-100";
@@ -264,11 +264,11 @@ const FertilityCalculator = () => {
   };
 
   return (
-    <div className="glass-card rounded-lg shadow-md p-6 mb-6 text-blue-100">
-      <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">Idalia Calc - Análise de Fertilidade</h2>
+    <div className="glass-card rounded-lg shadow-md p-4 sm:p-6 mb-6 text-blue-100 max-w-full overflow-hidden">
+      <h2 className="text-xl sm:text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">Idalia Calc - Análise de Fertilidade</h2>
       
-      <div className="mb-6 glass-panel p-4 rounded-lg tech-border">
-        <p className="text-sm text-blue-200 italic">
+      <div className="mb-4 sm:mb-6 glass-panel p-3 sm:p-4 rounded-lg tech-border">
+        <p className="text-xs sm:text-sm text-blue-200 italic">
           Sistema avançado de análise de ciclos com detecção de períodos férteis baseada em biomarcadores como muco cervical, temperatura basal e padrões hormonais.
         </p>
       </div>
@@ -427,12 +427,12 @@ const FertilityCalculator = () => {
               <div className="mb-6">
                 <button 
                   onClick={() => toggleSection('bodyChanges')}
-                  className="w-full flex items-center justify-between p-3 tech-gradient rounded-lg tech-border mb-2"
+                  className="w-full flex items-center justify-between p-2 sm:p-3 tech-gradient rounded-lg tech-border mb-2"
                 >
-                  <span className="font-semibold text-blue-100">Biomarcadores na Fase {results.currentCyclePhase}</span>
+                  <span className="text-sm sm:text-base font-semibold text-blue-100">Biomarcadores na Fase {results.currentCyclePhase}</span>
                   {expandedSection === 'bodyChanges' ? 
-                    <ChevronUp className="h-5 w-5 text-blue-200 tech-glow" /> : 
-                    <ChevronDown className="h-5 w-5 text-blue-200" />
+                    <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200 tech-glow" /> : 
+                    <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200" />
                   }
                 </button>
                 
@@ -443,12 +443,12 @@ const FertilityCalculator = () => {
               <div className="mb-6">
                 <button 
                   onClick={() => toggleSection('nextPeriod')}
-                  className="w-full flex items-center justify-between p-3 tech-gradient rounded-lg tech-border mb-2"
+                  className="w-full flex items-center justify-between p-2 sm:p-3 tech-gradient rounded-lg tech-border mb-2"
                 >
-                  <span className="font-semibold text-blue-100">Próximo Ciclo Menstrual</span>
+                  <span className="text-sm sm:text-base font-semibold text-blue-100">Próximo Ciclo Menstrual</span>
                   {expandedSection === 'nextPeriod' ? 
-                    <ChevronUp className="h-5 w-5 text-blue-200 tech-glow" /> : 
-                    <ChevronDown className="h-5 w-5 text-blue-200" />
+                    <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200 tech-glow" /> : 
+                    <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200" />
                   }
                 </button>
                 
@@ -473,46 +473,46 @@ const FertilityCalculator = () => {
               <div>
                 <button 
                   onClick={() => toggleSection('calendar')}
-                  className="w-full flex items-center justify-between p-3 tech-gradient rounded-lg tech-border mb-2"
+                  className="w-full flex items-center justify-between p-2 sm:p-3 tech-gradient rounded-lg tech-border mb-2"
                 >
                   <div className="flex items-center">
-                    <CalendarIcon className="h-5 w-5 mr-2 text-blue-200 tech-glow" />
-                    <span className="font-semibold text-blue-100">Calendário Analítico</span>
+                    <CalendarIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-blue-200 tech-glow" />
+                    <span className="text-sm sm:text-base font-semibold text-blue-100">Calendário Analítico</span>
                   </div>
                   {expandedSection === 'calendar' ? 
-                    <ChevronUp className="h-5 w-5 text-blue-200 tech-glow" /> : 
-                    <ChevronDown className="h-5 w-5 text-blue-200" />
+                    <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200 tech-glow" /> : 
+                    <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200" />
                   }
                 </button>
                 
                 {expandedSection === 'calendar' && (
                   <div className="mt-3 p-4 glass-panel rounded-lg tech-border">
-                    <div className="grid grid-cols-7 gap-1 text-center text-sm">
-                      <div className="p-1 font-medium text-blue-300">Dom</div>
-                      <div className="p-1 font-medium text-blue-300">Seg</div>
-                      <div className="p-1 font-medium text-blue-300">Ter</div>
-                      <div className="p-1 font-medium text-blue-300">Qua</div>
-                      <div className="p-1 font-medium text-blue-300">Qui</div>
-                      <div className="p-1 font-medium text-blue-300">Sex</div>
-                      <div className="p-1 font-medium text-blue-300">Sáb</div>
+                    <div className="grid grid-cols-7 gap-0.5 sm:gap-1 text-center text-xs sm:text-sm">
+                      <div className="p-0.5 sm:p-1 font-medium text-blue-300">D</div>
+                      <div className="p-0.5 sm:p-1 font-medium text-blue-300">S</div>
+                      <div className="p-0.5 sm:p-1 font-medium text-blue-300">T</div>
+                      <div className="p-0.5 sm:p-1 font-medium text-blue-300">Q</div>
+                      <div className="p-0.5 sm:p-1 font-medium text-blue-300">Q</div>
+                      <div className="p-0.5 sm:p-1 font-medium text-blue-300">S</div>
+                      <div className="p-0.5 sm:p-1 font-medium text-blue-300">S</div>
                       {renderCalendar()}
                     </div>
                     
-                    <div className="flex flex-wrap justify-center items-center mt-4 text-sm gap-3 text-blue-200">
+                    <div className="flex flex-wrap justify-center items-center mt-3 sm:mt-4 text-xs sm:text-sm gap-2 sm:gap-3 text-blue-200">
                       <div className="flex items-center">
-                        <div className="w-4 h-4 bg-red-300/50 rounded mr-1 tech-border"></div>
+                        <div className="w-3 h-3 sm:w-4 sm:h-4 bg-red-300/50 rounded mr-1 tech-border"></div>
                         <span>Menstruação</span>
                       </div>
                       <div className="flex items-center">
-                        <div className="w-4 h-4 fertile-day rounded mr-1 tech-border"></div>
+                        <div className="w-3 h-3 sm:w-4 sm:h-4 fertile-day rounded mr-1 tech-border"></div>
                         <span>Período Fértil</span>
                       </div>
                       <div className="flex items-center">
-                        <div className="w-4 h-4 ovulation-day rounded mr-1 tech-border pulse-animation"></div>
+                        <div className="w-3 h-3 sm:w-4 sm:h-4 ovulation-day rounded mr-1 tech-border pulse-animation"></div>
                         <span>Ovulação</span>
                       </div>
                       <div className="flex items-center">
-                        <div className="w-4 h-4 border border-blue-500 rounded mr-1 tech-highlight"></div>
+                        <div className="w-3 h-3 sm:w-4 sm:h-4 border border-blue-500 rounded mr-1 tech-highlight"></div>
                         <span>Hoje</span>
                       </div>
                     </div>

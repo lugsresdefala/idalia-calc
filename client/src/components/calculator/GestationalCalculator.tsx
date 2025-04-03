@@ -122,11 +122,11 @@ const GestationalCalculator = () => {
   };
 
   return (
-    <div className="glass-card rounded-lg shadow-md p-6 mb-6 text-blue-100">
-      <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">Idalia Calc - Análise Gestacional</h2>
+    <div className="glass-card rounded-lg shadow-md p-4 sm:p-6 mb-6 text-blue-100 max-w-full overflow-hidden">
+      <h2 className="text-xl sm:text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">Idalia Calc - Análise Gestacional</h2>
       
-      <div className="mb-6 glass-panel p-4 rounded-lg tech-border">
-        <p className="text-sm text-blue-200 italic">
+      <div className="mb-6 glass-panel p-3 sm:p-4 rounded-lg tech-border">
+        <p className="text-xs sm:text-sm text-blue-200 italic">
           Sistema avançado de cálculo gestacional com análise de desenvolvimento embrionário, protocolos de pré-natal e recomendações médicas precisas para cada fase.
         </p>
       </div>
@@ -354,31 +354,31 @@ const GestationalCalculator = () => {
               </CardDescription>
             </CardHeader>
             
-            <CardContent className="pt-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <CardContent className="pt-4 sm:pt-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-6">
                 <Card className="glass-panel tech-border">
-                  <CardContent className="p-4">
+                  <CardContent className="p-3 sm:p-4">
                     <div className="flex items-center mb-2">
-                      <Calendar className="h-5 w-5 text-cyan-400 tech-glow mr-2" />
-                      <p className="text-sm text-blue-300">Data Provável do Parto</p>
+                      <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 tech-glow mr-2" />
+                      <p className="text-xs sm:text-sm text-blue-300">Data Provável do Parto</p>
                     </div>
-                    <p className="text-xl font-medium text-blue-200 tech-text-glow">{results.dueDate}</p>
+                    <p className="text-base sm:text-xl font-medium text-blue-200 tech-text-glow">{results.dueDate}</p>
                   </CardContent>
                 </Card>
-                <Card className="glass-panel tech-border col-span-2">
-                  <CardContent className="p-4">
+                <Card className="glass-panel tech-border col-span-1 md:col-span-2">
+                  <CardContent className="p-3 sm:p-4">
                     <div className="flex items-center mb-2">
-                      <Calendar className="h-5 w-5 text-teal-400 tech-glow mr-2" />
-                      <p className="text-sm text-blue-300">Trimestres</p>
+                      <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-teal-400 tech-glow mr-2" />
+                      <p className="text-xs sm:text-sm text-blue-300">Trimestres</p>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-2 sm:gap-4">
                       <div>
-                        <p className="text-sm text-cyan-300">1º Trimestre até:</p>
-                        <p className="font-medium text-blue-200">{results.firstTrimester}</p>
+                        <p className="text-xs sm:text-sm text-cyan-300">1º Trimestre até:</p>
+                        <p className="text-xs sm:text-sm font-medium text-blue-200">{results.firstTrimester}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-cyan-300">2º Trimestre até:</p>
-                        <p className="font-medium text-blue-200">{results.secondTrimester}</p>
+                        <p className="text-xs sm:text-sm text-cyan-300">2º Trimestre até:</p>
+                        <p className="text-xs sm:text-sm font-medium text-blue-200">{results.secondTrimester}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -389,33 +389,33 @@ const GestationalCalculator = () => {
               <div className="mb-6">
                 <button 
                   onClick={() => toggleSection('development')}
-                  className="w-full flex items-center justify-between p-3 tech-gradient rounded-lg tech-border mb-2"
+                  className="w-full flex items-center justify-between p-2 sm:p-3 tech-gradient rounded-lg tech-border mb-2"
                 >
                   <div className="flex items-center">
-                    <Baby className="h-5 w-5 mr-2 text-cyan-300 tech-glow" />
-                    <span className="font-semibold text-blue-100">Desenvolvimento Fetal</span>
+                    <Baby className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-cyan-300 tech-glow" />
+                    <span className="text-sm sm:text-base font-semibold text-blue-100">Desenvolvimento Fetal</span>
                   </div>
-                  {expandedSection === 'development' ? <ChevronUp className="h-5 w-5 text-blue-200 tech-glow" /> : <ChevronDown className="h-5 w-5 text-blue-200" />}
+                  {expandedSection === 'development' ? <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200 tech-glow" /> : <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200" />}
                 </button>
                 
                 {expandedSection === 'development' && (
-                  <div className="mt-3 p-4 glass-panel rounded-lg tech-border">
-                    <h4 className="text-lg font-semibold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 tech-text-glow">{results.developmentInfo.title}</h4>
+                  <div className="mt-2 sm:mt-3 p-3 sm:p-4 glass-panel rounded-lg tech-border">
+                    <h4 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 tech-text-glow">{results.developmentInfo.title}</h4>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                       <div>
-                        <p className="font-medium mb-1 text-cyan-300">Desenvolvimento:</p>
-                        <p className="text-sm text-blue-200 mb-3">{results.developmentInfo.development}</p>
+                        <p className="text-sm font-medium mb-1 text-cyan-300">Desenvolvimento:</p>
+                        <p className="text-xs sm:text-sm text-blue-200 mb-3">{results.developmentInfo.development}</p>
                         
-                        <p className="font-medium mb-1 text-cyan-300">Marco importante:</p>
-                        <p className="text-sm text-blue-200">{results.developmentInfo.milestone}</p>
+                        <p className="text-sm font-medium mb-1 text-cyan-300">Marco importante:</p>
+                        <p className="text-xs sm:text-sm text-blue-200">{results.developmentInfo.milestone}</p>
                       </div>
                       <div>
-                        <p className="font-medium mb-1 text-cyan-300">Tamanho aproximado:</p>
-                        <p className="text-xl font-bold text-blue-100 tech-text-glow mb-4">{results.developmentInfo.size}</p>
+                        <p className="text-sm font-medium mb-1 text-cyan-300">Tamanho aproximado:</p>
+                        <p className="text-base sm:text-xl font-bold text-blue-100 tech-text-glow mb-3 sm:mb-4">{results.developmentInfo.size}</p>
                         
-                        <div className="glass-panel p-3 tech-border rounded-lg">
-                          <p className="text-sm text-blue-200">
+                        <div className="glass-panel p-2 sm:p-3 tech-border rounded-lg">
+                          <p className="text-xs sm:text-sm text-blue-200">
                             <span className="font-medium text-teal-300">Trimestre {results.currentTrimester}: </span>
                             {results.currentTrimester === 1 
                               ? "Formação dos principais órgãos e sistemas."
@@ -434,69 +434,69 @@ const GestationalCalculator = () => {
               <div className="mb-6">
                 <button 
                   onClick={() => toggleSection('prenatal')}
-                  className="w-full flex items-center justify-between p-3 tech-gradient rounded-lg tech-border mb-2"
+                  className="w-full flex items-center justify-between p-2 sm:p-3 tech-gradient rounded-lg tech-border mb-2"
                 >
                   <div className="flex items-center">
-                    <Stethoscope className="h-5 w-5 mr-2 text-teal-300 tech-glow" />
-                    <span className="font-semibold text-blue-100">Cuidados Pré-Natais</span>
+                    <Stethoscope className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-teal-300 tech-glow" />
+                    <span className="text-sm sm:text-base font-semibold text-blue-100">Cuidados Pré-Natais</span>
                   </div>
-                  {expandedSection === 'prenatal' ? <ChevronUp className="h-5 w-5 text-blue-200 tech-glow" /> : <ChevronDown className="h-5 w-5 text-blue-200" />}
+                  {expandedSection === 'prenatal' ? <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200 tech-glow" /> : <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200" />}
                 </button>
                 
                 {expandedSection === 'prenatal' && (
-                  <div className="mt-3">
-                    <div className="mb-4 glass-panel rounded-lg tech-border p-4">
-                      <div className="flex items-center mb-2">
-                        <FileHeart className="h-5 w-5 text-cyan-400 tech-glow mr-2" />
-                        <h5 className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Exames Recomendados</h5>
+                  <div className="mt-2 sm:mt-3">
+                    <div className="mb-3 sm:mb-4 glass-panel rounded-lg tech-border p-3 sm:p-4">
+                      <div className="flex items-center mb-1 sm:mb-2">
+                        <FileHeart className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 tech-glow mr-2" />
+                        <h5 className="text-sm sm:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Exames Recomendados</h5>
                       </div>
-                      <p className="text-sm text-blue-200">{results.prenatalCare.examinations}</p>
+                      <p className="text-xs sm:text-sm text-blue-200">{results.prenatalCare.examinations}</p>
                     </div>
                     
-                    <div className="mb-4 glass-panel rounded-lg tech-border p-4">
-                      <div className="flex items-center mb-2">
-                        <Syringe className="h-5 w-5 text-teal-400 tech-glow mr-2" />
-                        <h5 className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Vacinas</h5>
+                    <div className="mb-3 sm:mb-4 glass-panel rounded-lg tech-border p-3 sm:p-4">
+                      <div className="flex items-center mb-1 sm:mb-2">
+                        <Syringe className="h-4 w-4 sm:h-5 sm:w-5 text-teal-400 tech-glow mr-2" />
+                        <h5 className="text-sm sm:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Vacinas</h5>
                       </div>
-                      <p className="text-sm text-blue-200">{results.prenatalCare.vaccines}</p>
+                      <p className="text-xs sm:text-sm text-blue-200">{results.prenatalCare.vaccines}</p>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="glass-panel rounded-lg tech-border p-4">
-                        <div className="flex items-center mb-2">
-                          <Salad className="h-5 w-5 text-blue-400 tech-glow mr-2" />
-                          <h5 className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Alimentação e Suplementação</h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                      <div className="glass-panel rounded-lg tech-border p-3 sm:p-4">
+                        <div className="flex items-center mb-1 sm:mb-2">
+                          <Salad className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400 tech-glow mr-2" />
+                          <h5 className="text-sm sm:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Alimentação e Suplementação</h5>
                         </div>
-                        <p className="text-sm text-blue-200">{results.prenatalCare.nutrition}</p>
+                        <p className="text-xs sm:text-sm text-blue-200">{results.prenatalCare.nutrition}</p>
                       </div>
                       
-                      <div className="glass-panel rounded-lg tech-border p-4">
-                        <div className="flex items-center mb-2">
-                          <HeartPulse className="h-5 w-5 text-teal-400 tech-glow mr-2" />
-                          <h5 className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Cuidados Especiais</h5>
+                      <div className="glass-panel rounded-lg tech-border p-3 sm:p-4">
+                        <div className="flex items-center mb-1 sm:mb-2">
+                          <HeartPulse className="h-4 w-4 sm:h-5 sm:w-5 text-teal-400 tech-glow mr-2" />
+                          <h5 className="text-sm sm:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Cuidados Especiais</h5>
                         </div>
-                        <p className="text-sm text-blue-200">{results.prenatalCare.special_care}</p>
+                        <p className="text-xs sm:text-sm text-blue-200">{results.prenatalCare.special_care}</p>
                       </div>
                     </div>
                     
-                    <div className="mt-4 glass-panel tech-gradient-warning rounded-lg tech-border-alert p-4">
-                      <div className="flex items-center mb-2">
-                        <AlertCircle className="h-5 w-5 text-blue-300 tech-glow mr-2" />
-                        <h5 className="font-medium text-blue-100">Sinais de Alerta - Procure atendimento médico:</h5>
+                    <div className="mt-3 sm:mt-4 glass-panel tech-gradient-warning rounded-lg tech-border-alert p-3 sm:p-4">
+                      <div className="flex items-center mb-1 sm:mb-2">
+                        <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-blue-300 tech-glow mr-2" />
+                        <h5 className="text-sm sm:text-base font-medium text-blue-100">Sinais de Alerta - Procure atendimento médico:</h5>
                       </div>
-                      <p className="text-sm text-blue-200">{results.prenatalCare.warning_signs}</p>
+                      <p className="text-xs sm:text-sm text-blue-200">{results.prenatalCare.warning_signs}</p>
                     </div>
                   </div>
                 )}
               </div>
               
               {/* Observações */}
-              <div className="glass-panel tech-border-accent rounded-lg p-4 text-sm text-blue-200">
-                <div className="flex items-center mb-2">
-                  <Info className="h-5 w-5 text-teal-300 tech-glow mr-2" />
+              <div className="glass-panel tech-border-accent rounded-lg p-3 sm:p-4 text-xs sm:text-sm text-blue-200">
+                <div className="flex items-center mb-1 sm:mb-2">
+                  <Info className="h-4 w-4 sm:h-5 sm:w-5 text-teal-300 tech-glow mr-2" />
                   <span className="font-medium text-cyan-300">IMPORTANTE:</span>
                 </div>
-                <p className="mb-2">
+                <p className="mb-1 sm:mb-2">
                   Esta ferramenta fornece estimativas baseadas em cálculos padrão.
                 </p>
                 <p>
