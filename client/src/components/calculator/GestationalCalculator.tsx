@@ -23,7 +23,10 @@ import {
   Syringe, 
   FileHeart, 
   ChevronDown, 
-  ChevronUp 
+  ChevronUp,
+  AlertCircle,
+  HeartPulse,
+  Salad
 } from "lucide-react";
 import { 
   calculateGestationalAgeFromLMP, 
@@ -202,17 +205,17 @@ const GestationalCalculator = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <div className="flex items-center">
-                <Label htmlFor="usg-date" className="block text-sm font-medium text-gray-700 mb-2">
+                <Label htmlFor="usg-date" className="block text-sm font-medium text-blue-200 mb-2">
                   Data do Ultrassom
                 </Label>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <span className="ml-1 text-gray-400 cursor-help">
-                        <Info className="h-4 w-4 inline" />
+                      <span className="ml-1 text-blue-400 cursor-help">
+                        <Info className="h-4 w-4 inline tech-glow" />
                       </span>
                     </TooltipTrigger>
-                    <TooltipContent className="max-w-[200px] text-xs">
+                    <TooltipContent className="max-w-[200px] text-xs glass-panel tech-border">
                       Data em que o exame de ultrassom foi realizado
                     </TooltipContent>
                   </Tooltip>
@@ -223,16 +226,16 @@ const GestationalCalculator = () => {
                 type="date" 
                 value={ultrasoundDate}
                 onChange={(e) => setUltrasoundDate(e.target.value)}
-                className="mt-1 w-full"
+                className="mt-1 w-full bg-blue-900/20 border-blue-500/30 text-blue-100"
               />
             </div>
             <div>
-              <Label htmlFor="usg-weeks" className="block text-sm font-medium text-gray-700 mb-2">
+              <Label htmlFor="usg-weeks" className="block text-sm font-medium text-blue-200 mb-2">
                 Idade Gestacional no Ultrassom
               </Label>
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <Label htmlFor="usg-weeks" className="block text-xs text-gray-500">Semanas</Label>
+                  <Label htmlFor="usg-weeks" className="block text-xs text-cyan-300">Semanas</Label>
                   <Input 
                     id="usg-weeks"
                     type="number"
@@ -240,11 +243,11 @@ const GestationalCalculator = () => {
                     max={42}
                     value={ultrasoundWeeks}
                     onChange={(e) => setUltrasoundWeeks(parseInt(e.target.value) || 0)}
-                    className="mt-1 w-full"
+                    className="mt-1 w-full bg-blue-900/20 border-blue-500/30 text-blue-100"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="usg-days" className="block text-xs text-gray-500">Dias</Label>
+                  <Label htmlFor="usg-days" className="block text-xs text-cyan-300">Dias</Label>
                   <Input 
                     id="usg-days"
                     type="number"
@@ -252,7 +255,7 @@ const GestationalCalculator = () => {
                     max={6}
                     value={ultrasoundDays}
                     onChange={(e) => setUltrasoundDays(parseInt(e.target.value) || 0)}
-                    className="mt-1 w-full"
+                    className="mt-1 w-full bg-blue-900/20 border-blue-500/30 text-blue-100"
                   />
                 </div>
               </div>
@@ -261,7 +264,7 @@ const GestationalCalculator = () => {
           <div className="mt-4">
             <Button 
               onClick={handleCalculate}
-              className="px-6 py-2 bg-[#ff4081] hover:bg-[#c60055] text-white rounded-md"
+              className="tech-button px-6 py-2 tech-glow"
             >
               Calcular
             </Button>
@@ -274,17 +277,17 @@ const GestationalCalculator = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <div className="flex items-center">
-                <Label htmlFor="transfer-date" className="block text-sm font-medium text-gray-700 mb-2">
+                <Label htmlFor="transfer-date" className="block text-sm font-medium text-blue-200 mb-2">
                   Data da Transferência Embrionária
                 </Label>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <span className="ml-1 text-gray-400 cursor-help">
-                        <Info className="h-4 w-4 inline" />
+                      <span className="ml-1 text-blue-400 cursor-help">
+                        <Info className="h-4 w-4 inline tech-glow" />
                       </span>
                     </TooltipTrigger>
-                    <TooltipContent className="max-w-[200px] text-xs">
+                    <TooltipContent className="max-w-[200px] text-xs glass-panel tech-border">
                       Data em que ocorreu a transferência do embrião
                     </TooltipContent>
                   </Tooltip>
@@ -295,22 +298,22 @@ const GestationalCalculator = () => {
                 type="date" 
                 value={transferDate}
                 onChange={(e) => setTransferDate(e.target.value)}
-                className="mt-1 w-full"
+                className="mt-1 w-full bg-blue-900/20 border-blue-500/30 text-blue-100"
               />
             </div>
             <div>
               <div className="flex items-center">
-                <Label htmlFor="embryo-days" className="block text-sm font-medium text-gray-700 mb-2">
+                <Label htmlFor="embryo-days" className="block text-sm font-medium text-blue-200 mb-2">
                   Dias de Desenvolvimento do Embrião
                 </Label>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <span className="ml-1 text-gray-400 cursor-help">
-                        <Info className="h-4 w-4 inline" />
+                      <span className="ml-1 text-blue-400 cursor-help">
+                        <Info className="h-4 w-4 inline tech-glow" />
                       </span>
                     </TooltipTrigger>
-                    <TooltipContent className="max-w-[200px] text-xs">
+                    <TooltipContent className="max-w-[200px] text-xs glass-panel tech-border">
                       Número de dias que o embrião se desenvolveu antes da transferência (geralmente 3 ou 5 dias)
                     </TooltipContent>
                   </Tooltip>
@@ -320,12 +323,12 @@ const GestationalCalculator = () => {
                 value={embryoDays} 
                 onValueChange={setEmbryoDays}
               >
-                <SelectTrigger className="mt-1 w-full">
+                <SelectTrigger className="mt-1 w-full bg-blue-900/20 border-blue-500/30 text-blue-100">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="3">3 dias</SelectItem>
-                  <SelectItem value="5">5 dias (blastocisto)</SelectItem>
+                <SelectContent className="glass-panel tech-border">
+                  <SelectItem value="3" className="text-blue-200 hover:bg-blue-900/50 focus:bg-blue-800/50">3 dias</SelectItem>
+                  <SelectItem value="5" className="text-blue-200 hover:bg-blue-900/50 focus:bg-blue-800/50">5 dias (blastocisto)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -333,7 +336,7 @@ const GestationalCalculator = () => {
           <div className="mt-4">
             <Button 
               onClick={handleCalculate}
-              className="px-6 py-2 bg-[#ff4081] hover:bg-[#c60055] text-white rounded-md"
+              className="tech-button px-6 py-2 tech-glow"
             >
               Calcular
             </Button>
@@ -353,29 +356,29 @@ const GestationalCalculator = () => {
             
             <CardContent className="pt-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <Card className="border border-pink-200 shadow-sm">
+                <Card className="glass-panel tech-border">
                   <CardContent className="p-4">
                     <div className="flex items-center mb-2">
-                      <Calendar className="h-5 w-5 text-[#ff4081] mr-2" />
-                      <p className="text-sm text-gray-500">Data Provável do Parto</p>
+                      <Calendar className="h-5 w-5 text-cyan-400 tech-glow mr-2" />
+                      <p className="text-sm text-blue-300">Data Provável do Parto</p>
                     </div>
-                    <p className="text-xl font-medium text-[#ff4081]">{results.dueDate}</p>
+                    <p className="text-xl font-medium text-blue-200 tech-text-glow">{results.dueDate}</p>
                   </CardContent>
                 </Card>
-                <Card className="border border-pink-200 shadow-sm col-span-2">
+                <Card className="glass-panel tech-border col-span-2">
                   <CardContent className="p-4">
                     <div className="flex items-center mb-2">
-                      <Calendar className="h-5 w-5 text-[#ff4081] mr-2" />
-                      <p className="text-sm text-gray-500">Trimestres</p>
+                      <Calendar className="h-5 w-5 text-teal-400 tech-glow mr-2" />
+                      <p className="text-sm text-blue-300">Trimestres</p>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <p className="text-sm">1º Trimestre até:</p>
-                        <p className="font-medium">{results.firstTrimester}</p>
+                        <p className="text-sm text-cyan-300">1º Trimestre até:</p>
+                        <p className="font-medium text-blue-200">{results.firstTrimester}</p>
                       </div>
                       <div>
-                        <p className="text-sm">2º Trimestre até:</p>
-                        <p className="font-medium">{results.secondTrimester}</p>
+                        <p className="text-sm text-cyan-300">2º Trimestre até:</p>
+                        <p className="font-medium text-blue-200">{results.secondTrimester}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -397,23 +400,23 @@ const GestationalCalculator = () => {
                 
                 {expandedSection === 'development' && (
                   <div className="mt-3 p-4 glass-panel rounded-lg tech-border">
-                    <h4 className="text-lg font-semibold mb-3 text-[#c60055]">{results.developmentInfo.title}</h4>
+                    <h4 className="text-lg font-semibold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 tech-text-glow">{results.developmentInfo.title}</h4>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <p className="font-medium mb-1">Desenvolvimento:</p>
-                        <p className="text-sm text-gray-700 mb-3">{results.developmentInfo.development}</p>
+                        <p className="font-medium mb-1 text-cyan-300">Desenvolvimento:</p>
+                        <p className="text-sm text-blue-200 mb-3">{results.developmentInfo.development}</p>
                         
-                        <p className="font-medium mb-1">Marco importante:</p>
-                        <p className="text-sm text-gray-700">{results.developmentInfo.milestone}</p>
+                        <p className="font-medium mb-1 text-cyan-300">Marco importante:</p>
+                        <p className="text-sm text-blue-200">{results.developmentInfo.milestone}</p>
                       </div>
                       <div>
-                        <p className="font-medium mb-1">Tamanho aproximado:</p>
-                        <p className="text-xl font-bold text-[#ff4081] mb-4">{results.developmentInfo.size}</p>
+                        <p className="font-medium mb-1 text-cyan-300">Tamanho aproximado:</p>
+                        <p className="text-xl font-bold text-blue-100 tech-text-glow mb-4">{results.developmentInfo.size}</p>
                         
-                        <div className="bg-pink-50 rounded-lg p-3 border border-pink-100">
-                          <p className="text-sm">
-                            <span className="font-medium">Trimestre {results.currentTrimester}: </span>
+                        <div className="glass-panel p-3 tech-border rounded-lg">
+                          <p className="text-sm text-blue-200">
+                            <span className="font-medium text-teal-300">Trimestre {results.currentTrimester}: </span>
                             {results.currentTrimester === 1 
                               ? "Formação dos principais órgãos e sistemas."
                               : results.currentTrimester === 2 
@@ -442,46 +445,59 @@ const GestationalCalculator = () => {
                 
                 {expandedSection === 'prenatal' && (
                   <div className="mt-3">
-                    <div className="mb-4 bg-white rounded-lg border border-gray-200 p-4">
+                    <div className="mb-4 glass-panel rounded-lg tech-border p-4">
                       <div className="flex items-center mb-2">
-                        <FileHeart className="h-5 w-5 text-[#ff4081] mr-2" />
-                        <h5 className="font-medium">Exames Recomendados</h5>
+                        <FileHeart className="h-5 w-5 text-cyan-400 tech-glow mr-2" />
+                        <h5 className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Exames Recomendados</h5>
                       </div>
-                      <p className="text-sm text-gray-700">{results.prenatalCare.examinations}</p>
+                      <p className="text-sm text-blue-200">{results.prenatalCare.examinations}</p>
                     </div>
                     
-                    <div className="mb-4 bg-white rounded-lg border border-gray-200 p-4">
+                    <div className="mb-4 glass-panel rounded-lg tech-border p-4">
                       <div className="flex items-center mb-2">
-                        <Syringe className="h-5 w-5 text-[#ff4081] mr-2" />
-                        <h5 className="font-medium">Vacinas</h5>
+                        <Syringe className="h-5 w-5 text-teal-400 tech-glow mr-2" />
+                        <h5 className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Vacinas</h5>
                       </div>
-                      <p className="text-sm text-gray-700">{results.prenatalCare.vaccines}</p>
+                      <p className="text-sm text-blue-200">{results.prenatalCare.vaccines}</p>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="bg-white rounded-lg border border-gray-200 p-4">
-                        <h5 className="font-medium mb-2">Alimentação e Suplementação</h5>
-                        <p className="text-sm text-gray-700">{results.prenatalCare.nutrition}</p>
+                      <div className="glass-panel rounded-lg tech-border p-4">
+                        <div className="flex items-center mb-2">
+                          <Salad className="h-5 w-5 text-blue-400 tech-glow mr-2" />
+                          <h5 className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Alimentação e Suplementação</h5>
+                        </div>
+                        <p className="text-sm text-blue-200">{results.prenatalCare.nutrition}</p>
                       </div>
                       
-                      <div className="bg-white rounded-lg border border-gray-200 p-4">
-                        <h5 className="font-medium mb-2">Cuidados Especiais</h5>
-                        <p className="text-sm text-gray-700">{results.prenatalCare.special_care}</p>
+                      <div className="glass-panel rounded-lg tech-border p-4">
+                        <div className="flex items-center mb-2">
+                          <HeartPulse className="h-5 w-5 text-teal-400 tech-glow mr-2" />
+                          <h5 className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Cuidados Especiais</h5>
+                        </div>
+                        <p className="text-sm text-blue-200">{results.prenatalCare.special_care}</p>
                       </div>
                     </div>
                     
-                    <div className="mt-4 bg-pink-50 rounded-lg border border-pink-200 p-4">
-                      <h5 className="font-medium mb-2 text-[#c60055]">Sinais de Alerta - Procure atendimento médico:</h5>
-                      <p className="text-sm text-gray-700">{results.prenatalCare.warning_signs}</p>
+                    <div className="mt-4 glass-panel tech-gradient-warning rounded-lg tech-border-alert p-4">
+                      <div className="flex items-center mb-2">
+                        <AlertCircle className="h-5 w-5 text-blue-300 tech-glow mr-2" />
+                        <h5 className="font-medium text-blue-100">Sinais de Alerta - Procure atendimento médico:</h5>
+                      </div>
+                      <p className="text-sm text-blue-200">{results.prenatalCare.warning_signs}</p>
                     </div>
                   </div>
                 )}
               </div>
               
               {/* Observações */}
-              <div className="rounded-lg border border-gray-200 p-4 text-sm text-gray-600">
+              <div className="glass-panel tech-border-accent rounded-lg p-4 text-sm text-blue-200">
+                <div className="flex items-center mb-2">
+                  <Info className="h-5 w-5 text-teal-300 tech-glow mr-2" />
+                  <span className="font-medium text-cyan-300">IMPORTANTE:</span>
+                </div>
                 <p className="mb-2">
-                  <span className="font-medium">IMPORTANTE:</span> Esta ferramenta fornece estimativas baseadas em cálculos padrão.
+                  Esta ferramenta fornece estimativas baseadas em cálculos padrão.
                 </p>
                 <p>
                   As recomendações e informações são baseadas em diretrizes do Ministério da Saúde, Febrasgo e ACOG. Consulte sempre um profissional de saúde para orientações específicas.
