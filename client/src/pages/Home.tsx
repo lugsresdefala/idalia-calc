@@ -6,24 +6,24 @@ const Home = () => {
   const [activeTab, setActiveTab] = useState<"gestational" | "fertility">("fertility");
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-pink-50">
+    <div className="min-h-screen tech-bg">
       <div className="max-w-5xl mx-auto px-4 py-8">
         <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-[#c60055] to-[#ff4081]">
-            Idalia Calc
+          <h1 className="text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-teal-500 tech-text-glow">
+            MedCalc Pro
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-            Compreenda seu ciclo menstrual com detalhes das fases hormonais, muco cervical e padrões de fertilidade
+          <p className="text-blue-100 max-w-2xl mx-auto text-lg">
+            Calculadora de precisão médica com análise avançada de ciclos e desenvolvimento gestacional
           </p>
         </header>
 
-        <div className="bg-white rounded-t-lg shadow-sm flex border-b">
+        <div className="glass-card rounded-t-lg shadow-md flex border-b border-blue-400/20">
           <button
             onClick={() => setActiveTab("fertility")}
             className={`flex-1 py-4 px-6 text-center font-medium transition-all duration-300 ${
               activeTab === "fertility" 
-                ? "text-[#c60055] border-b-2 border-[#ff4081] bg-gradient-to-r from-pink-50 to-transparent" 
-                : "text-gray-600 hover:bg-pink-50"
+                ? "text-blue-300 border-b-2 border-blue-400 bg-gradient-to-r from-blue-900/50 to-transparent tech-text-glow" 
+                : "text-blue-200 hover:bg-blue-900/30"
             }`}
           >
             Período Fértil
@@ -32,8 +32,8 @@ const Home = () => {
             onClick={() => setActiveTab("gestational")}
             className={`flex-1 py-4 px-6 text-center font-medium transition-all duration-300 ${
               activeTab === "gestational" 
-                ? "text-[#c60055] border-b-2 border-[#ff4081] bg-gradient-to-r from-pink-50 to-transparent" 
-                : "text-gray-600 hover:bg-pink-50"
+                ? "text-blue-300 border-b-2 border-blue-400 bg-gradient-to-r from-blue-900/50 to-transparent tech-text-glow" 
+                : "text-blue-200 hover:bg-blue-900/30"
             }`}
           >
             Idade Gestacional
@@ -46,13 +46,17 @@ const Home = () => {
           <FertilityCalculator />
         )}
 
-        <footer className="mt-8 text-center text-sm text-gray-600 bg-white p-4 rounded-lg shadow-sm">
+        <footer className="mt-8 text-center text-sm text-blue-200 glass-panel p-4 rounded-lg shadow-md">
           <p className="mb-2">
-            Esta calculadora fornece estimativas baseadas em cálculos padrão e informações científicas sobre o ciclo menstrual.
+            Esta calculadora de precisão fornece análises baseadas em metodologias científicas e algoritmos avançados.
           </p>
           <p>
-            Consulte sempre um profissional de saúde para orientações específicas sobre fertilidade e planejamento familiar.
+            Consulte sempre um profissional de saúde para interpretação dos resultados e orientações específicas.
           </p>
+          <div className="mt-4 text-xs text-blue-300/70 flex justify-center items-center gap-1">
+            <span className="inline-block h-2 w-2 rounded-full bg-blue-400 pulse-animation"></span>
+            <span>MedCalc Pro v1.2.1</span>
+          </div>
         </footer>
       </div>
     </div>

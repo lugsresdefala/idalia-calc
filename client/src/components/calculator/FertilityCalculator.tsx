@@ -264,29 +264,29 @@ const FertilityCalculator = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-      <h2 className="text-2xl font-bold mb-4 text-[#c60055]">Idalia Calc - Período Fértil</h2>
+    <div className="glass-card rounded-lg shadow-md p-6 mb-6 text-blue-100">
+      <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 tech-text-glow">MedCalc Pro - Análise de Fertilidade</h2>
       
-      <div className="mb-6 bg-pink-50 p-4 rounded-lg border border-pink-200">
-        <p className="text-sm text-gray-600 italic">
-          Calcule seu período fértil e obtenha informações detalhadas sobre seu ciclo menstrual, incluindo as mudanças no muco cervical, temperatura basal e níveis hormonais ao longo do mês.
+      <div className="mb-6 glass-panel p-4 rounded-lg tech-border">
+        <p className="text-sm text-blue-200 italic">
+          Sistema avançado de análise de ciclos com detecção de períodos férteis baseada em biomarcadores como muco cervical, temperatura basal e padrões hormonais.
         </p>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
           <div className="flex items-center">
-            <Label htmlFor="last-period-start" className="block text-sm font-medium text-gray-700 mb-2">
+            <Label htmlFor="last-period-start" className="block text-sm font-medium text-blue-200 mb-2">
               Início da Última Menstruação
             </Label>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span className="ml-1 text-gray-400 cursor-help">
-                    <Info className="h-4 w-4 inline" />
+                  <span className="ml-1 text-blue-400 cursor-help">
+                    <Info className="h-4 w-4 inline tech-glow" />
                   </span>
                 </TooltipTrigger>
-                <TooltipContent className="max-w-[200px] text-xs">
+                <TooltipContent className="max-w-[200px] text-xs glass-panel tech-border">
                   Primeiro dia do seu último ciclo menstrual
                 </TooltipContent>
               </Tooltip>
@@ -297,22 +297,22 @@ const FertilityCalculator = () => {
             type="date" 
             value={lastPeriodStart}
             onChange={(e) => setLastPeriodStart(e.target.value)}
-            className="mt-1 w-full"
+            className="mt-1 w-full bg-blue-900/20 border-blue-500/30 text-blue-100"
           />
         </div>
         <div>
           <div className="flex items-center">
-            <Label htmlFor="last-period-end" className="block text-sm font-medium text-gray-700 mb-2">
+            <Label htmlFor="last-period-end" className="block text-sm font-medium text-blue-200 mb-2">
               Fim da Última Menstruação
             </Label>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span className="ml-1 text-gray-400 cursor-help">
-                    <Info className="h-4 w-4 inline" />
+                  <span className="ml-1 text-blue-400 cursor-help">
+                    <Info className="h-4 w-4 inline tech-glow" />
                   </span>
                 </TooltipTrigger>
-                <TooltipContent className="max-w-[200px] text-xs">
+                <TooltipContent className="max-w-[200px] text-xs glass-panel tech-border">
                   Último dia do seu último ciclo menstrual
                 </TooltipContent>
               </Tooltip>
@@ -323,7 +323,7 @@ const FertilityCalculator = () => {
             type="date" 
             value={lastPeriodEnd}
             onChange={(e) => setLastPeriodEnd(e.target.value)}
-            className="mt-1 w-full"
+            className="mt-1 w-full bg-blue-900/20 border-blue-500/30 text-blue-100"
           />
         </div>
       </div>
@@ -331,17 +331,17 @@ const FertilityCalculator = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 mb-6">
         <div>
           <div className="flex items-center">
-            <Label htmlFor="cycle-length" className="block text-sm font-medium text-gray-700 mb-2">
+            <Label htmlFor="cycle-length" className="block text-sm font-medium text-blue-200 mb-2">
               Duração média do ciclo menstrual
             </Label>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span className="ml-1 text-gray-400 cursor-help">
-                    <Info className="h-4 w-4 inline" />
+                  <span className="ml-1 text-blue-400 cursor-help">
+                    <Info className="h-4 w-4 inline tech-glow" />
                   </span>
                 </TooltipTrigger>
-                <TooltipContent className="max-w-[200px] text-xs">
+                <TooltipContent className="max-w-[200px] text-xs glass-panel tech-border">
                   Geralmente entre 21 e 35 dias, com média de 28 dias
                 </TooltipContent>
               </Tooltip>
@@ -355,15 +355,15 @@ const FertilityCalculator = () => {
               max={45}
               value={cycleLength}
               onChange={(e) => setCycleLength(parseInt(e.target.value) || 28)}
-              className="mt-1 w-24"
+              className="mt-1 w-24 bg-blue-900/20 border-blue-500/30 text-blue-100"
             />
-            <span className="ml-2 text-gray-600">dias</span>
+            <span className="ml-2 text-blue-300">dias</span>
           </div>
         </div>
         <div className="flex items-end">
           <Button 
             onClick={handleCalculate}
-            className="px-6 py-2 bg-[#ff4081] hover:bg-[#c60055] text-white rounded-md"
+            className="tech-button px-6 py-2 tech-glow"
           >
             Calcular
           </Button>
@@ -371,12 +371,12 @@ const FertilityCalculator = () => {
       </div>
 
       {cycleHistory.length > 0 && (
-        <div className="mb-6 p-4 border border-gray-200 rounded-lg">
-          <h3 className="text-lg font-medium mb-3 text-[#c60055]">Histórico de Ciclos</h3>
+        <div className="mb-6 p-4 glass-panel rounded-lg tech-border">
+          <h3 className="text-lg font-medium mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Histórico de Ciclos</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {cycleHistory.map((cycle, index) => (
-              <Card key={index} className="border border-pink-100">
-                <CardContent className="p-4">
+              <Card key={index} className="glass-card border-blue-400/20">
+                <CardContent className="p-4 text-blue-200">
                   <p>Início: {format(cycle.periodStart, "dd/MM/yyyy")}</p>
                   <p>Duração: {cycle.periodLength} dias</p>
                   <p>Ciclo: {cycle.cycleLength} dias</p>
@@ -389,11 +389,11 @@ const FertilityCalculator = () => {
 
       {results && (
         <div className="mt-8">
-          <Card className="border-2 border-[#ff4081] overflow-hidden">
-            <CardHeader className="bg-gradient-to-r from-pink-100 to-purple-100 pb-4">
-              <CardTitle className="text-xl font-bold text-[#c60055]">Seus Resultados</CardTitle>
-              <CardDescription>
-                Hoje você está na fase <span className="font-bold text-[#c60055]">{results.currentCyclePhase}</span> do seu ciclo
+          <Card className="glass-card border-blue-400/30 overflow-hidden">
+            <CardHeader className="glass-header pb-4">
+              <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-teal-200 tech-text-glow">Análise do Ciclo</CardTitle>
+              <CardDescription className="text-blue-200">
+                Hoje você está na fase <span className="font-bold text-blue-300 tech-text-glow">{results.currentCyclePhase}</span> do seu ciclo
                 {results.daysUntilNextPhase > 0 && 
                   <span> (faltam {results.daysUntilNextPhase} dia(s) para a fase {results.nextPhase})</span>
                 }
@@ -402,23 +402,23 @@ const FertilityCalculator = () => {
             
             <CardContent className="pt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <Card className="border border-pink-200 shadow-sm">
+                <Card className="glass-panel tech-border">
                   <CardContent className="p-4">
-                    <p className="text-sm text-gray-500 mb-1">Janela Fértil</p>
-                    <p className="text-xl font-medium text-[#ff4081]">
+                    <p className="text-sm text-blue-300 mb-1">Janela Fértil</p>
+                    <p className="text-xl font-medium text-blue-200 tech-text-glow">
                       {format(results.fertileStart, "dd/MM/yyyy", { locale: ptBR })} a {" "}
                       {format(results.fertileEnd, "dd/MM/yyyy", { locale: ptBR })}
                     </p>
-                    <p className="text-sm text-gray-600 mt-2">Durante estes dias, as chances de gravidez são maiores</p>
+                    <p className="text-sm text-blue-300/70 mt-2">Durante estes dias, a probabilidade de concepção é elevada</p>
                   </CardContent>
                 </Card>
-                <Card className="border border-pink-200 shadow-sm">
+                <Card className="glass-panel tech-border pulse-animation">
                   <CardContent className="p-4">
-                    <p className="text-sm text-gray-500 mb-1">Dia Provável da Ovulação</p>
-                    <p className="text-xl font-medium text-[#ff4081]">
+                    <p className="text-sm text-blue-300 mb-1">Dia Provável da Ovulação</p>
+                    <p className="text-xl font-medium text-blue-200 tech-text-glow">
                       {format(results.ovulationDay, "dd/MM/yyyy", { locale: ptBR })}
                     </p>
-                    <p className="text-sm text-gray-600 mt-2">O óvulo permanece viável por aproximadamente 24 horas após a ovulação</p>
+                    <p className="text-sm text-blue-300/70 mt-2">Período de 24 horas de viabilidade máxima do óvulo pós-ovulação</p>
                   </CardContent>
                 </Card>
               </div>
@@ -427,10 +427,13 @@ const FertilityCalculator = () => {
               <div className="mb-6">
                 <button 
                   onClick={() => toggleSection('bodyChanges')}
-                  className="w-full flex items-center justify-between p-3 bg-gradient-to-r from-pink-50 to-purple-50 rounded-lg border border-pink-100 mb-2"
+                  className="w-full flex items-center justify-between p-3 tech-gradient rounded-lg tech-border mb-2"
                 >
-                  <span className="font-semibold text-[#c60055]">Características Corporais na Fase {results.currentCyclePhase}</span>
-                  {expandedSection === 'bodyChanges' ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                  <span className="font-semibold text-blue-100">Biomarcadores na Fase {results.currentCyclePhase}</span>
+                  {expandedSection === 'bodyChanges' ? 
+                    <ChevronUp className="h-5 w-5 text-blue-200 tech-glow" /> : 
+                    <ChevronDown className="h-5 w-5 text-blue-200" />
+                  }
                 </button>
                 
                 {expandedSection === 'bodyChanges' && renderCyclePhaseInfo()}
@@ -440,23 +443,26 @@ const FertilityCalculator = () => {
               <div className="mb-6">
                 <button 
                   onClick={() => toggleSection('nextPeriod')}
-                  className="w-full flex items-center justify-between p-3 bg-gradient-to-r from-pink-50 to-purple-50 rounded-lg border border-pink-100 mb-2"
+                  className="w-full flex items-center justify-between p-3 tech-gradient rounded-lg tech-border mb-2"
                 >
-                  <span className="font-semibold text-[#c60055]">Próxima Menstruação Prevista</span>
-                  {expandedSection === 'nextPeriod' ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                  <span className="font-semibold text-blue-100">Próximo Ciclo Menstrual</span>
+                  {expandedSection === 'nextPeriod' ? 
+                    <ChevronUp className="h-5 w-5 text-blue-200 tech-glow" /> : 
+                    <ChevronDown className="h-5 w-5 text-blue-200" />
+                  }
                 </button>
                 
                 {expandedSection === 'nextPeriod' && (
-                  <div className="mt-3 p-4 bg-white rounded-lg border border-gray-200">
+                  <div className="mt-3 p-4 glass-panel rounded-lg tech-border">
                     <div className="flex flex-col md:flex-row items-center justify-center gap-3">
                       <div className="text-center">
-                        <p className="text-sm text-gray-500">Início</p>
-                        <p className="text-xl font-medium">{format(results.nextPeriodStart, "dd/MM/yyyy", { locale: ptBR })}</p>
+                        <p className="text-sm text-blue-300">Início</p>
+                        <p className="text-xl font-medium text-blue-200 tech-text-glow">{format(results.nextPeriodStart, "dd/MM/yyyy", { locale: ptBR })}</p>
                       </div>
-                      <ArrowRight className="h-5 w-5 text-gray-400" />
+                      <ArrowRight className="h-5 w-5 text-blue-400" />
                       <div className="text-center">
-                        <p className="text-sm text-gray-500">Fim</p>
-                        <p className="text-xl font-medium">{format(results.nextPeriodEnd, "dd/MM/yyyy", { locale: ptBR })}</p>
+                        <p className="text-sm text-blue-300">Fim</p>
+                        <p className="text-xl font-medium text-blue-200 tech-text-glow">{format(results.nextPeriodEnd, "dd/MM/yyyy", { locale: ptBR })}</p>
                       </div>
                     </div>
                   </div>
@@ -467,43 +473,46 @@ const FertilityCalculator = () => {
               <div>
                 <button 
                   onClick={() => toggleSection('calendar')}
-                  className="w-full flex items-center justify-between p-3 bg-gradient-to-r from-pink-50 to-purple-50 rounded-lg border border-pink-100 mb-2"
+                  className="w-full flex items-center justify-between p-3 tech-gradient rounded-lg tech-border mb-2"
                 >
                   <div className="flex items-center">
-                    <CalendarIcon className="h-5 w-5 mr-2 text-[#c60055]" />
-                    <span className="font-semibold text-[#c60055]">Calendário do Ciclo</span>
+                    <CalendarIcon className="h-5 w-5 mr-2 text-blue-200 tech-glow" />
+                    <span className="font-semibold text-blue-100">Calendário Analítico</span>
                   </div>
-                  {expandedSection === 'calendar' ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                  {expandedSection === 'calendar' ? 
+                    <ChevronUp className="h-5 w-5 text-blue-200 tech-glow" /> : 
+                    <ChevronDown className="h-5 w-5 text-blue-200" />
+                  }
                 </button>
                 
                 {expandedSection === 'calendar' && (
-                  <div className="mt-3 p-4 bg-white rounded-lg border border-gray-200">
+                  <div className="mt-3 p-4 glass-panel rounded-lg tech-border">
                     <div className="grid grid-cols-7 gap-1 text-center text-sm">
-                      <div className="p-1 font-medium text-gray-600">Dom</div>
-                      <div className="p-1 font-medium text-gray-600">Seg</div>
-                      <div className="p-1 font-medium text-gray-600">Ter</div>
-                      <div className="p-1 font-medium text-gray-600">Qua</div>
-                      <div className="p-1 font-medium text-gray-600">Qui</div>
-                      <div className="p-1 font-medium text-gray-600">Sex</div>
-                      <div className="p-1 font-medium text-gray-600">Sáb</div>
+                      <div className="p-1 font-medium text-blue-300">Dom</div>
+                      <div className="p-1 font-medium text-blue-300">Seg</div>
+                      <div className="p-1 font-medium text-blue-300">Ter</div>
+                      <div className="p-1 font-medium text-blue-300">Qua</div>
+                      <div className="p-1 font-medium text-blue-300">Qui</div>
+                      <div className="p-1 font-medium text-blue-300">Sex</div>
+                      <div className="p-1 font-medium text-blue-300">Sáb</div>
                       {renderCalendar()}
                     </div>
                     
-                    <div className="flex flex-wrap justify-center items-center mt-4 text-sm gap-3">
+                    <div className="flex flex-wrap justify-center items-center mt-4 text-sm gap-3 text-blue-200">
                       <div className="flex items-center">
-                        <div className="w-4 h-4 bg-red-100 rounded mr-1"></div>
+                        <div className="w-4 h-4 bg-red-300/50 rounded mr-1 tech-border"></div>
                         <span>Menstruação</span>
                       </div>
                       <div className="flex items-center">
-                        <div className="w-4 h-4 fertile-day rounded mr-1"></div>
+                        <div className="w-4 h-4 fertile-day rounded mr-1 tech-border"></div>
                         <span>Período Fértil</span>
                       </div>
                       <div className="flex items-center">
-                        <div className="w-4 h-4 ovulation-day rounded mr-1"></div>
+                        <div className="w-4 h-4 ovulation-day rounded mr-1 tech-border pulse-animation"></div>
                         <span>Ovulação</span>
                       </div>
                       <div className="flex items-center">
-                        <div className="w-4 h-4 border border-blue-500 rounded mr-1"></div>
+                        <div className="w-4 h-4 border border-blue-500 rounded mr-1 tech-highlight"></div>
                         <span>Hoje</span>
                       </div>
                     </div>

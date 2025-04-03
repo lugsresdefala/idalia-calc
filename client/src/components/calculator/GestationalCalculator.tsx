@@ -119,37 +119,37 @@ const GestationalCalculator = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-      <h2 className="text-2xl font-bold mb-4 text-[#c60055]">Idalia Calc - Idade Gestacional</h2>
+    <div className="glass-card rounded-lg shadow-md p-6 mb-6 text-blue-100">
+      <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 tech-text-glow">MedCalc Pro - Análise Gestacional</h2>
       
-      <div className="mb-6 bg-pink-50 p-4 rounded-lg border border-pink-200">
-        <p className="text-sm text-gray-600 italic">
-          Calcule a idade gestacional, data provável do parto e conheça detalhes do desenvolvimento fetal, exames e cuidados recomendados para cada fase da gestação.
+      <div className="mb-6 glass-panel p-4 rounded-lg tech-border">
+        <p className="text-sm text-blue-200 italic">
+          Sistema avançado de cálculo gestacional com análise de desenvolvimento embrionário, protocolos de pré-natal e recomendações médicas precisas para cada fase.
         </p>
       </div>
 
       <div className="mb-6">
-        <Label className="block text-sm font-medium text-gray-700 mb-2">Método de Cálculo</Label>
+        <Label className="block text-sm font-medium text-blue-200 mb-2">Método de Cálculo</Label>
         <RadioGroup 
           value={calculationType} 
           onValueChange={(value) => setCalculationType(value as CalculationType)}
           className="grid grid-cols-1 md:grid-cols-3 gap-3"
         >
-          <div className="relative flex items-center p-3 rounded border cursor-pointer hover:bg-pink-50 transition">
-            <RadioGroupItem value="lmp" id="lmp" className="h-4 w-4" />
-            <Label htmlFor="lmp" className="ml-3 font-medium text-sm cursor-pointer">
+          <div className="relative flex items-center p-3 rounded tech-border glass-panel cursor-pointer hover:bg-blue-900/30 transition">
+            <RadioGroupItem value="lmp" id="lmp" className="h-4 w-4 text-blue-400" />
+            <Label htmlFor="lmp" className="ml-3 font-medium text-sm cursor-pointer text-blue-200">
               Data da Última Menstruação
             </Label>
           </div>
-          <div className="relative flex items-center p-3 rounded border cursor-pointer hover:bg-pink-50 transition">
-            <RadioGroupItem value="ultrasound" id="ultrasound" className="h-4 w-4" />
-            <Label htmlFor="ultrasound" className="ml-3 font-medium text-sm cursor-pointer">
+          <div className="relative flex items-center p-3 rounded tech-border glass-panel cursor-pointer hover:bg-blue-900/30 transition">
+            <RadioGroupItem value="ultrasound" id="ultrasound" className="h-4 w-4 text-blue-400" />
+            <Label htmlFor="ultrasound" className="ml-3 font-medium text-sm cursor-pointer text-blue-200">
               Data do Ultrassom
             </Label>
           </div>
-          <div className="relative flex items-center p-3 rounded border cursor-pointer hover:bg-pink-50 transition">
-            <RadioGroupItem value="transfer" id="transfer" className="h-4 w-4" />
-            <Label htmlFor="transfer" className="ml-3 font-medium text-sm cursor-pointer">
+          <div className="relative flex items-center p-3 rounded tech-border glass-panel cursor-pointer hover:bg-blue-900/30 transition">
+            <RadioGroupItem value="transfer" id="transfer" className="h-4 w-4 text-blue-400" />
+            <Label htmlFor="transfer" className="ml-3 font-medium text-sm cursor-pointer text-blue-200">
               Transferência Embrionária
             </Label>
           </div>
@@ -161,17 +161,17 @@ const GestationalCalculator = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <div className="flex items-center">
-                <Label htmlFor="lmp-date" className="block text-sm font-medium text-gray-700 mb-2">
+                <Label htmlFor="lmp-date" className="block text-sm font-medium text-blue-200 mb-2">
                   Data da Última Menstruação
                 </Label>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <span className="ml-1 text-gray-400 cursor-help">
-                        <Info className="h-4 w-4 inline" />
+                      <span className="ml-1 text-blue-400 cursor-help">
+                        <Info className="h-4 w-4 inline tech-glow" />
                       </span>
                     </TooltipTrigger>
-                    <TooltipContent className="max-w-[200px] text-xs">
+                    <TooltipContent className="max-w-[200px] text-xs glass-panel tech-border">
                       Primeiro dia do último ciclo menstrual
                     </TooltipContent>
                   </Tooltip>
@@ -182,13 +182,13 @@ const GestationalCalculator = () => {
                 type="date" 
                 value={lmpDate}
                 onChange={(e) => setLmpDate(e.target.value)}
-                className="mt-1 w-full"
+                className="mt-1 w-full bg-blue-900/20 border-blue-500/30 text-blue-100"
               />
             </div>
             <div className="flex items-end">
               <Button 
                 onClick={handleCalculate}
-                className="px-6 py-2 bg-[#ff4081] hover:bg-[#c60055] text-white rounded-md"
+                className="tech-button px-6 py-2 tech-glow"
               >
                 Calcular
               </Button>
@@ -343,11 +343,11 @@ const GestationalCalculator = () => {
 
       {results && (
         <div className="mt-8">
-          <Card className="border-2 border-[#ff4081] overflow-hidden">
-            <CardHeader className="bg-gradient-to-r from-pink-100 to-purple-100 pb-4">
-              <CardTitle className="text-xl font-bold text-[#c60055]">Resultados</CardTitle>
-              <CardDescription>
-                <span className="font-semibold">{results.gestationalAge}</span> - {results.currentTrimester}º Trimestre
+          <Card className="glass-card border-blue-400/30 overflow-hidden">
+            <CardHeader className="glass-header pb-4">
+              <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-teal-200 tech-text-glow">Análise Gestacional</CardTitle>
+              <CardDescription className="text-blue-200">
+                <span className="font-semibold tech-text-glow">{results.gestationalAge}</span> - {results.currentTrimester}º Trimestre
               </CardDescription>
             </CardHeader>
             
