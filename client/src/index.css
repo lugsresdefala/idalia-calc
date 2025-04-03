@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+.fertile-day {
+  background-color: rgba(255, 64, 129, 0.1);
+}
+
+.ovulation-day {
+  background-color: rgba(255, 64, 129, 0.3);
+  font-weight: 500;
+}
+
 @layer base {
   * {
     @apply border-border;
