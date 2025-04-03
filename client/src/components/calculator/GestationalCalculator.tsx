@@ -120,7 +120,7 @@ const GestationalCalculator = () => {
 
   return (
     <div className="glass-card rounded-lg shadow-md p-6 mb-6 text-blue-100">
-      <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 tech-text-glow">Idalia Calc - Análise Gestacional</h2>
+      <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">Idalia Calc - Análise Gestacional</h2>
       
       <div className="mb-6 glass-panel p-4 rounded-lg tech-border">
         <p className="text-sm text-blue-200 italic">
@@ -345,7 +345,7 @@ const GestationalCalculator = () => {
         <div className="mt-8">
           <Card className="glass-card border-blue-400/30 overflow-hidden">
             <CardHeader className="glass-header pb-4">
-              <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-teal-200 tech-text-glow">Análise Gestacional</CardTitle>
+              <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-200 tech-text-glow">Análise Gestacional</CardTitle>
               <CardDescription className="text-blue-200">
                 <span className="font-semibold tech-text-glow">{results.gestationalAge}</span> - {results.currentTrimester}º Trimestre
               </CardDescription>
@@ -386,17 +386,17 @@ const GestationalCalculator = () => {
               <div className="mb-6">
                 <button 
                   onClick={() => toggleSection('development')}
-                  className="w-full flex items-center justify-between p-3 bg-gradient-to-r from-pink-50 to-purple-50 rounded-lg border border-pink-100 mb-2"
+                  className="w-full flex items-center justify-between p-3 tech-gradient rounded-lg tech-border mb-2"
                 >
                   <div className="flex items-center">
-                    <Baby className="h-5 w-5 mr-2 text-[#c60055]" />
-                    <span className="font-semibold text-[#c60055]">Desenvolvimento Fetal</span>
+                    <Baby className="h-5 w-5 mr-2 text-cyan-300 tech-glow" />
+                    <span className="font-semibold text-blue-100">Desenvolvimento Fetal</span>
                   </div>
-                  {expandedSection === 'development' ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                  {expandedSection === 'development' ? <ChevronUp className="h-5 w-5 text-blue-200 tech-glow" /> : <ChevronDown className="h-5 w-5 text-blue-200" />}
                 </button>
                 
                 {expandedSection === 'development' && (
-                  <div className="mt-3 p-4 bg-white rounded-lg border border-gray-200">
+                  <div className="mt-3 p-4 glass-panel rounded-lg tech-border">
                     <h4 className="text-lg font-semibold mb-3 text-[#c60055]">{results.developmentInfo.title}</h4>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -431,13 +431,13 @@ const GestationalCalculator = () => {
               <div className="mb-6">
                 <button 
                   onClick={() => toggleSection('prenatal')}
-                  className="w-full flex items-center justify-between p-3 bg-gradient-to-r from-pink-50 to-purple-50 rounded-lg border border-pink-100 mb-2"
+                  className="w-full flex items-center justify-between p-3 tech-gradient rounded-lg tech-border mb-2"
                 >
                   <div className="flex items-center">
-                    <Stethoscope className="h-5 w-5 mr-2 text-[#c60055]" />
-                    <span className="font-semibold text-[#c60055]">Cuidados Pré-Natais</span>
+                    <Stethoscope className="h-5 w-5 mr-2 text-teal-300 tech-glow" />
+                    <span className="font-semibold text-blue-100">Cuidados Pré-Natais</span>
                   </div>
-                  {expandedSection === 'prenatal' ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                  {expandedSection === 'prenatal' ? <ChevronUp className="h-5 w-5 text-blue-200 tech-glow" /> : <ChevronDown className="h-5 w-5 text-blue-200" />}
                 </button>
                 
                 {expandedSection === 'prenatal' && (

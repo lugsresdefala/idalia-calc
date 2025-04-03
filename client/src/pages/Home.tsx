@@ -9,7 +9,7 @@ const Home = () => {
     <div className="min-h-screen tech-bg">
       <div className="max-w-5xl mx-auto px-4 py-8">
         <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-teal-500 tech-text-glow">
+          <h1 className="text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-400 tech-text-glow">
             Idalia Calc
           </h1>
           <p className="text-blue-100 max-w-2xl mx-auto text-lg">
@@ -22,8 +22,8 @@ const Home = () => {
             onClick={() => setActiveTab("fertility")}
             className={`flex-1 py-4 px-6 text-center font-medium transition-all duration-300 ${
               activeTab === "fertility" 
-                ? "text-blue-300 border-b-2 border-blue-400 bg-gradient-to-r from-blue-900/50 to-transparent tech-text-glow" 
-                : "text-blue-200 hover:bg-blue-900/30"
+                ? "text-cyan-200 border-b-2 border-cyan-500 bg-gradient-to-r from-blue-900/50 to-teal-900/30 tech-text-glow" 
+                : "text-cyan-300 hover:bg-blue-900/30"
             }`}
           >
             Período Fértil
@@ -32,8 +32,8 @@ const Home = () => {
             onClick={() => setActiveTab("gestational")}
             className={`flex-1 py-4 px-6 text-center font-medium transition-all duration-300 ${
               activeTab === "gestational" 
-                ? "text-blue-300 border-b-2 border-blue-400 bg-gradient-to-r from-blue-900/50 to-transparent tech-text-glow" 
-                : "text-blue-200 hover:bg-blue-900/30"
+                ? "text-teal-200 border-b-2 border-teal-500 bg-gradient-to-r from-blue-900/50 to-teal-900/30 tech-text-glow" 
+                : "text-teal-300 hover:bg-blue-900/30"
             }`}
           >
             Idade Gestacional

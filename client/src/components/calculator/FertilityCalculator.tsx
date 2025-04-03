@@ -265,7 +265,7 @@ const FertilityCalculator = () => {
 
   return (
     <div className="glass-card rounded-lg shadow-md p-6 mb-6 text-blue-100">
-      <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 tech-text-glow">Idalia Calc - Análise de Fertilidade</h2>
+      <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">Idalia Calc - Análise de Fertilidade</h2>
       
       <div className="mb-6 glass-panel p-4 rounded-lg tech-border">
         <p className="text-sm text-blue-200 italic">
@@ -391,7 +391,7 @@ const FertilityCalculator = () => {
         <div className="mt-8">
           <Card className="glass-card border-blue-400/30 overflow-hidden">
             <CardHeader className="glass-header pb-4">
-              <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-teal-200 tech-text-glow">Análise do Ciclo</CardTitle>
+              <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-200 tech-text-glow">Análise do Ciclo</CardTitle>
               <CardDescription className="text-blue-200">
                 Hoje você está na fase <span className="font-bold text-blue-300 tech-text-glow">{results.currentCyclePhase}</span> do seu ciclo
                 {results.daysUntilNextPhase > 0 && 
