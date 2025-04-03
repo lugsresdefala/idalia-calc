@@ -265,7 +265,7 @@ const FertilityCalculator = () => {
 
   return (
     <div className="glass-card rounded-lg shadow-md p-6 mb-6 text-blue-100">
-      <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 tech-text-glow">MedCalc Pro - Análise de Fertilidade</h2>
+      <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 tech-text-glow">Idalia Calc - Análise de Fertilidade</h2>
       
       <div className="mb-6 glass-panel p-4 rounded-lg tech-border">
         <p className="text-sm text-blue-200 italic">

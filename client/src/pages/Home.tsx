@@ -10,7 +10,7 @@ const Home = () => {
       <div className="max-w-5xl mx-auto px-4 py-8">
         <header className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-teal-500 tech-text-glow">
-            MedCalc Pro
+            Idalia Calc
           </h1>
           <p className="text-blue-100 max-w-2xl mx-auto text-lg">
             Calculadora de precisão médica com análise avançada de ciclos e desenvolvimento gestacional
@@ -55,7 +55,7 @@ const Home = () => {
           </p>
           <div className="mt-4 text-xs text-blue-300/70 flex justify-center items-center gap-1">
             <span className="inline-block h-2 w-2 rounded-full bg-blue-400 pulse-animation"></span>
-            <span>MedCalc Pro v1.2.1</span>
+            <span>Idalia Calc v1.2.1</span>
           </div>
         </footer>
       </div>
