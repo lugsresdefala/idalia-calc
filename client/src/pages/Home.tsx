@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import GestationalCalculator from "@/components/calculator/GestationalCalculator";
 import FertilityCalculator from "@/components/calculator/FertilityCalculator";
 
@@ -50,10 +51,18 @@ const Home = () => {
           <p className="mb-2">
             Esta calculadora de precisão fornece análises baseadas em metodologias científicas e algoritmos avançados.
           </p>
-          <p>
+          <p className="mb-3">
             Consulte sempre um profissional de saúde para interpretação dos resultados e orientações específicas.
           </p>
-          <div className="mt-4 text-xs text-blue-300/70 flex justify-center items-center gap-1">
+          <div className="mb-4">
+            <Link href="/aloritmos" className="inline-flex items-center text-cyan-300 hover:text-cyan-200 transition-colors tech-text-glow px-3 py-1 rounded-md glass-panel tech-border-faint">
+              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              Saiba mais sobre nossos algoritmos
+            </Link>
+          </div>
+          <div className="text-xs text-blue-300/70 flex justify-center items-center gap-1">
             <span className="inline-block h-2 w-2 rounded-full bg-blue-400 pulse-animation"></span>
             <span>Idalia Calc v1.2.1</span>
           </div>
