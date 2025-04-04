@@ -1,0 +1,81 @@
+IDALIA-CALC: Funcionalidades, Tecnologias e Recursos
+A IDALIA-CALC é uma aplicação web sofisticada dedicada a cálculos de fertilidade e gravidez, oferecendo duas calculadoras especializadas com base em padrões médicos científicos.
+
+Linguagem e Tecnologias Utilizadas
+Linguagem Principal: TypeScript (superset tipado de JavaScript)
+Framework: React 18
+Estilização: TailwindCSS com classes personalizadas
+Componentes UI: Baseados em Radix UI (biblioteca de componentes acessíveis)
+Gerenciamento de Datas: date-fns com suporte para localização em português brasileiro
+Visualização de Dados: Recharts para gráficos interativos
+Animações: Framer Motion para transições suaves
+Build Tool: Vite (ferramenta de desenvolvimento rápida)
+Calculadoras Principais
+1. Calculadora de Período Fértil
+Esta calculadora oferece funcionalidades avançadas para rastreamento do ciclo menstrual:
+
+Entradas de Dados:
+
+Data de início e fim da última menstruação
+Duração personalizada do ciclo
+Registro de ciclos anteriores para análise histórica
+Cálculos e Previsões:
+
+Janela fértil (período de maior probabilidade de concepção)
+Dia estimado da ovulação
+Data prevista da próxima menstruação
+Fase atual do ciclo com detalhes fisiológicos
+Cálculo da duração média do ciclo baseado no histórico registrado
+Informações Fisiológicas:
+
+Características do muco cervical em cada fase
+Padrões de temperatura basal corporal
+Níveis hormonais estimados (estrogênio, progesterona, LH, FSH)
+2. Calculadora de Idade Gestacional
+Oferece três métodos diferentes para cálculo gestacional:
+
+Métodos de Cálculo:
+
+Data da Última Menstruação (DUM)
+Medidas de Ultrassom
+Transferência Embrionária (para FIV)
+Resultados e Marcos:
+
+Idade gestacional precisa em semanas e dias
+Data provável do parto (DPP)
+Trimestre atual e progresso percentual da gestação
+Marcos de desenvolvimento fetal por semana
+Medidas fetais estimadas (perímetro cefálico, comprimento, peso)
+Informações Médicas:
+
+Características de cada fase do desenvolvimento embrionário e fetal
+Alterações fisiológicas maternas esperadas
+Recomendações clínicas baseadas na idade gestacional
+Fatores de risco que devem ser monitorados
+Elementos de Interface
+Design Visual:
+
+Interface com efeito "glassmorphism" (vidro fosco)
+Paleta de cores em tons de azul, turquesa e branco
+Animações suaves entre transições de componentes
+Efeitos parallax para sensação de profundidade
+Elementos responsivos adaptados para diferentes dispositivos
+Componentes Interativos:
+
+Calendários personalizados para seleção de datas
+Seletores de valores numéricos
+Botões com efeitos de hover e feedback visual
+Gráficos interativos para visualização de dados
+Tabelas para histórico de ciclos
+Feedback Visual:
+
+Indicadores de fase atual do ciclo/gestação
+Efeitos de brilho em informações importantes
+Animações sutis que orientam a atenção do usuário
+Recursos Adicionais
+Armazenamento Local: Salvamento automático do histórico de cálculos
+Localização: Interface totalmente em português brasileiro
+Responsividade: Design adaptativo para dispositivos móveis e desktop
+Informações Educativas: Explicações detalhadas sobre os resultados e processos fisiológicos
+Processamento Eficiente: Cálculos realizados localmente sem necessidade de servidores externos
+A aplicação combina ciência médica precisa com design moderno para oferecer uma experiência completa para mulheres que desejam monitorar seu ciclo menstrual ou acompanhar uma gestação, tudo isso com uma interface intuitiva e visualmente agradável.
