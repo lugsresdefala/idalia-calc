@@ -59,7 +59,7 @@ const QuickActions = ({ userId = 1 }: QuickActionsProps) => {
   return (
     <div className="space-y-4">
       {/* Ações Rápidas */}
-      <Card className="glass-card border-yellow-500/20">
+      <Card className="glass-card border-yellow-500/20 golden-glow">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-yellow-300">
             <Clock className="h-5 w-5" />
