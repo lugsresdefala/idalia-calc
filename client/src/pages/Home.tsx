@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
+import Header from "@/components/ui/Header";
 import GestationalCalculator from "@/components/calculator/GestationalCalculator";
 import FertilityCalculator from "@/components/calculator/FertilityCalculator";
 
@@ -9,14 +10,7 @@ const Home = () => {
   return (
     <div className="min-h-screen tech-bg">
       <div className="max-w-5xl mx-auto px-4 py-8">
-        <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-400 tech-text-glow">
-            Idalia Calc
-          </h1>
-          <p className="text-blue-100 max-w-2xl mx-auto text-lg">
-            Calculadora de precisão médica com análise avançada de ciclos e desenvolvimento gestacional
-          </p>
-        </header>
+        <Header />
 
         <div className="glass-card rounded-t-lg shadow-md flex border-b border-blue-400/20">
           <button

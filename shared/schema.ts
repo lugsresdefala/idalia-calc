@@ -149,3 +149,7 @@ export type CervicalMucus = typeof cervicalMucus.$inferSelect;
 export type InsertCervicalMucus = z.infer<typeof insertCervicalMucusSchema>;
 export type FetalDevelopment = typeof fetalDevelopment.$inferSelect;
 export type InsertFetalDevelopment = z.infer<typeof insertFetalDevelopmentSchema>;
+export type CervicalMucus = typeof cervicalMucus.$inferSelect;
+export type InsertCervicalMucus = z.infer<typeof insertCervicalMucusSchema>;
+export type FetalDevelopment = typeof fetalDevelopment.$inferSelect;
+export type InsertFetalDevelopment = z.infer<typeof insertFetalDevelopmentSchema>;

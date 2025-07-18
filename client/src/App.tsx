@@ -5,6 +5,8 @@ import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import Algorithms from "@/pages/Algorithms";
+import Dashboard from "@/pages/Dashboard";
+import Notifications from "@/pages/Notifications";
 import "./styles/global.css"; // Added import for global styles
 
 // Função para encaminhar URLs personalizados para as rotas corretas
@@ -13,6 +15,8 @@ function Router() {
     <>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/notifications" component={Notifications} />
         <Route path="/algorithms" component={Algorithms} />
         {/* Rota personalizada em português */}
         <Route path="/aloritmos" component={Algorithms} />
