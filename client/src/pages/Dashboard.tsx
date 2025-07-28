@@ -1,20 +1,45 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/ui/Header";
 import Dashboard from "@/components/ui/Dashboard";
+import MobileDashboard from "@/components/ui/MobileDashboard";
 import DataEntry from "@/components/ui/DataEntry";
 import QuickActions from "@/components/ui/QuickActions";
+
+// Hook para detectar dispositivos móveis
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768 || 
+                   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setIsMobile(mobile);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return isMobile;
+}
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, TrendingUp, Thermometer, Droplets, Activity, FileText } from "lucide-react";
 
 const DashboardPage = () => {
   const [userId] = useState(1); // Mock user ID
+  const isMobile = useIsMobile();
 
+  // Versão mobile otimizada
+  if (isMobile) {
+    return <MobileDashboard userId={userId} />;
+  }
+
+  // Versão desktop
   return (
     <div className="min-h-screen tech-bg">
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <Header />
-        
+      <div className="max-w-6xl mx-auto px-4 py-8">        
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
             <Dashboard userId={userId} />

@@ -80,4 +80,95 @@
   .tech-border-faint {
     border: 1px solid rgba(14, 165, 233, 0.2);
   }
+
+  /* Mobile Optimizations */
+  .mobile-safe-area {
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .mobile-glass {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20 
+           shadow-lg transition-all duration-300;
+  }
+
+  .mobile-card {
+    @apply mobile-glass rounded-2xl p-4 mb-4
+           active:scale-[0.98] active:bg-white/15
+           transition-transform duration-150;
+  }
+
+  .mobile-nav-item {
+    @apply touch-target flex-1 flex flex-col items-center justify-center
+           rounded-xl active:bg-white/10 transition-all duration-150
+           text-xs font-medium;
+  }
+
+  .mobile-button {
+    @apply touch-target rounded-xl font-medium
+           active:scale-95 transition-all duration-150
+           shadow-lg;
+  }
+
+  .mobile-input {
+    @apply touch-target rounded-xl border border-white/20
+           bg-white/10 backdrop-blur-sm px-4 py-3
+           text-white placeholder-white/60
+           focus:border-cyan-400/50 focus:bg-white/15
+           transition-all duration-200;
+  }
+
+  /* Mobile Typography */
+  .mobile-title {
+    @apply text-2xl font-bold mb-2;
+  }
+
+  .mobile-subtitle {
+    @apply text-lg font-semibold mb-3;
+  }
+
+  .mobile-body {
+    @apply text-base leading-relaxed;
+  }
+
+  .mobile-caption {
+    @apply text-sm text-white/70;
+  }
+
+  /* Mobile Layout Helpers */
+  .mobile-container {
+    @apply px-4 py-2 max-w-sm mx-auto;
+  }
+
+  .mobile-section {
+    @apply mb-6;
+  }
+
+  .mobile-grid-2 {
+    @apply grid grid-cols-2 gap-3;
+  }
+
+  /* Gesture Feedback */
+  @media (hover: none) and (pointer: coarse) {
+    .hover\\:scale-105:hover {
+      transform: none;
+    }
+    
+    .active\\:scale-95:active {
+      transform: scale(0.95);
+    }
+  }
+
+  /* Safe Areas for iOS */
+  @supports (padding: max(0px)) {
+    .mobile-safe-area {
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+    }
+  }
 }

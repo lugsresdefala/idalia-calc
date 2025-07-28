@@ -1,12 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import Header from "@/components/ui/Header";
+import MobileHome from "@/components/ui/MobileHome";
 import GestationalCalculator from "@/components/calculator/GestationalCalculator";
 import FertilityCalculator from "@/components/calculator/FertilityCalculator";
 
+// Hook para detectar dispositivos móveis
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768 || 
+                   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setIsMobile(mobile);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return isMobile;
+}
+
 const Home = () => {
   const [activeTab, setActiveTab] = useState<"gestational" | "fertility">("fertility");
+  const isMobile = useIsMobile();
 
+  // Versão mobile otimizada
+  if (isMobile) {
+    return <MobileHome />;
+  }
+
+  // Versão desktop
   return (
     <div className="min-h-screen tech-bg">
       <div className="max-w-5xl mx-auto px-4 py-8">
