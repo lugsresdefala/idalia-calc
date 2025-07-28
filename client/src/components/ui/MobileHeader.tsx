@@ -4,7 +4,7 @@ import {
   Calculator, 
   BarChart3, 
   Bell, 
-  Heart, 
+  Activity, 
   Menu, 
   X,
   Home
@@ -18,7 +18,7 @@ const MobileHeader = () => {
     { path: "/", icon: Home, label: "Início", active: location === "/" },
     { path: "/dashboard", icon: BarChart3, label: "Dashboard", active: location === "/dashboard" },
     { path: "/notifications", icon: Bell, label: "Notificações", active: location === "/notifications" },
-    { path: "/algoritmos", icon: Heart, label: "Algoritmos", active: location === "/algoritmos" }
+    { path: "/algoritmos", icon: Activity, label: "Algoritmos", active: location === "/algoritmos" }
   ];
 
   return (

@@ -43,18 +43,11 @@ export default function Landing() {
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/80 border-b">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <svg className="h-10 w-10" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 5C25 5 28 8 28 12C28 16 25 18 22 20C20 22 18 24 18 27V35" stroke="url(#gradient)" strokeWidth="2" strokeLinecap="round"/>
-              <circle cx="20" cy="20" r="15" stroke="url(#gradient)" strokeWidth="1.5" opacity="0.3"/>
-              <path d="M12 18C12 18 14 16 16 16C18 16 20 17 22 15C24 13 26 12 28 14" stroke="url(#gradient)" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
-              <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#FFD700"/>
-                  <stop offset="50%" stopColor="#FFA500"/>
-                  <stop offset="100%" stopColor="#FF8C00"/>
-                </linearGradient>
-              </defs>
-            </svg>
+            <img 
+              src="/idalia-logo.png" 
+              alt="Idalia" 
+              className="h-10 w-10 drop-shadow-lg"
+            />
             <span className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
               Idalia Calc
             </span>

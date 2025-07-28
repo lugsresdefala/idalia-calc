@@ -65,6 +65,7 @@ IdaliaCalc é uma plataforma médica especializada em saúde reprodutiva, oferec
 - **Janeiro 2025**: Interface de entrada de dados para temperatura basal e muco cervical
 - **Janeiro 2025**: Ações rápidas e insights personalizados
 - **Janeiro 2025**: Header redesenhado com logo SVG do beija-flor
+- **Janeiro 2025**: Logo atualizado com imagem profissional do beija-flor azul e dourado
 
 ## Funcionalidades Implementadas
 ### Dashboard Principal
