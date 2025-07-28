@@ -10,6 +10,7 @@ import Home from "@/pages/Home";
 import Algorithms from "@/pages/Algorithms";
 import Dashboard from "@/pages/Dashboard";
 import Notifications from "@/pages/Notifications";
+import History from "@/pages/History";
 import Header from "./components/ui/Header";
 import MobileHeader from "./components/ui/MobileHeader";
 import "./styles/global.css";
@@ -47,6 +48,7 @@ function Router() {
           <Route path="/" component={Home} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/notifications" component={Notifications} />
+          <Route path="/history" component={History} />
           <Route path="/algorithms" component={Algorithms} />
           {/* Rota personalizada em português */}
           <Route path="/algoritmos" component={Algorithms} />

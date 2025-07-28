@@ -25,7 +25,7 @@ import {
   type InsertSubscriptionHistory
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, sql } from "drizzle-orm";
 
 // Interface de armazenamento expandida com as novas funcionalidades
 export interface IStorage {
@@ -259,22 +259,7 @@ export class DatabaseStorage implements IStorage {
     return updatedDevelopment;
   }
   
-  // Histórico de cálculos
-  async getCalculatorHistory(userId: string): Promise<CalculatorHistory[]> {
-    return await db
-      .select()
-      .from(calculatorHistory)
-      .where(eq(calculatorHistory.userId, userId))
-      .orderBy(desc(calculatorHistory.createdAt));
-  }
-  
-  async saveCalculatorHistory(history: InsertCalculatorHistory): Promise<CalculatorHistory> {
-    const [newHistory] = await db
-      .insert(calculatorHistory)
-      .values(history)
-      .returning();
-    return newHistory;
-  }
+  // Histórico de cálculos já implementado abaixo
 
   // Tokens de pagamento
   async getUserTokens(userId: string): Promise<number> {
@@ -287,7 +272,7 @@ export class DatabaseStorage implements IStorage {
     await db
       .update(users)
       .set({ 
-        tokens: db.sql`${users.tokens} + ${amount}`,
+        tokens: sql`${users.tokens} + ${amount}`,
         updatedAt: new Date()
       })
       .where(eq(users.id, userId));
@@ -318,7 +303,7 @@ export class DatabaseStorage implements IStorage {
     await db
       .update(users)
       .set({ 
-        tokens: db.sql`${users.tokens} - ${amount}`,
+        tokens: sql`${users.tokens} - ${amount}`,
         updatedAt: new Date()
       })
       .where(eq(users.id, userId));
@@ -373,6 +358,24 @@ export class DatabaseStorage implements IStorage {
       .returning();
     
     return history;
+  }
+  
+  // Histórico de cálculos - implementação movida para cá
+  async saveCalculatorHistory(data: InsertCalculatorHistory): Promise<CalculatorHistory> {
+    const [history] = await db
+      .insert(calculatorHistory)
+      .values(data)
+      .returning();
+    return history;
+  }
+  
+  // Buscar histórico de cálculos
+  async getCalculatorHistory(userId: string): Promise<CalculatorHistory[]> {
+    return await db
+      .select()
+      .from(calculatorHistory)
+      .where(eq(calculatorHistory.userId, userId))
+      .orderBy(desc(calculatorHistory.createdAt));
   }
 }
 

@@ -37,6 +37,7 @@ import {
 } from "@/lib/calculators";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { apiRequest } from "@/lib/queryClient";
 import GestationalVisualization from "@/components/ui/GestationalVisualization";
 
 type CalculationType = "lmp" | "ultrasound" | "transfer";
@@ -74,7 +75,7 @@ const GestationalCalculator = () => {
     };
   } | null>(null);
 
-  const handleCalculate = () => {
+  const handleCalculate = async () => {
     try {
       let result;
 
@@ -108,6 +109,35 @@ const GestationalCalculator = () => {
           developmentInfo: result.developmentInfo,
           prenatalCare: result.prenatalCare
         });
+        
+        // Salvar no histórico
+        try {
+          await apiRequest('POST', '/api/calculator-history', {
+            calculatorType: 'gestational',
+            inputData: JSON.stringify({ 
+              calculationType,
+              lmpDate,
+              ultrasoundDate,
+              ultrasoundWeeks,
+              ultrasoundDays,
+              transferDate,
+              embryoDays 
+            }),
+            resultData: JSON.stringify({
+              gestationalAge: `${result.weeks} semanas e ${result.days} dias`,
+              weeks: result.weeks,
+              days: result.days,
+              dueDate: format(result.dueDate, "dd/MM/yyyy", { locale: ptBR }),
+              firstTrimester: format(result.firstTrimesterEnd, "dd/MM/yyyy", { locale: ptBR }),
+              secondTrimester: format(result.secondTrimesterEnd, "dd/MM/yyyy", { locale: ptBR }),
+              currentTrimester: result.currentTrimester,
+              developmentInfo: result.developmentInfo,
+              prenatalCare: result.prenatalCare
+            })
+          });
+        } catch (error) {
+          console.error('Erro ao salvar histórico:', error);
+        }
       }
     } catch (error) {
       console.error("Calculation error:", error);
