@@ -37,6 +37,7 @@ import {
 } from "@/lib/calculators";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import GestationalVisualization from "@/components/ui/GestationalVisualization";
 
 type CalculationType = "lmp" | "ultrasound" | "transfer";
 
@@ -488,6 +489,14 @@ const GestationalCalculator = () => {
                     </div>
                   </div>
                 )}
+              </div>
+              
+              {/* Visualização Gráfica do Desenvolvimento */}
+              <div className="mb-6">
+                <GestationalVisualization 
+                  currentWeek={results.weeks}
+                  dueDate={new Date(results.dueDate)}
+                />
               </div>
               
               {/* Observações */}

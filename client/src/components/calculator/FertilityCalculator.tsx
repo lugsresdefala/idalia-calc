@@ -31,6 +31,8 @@ import {
   differenceInDays
 } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import CycleVisualization from "@/components/ui/CycleVisualization";
+import TemperatureChart from "@/components/ui/TemperatureChart";
 
 const FertilityCalculator = () => {
   const [lastPeriodStart, setLastPeriodStart] = useState<string>("");
@@ -467,6 +469,20 @@ const FertilityCalculator = () => {
                     </div>
                   </div>
                 )}
+              </div>
+              
+              {/* Visualizações Gráficas */}
+              <div className="mb-6 space-y-6">
+                <CycleVisualization 
+                  cycleLength={cycleLength}
+                  currentDay={Math.abs(differenceInDays(new Date(), new Date(lastPeriodStart))) % cycleLength + 1}
+                  periodLength={5}
+                  ovulationDay={Math.round(cycleLength - 14)}
+                />
+                
+                <TemperatureChart 
+                  ovulationDay={Math.round(cycleLength - 14)}
+                />
               </div>
               
               {/* Calendário */}
