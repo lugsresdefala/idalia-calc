@@ -46,7 +46,7 @@ function Router() {
           <Route path="/notifications" component={Notifications} />
           <Route path="/algorithms" component={Algorithms} />
           {/* Rota personalizada em português */}
-          <Route path="/aloritmos" component={Algorithms} />
+          <Route path="/algoritmos" component={Algorithms} />
           {/* Fallback para 404 */}
           <Route component={NotFound} />
         </Switch>

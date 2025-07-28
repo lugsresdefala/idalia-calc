@@ -39,7 +39,7 @@ const Header = () => {
             <Bell className="h-4 w-4" />
             Notificações
           </Link>
-          <Link href="/aloritmos" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass-panel text-teal-300 hover:text-teal-200 transition-all duration-300 tech-border-faint">
+          <Link href="/algoritmos" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass-panel text-teal-300 hover:text-teal-200 transition-all duration-300 tech-border-faint">
             <Heart className="h-4 w-4" />
             Algoritmos
           </Link>

@@ -36,7 +36,7 @@ const MobileHeader = () => {
               />
               <div>
                 <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-yellow-400">
-                  Idalia
+                  Idalia Calc
                 </h1>
                 <p className="text-xs text-white/70">Saúde Reprodutiva</p>
               </div>
