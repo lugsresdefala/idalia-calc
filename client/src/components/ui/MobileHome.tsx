@@ -90,7 +90,7 @@ const MobileHome = () => {
               Boas-vindas à Idalia Calc
             </h1>
             <p className="mobile-caption mt-2">
-              Sua plataforma de saúde reprodutiva
+              Calculadoras médicas especializadas
             </p>
           </div>
         </div>

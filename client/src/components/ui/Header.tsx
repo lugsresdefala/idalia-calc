@@ -22,7 +22,7 @@ const Header = () => {
           Idalia Calc
         </h1>
         <p className="text-blue-100 max-w-2xl mx-auto text-lg mb-4">
-          Plataforma médica especializada em saúde reprodutiva e análise de fertilidade
+          Calculadoras médicas especializadas
         </p>
         
         {/* Navegação */}
