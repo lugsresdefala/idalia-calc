@@ -99,5 +99,9 @@ IdaliaCalc é uma plataforma médica especializada em saúde reprodutiva, oferec
 5. Compartilhamento com profissionais de saúde
 
 ## Notas Importantes
-- **Autenticação**: Usuário preferiu manter a plataforma sem login/autenticação por enquanto
-- **Acesso**: Plataforma deve permanecer acessível publicamente sem necessidade de cadastro
+- **Design**: NÃO MUDAR O DESIGN ORIGINAL DA PLATAFORMA
+- **Autenticação**: Implementar sistema de login/cadastro mantendo o design original
+- **Funcionalidades pedidas**: 
+  1. Sistema de login/cadastro (backend pronto)
+  2. Histórico de utilização (salvar cálculos no banco)
+  3. Sistema de pagamento (assinatura + tokens)

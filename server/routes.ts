@@ -635,6 +635,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // =================== ROTAS PARA HISTÓRICO DE CÁLCULOS ===================
+  
+  // Salvar histórico de cálculo
+  app.post('/api/calculator-history', async (req, res) => {
+    try {
+      const { calculatorType, inputData, resultData, userId } = req.body;
+      
+      const history = await storage.saveCalculatorHistory({
+        userId: userId || 'anonymous',
+        calculatorType,
+        inputData,
+        resultData
+      });
+      
+      return res.status(201).json(history);
+    } catch (error) {
+      console.error('Erro ao salvar histórico:', error);
+      return res.status(500).json({ message: 'Erro ao salvar histórico' });
+    }
+  });
+  
+  // Buscar histórico de cálculos
+  app.get('/api/calculator-history/:userId', async (req, res) => {
+    try {
+      const history = await storage.getCalculatorHistory(req.params.userId);
+      return res.status(200).json(history);
+    } catch (error) {
+      console.error('Erro ao buscar histórico:', error);
+      return res.status(500).json({ message: 'Erro ao buscar histórico' });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;

@@ -40,22 +40,16 @@ function Router() {
 
   return (
     <div className={`min-h-screen ${isMobile ? 'bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800' : ''}`}>
-      {isAuthenticated && (isMobile ? <MobileHeader /> : <Header />)}
+      {isMobile ? <MobileHeader /> : <Header />}
       
-      <main className={isMobile ? '' : (isAuthenticated ? 'container mx-auto px-4' : '')}>
+      <main className={isMobile ? '' : 'container mx-auto px-4'}>
         <Switch>
-          {isLoading || !isAuthenticated ? (
-            <Route path="/" component={Landing} />
-          ) : (
-            <>
-              <Route path="/" component={Home} />
-              <Route path="/dashboard" component={Dashboard} />
-              <Route path="/notifications" component={Notifications} />
-              <Route path="/algorithms" component={Algorithms} />
-              {/* Rota personalizada em português */}
-              <Route path="/algoritmos" component={Algorithms} />
-            </>
-          )}
+          <Route path="/" component={Home} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/notifications" component={Notifications} />
+          <Route path="/algorithms" component={Algorithms} />
+          {/* Rota personalizada em português */}
+          <Route path="/algoritmos" component={Algorithms} />
           {/* Fallback para 404 */}
           <Route component={NotFound} />
         </Switch>

@@ -33,6 +33,7 @@ import {
 import { ptBR } from "date-fns/locale";
 import CycleVisualization from "@/components/ui/CycleVisualization";
 import TemperatureChart from "@/components/ui/TemperatureChart";
+import { apiRequest } from "@/lib/queryClient";
 
 const FertilityCalculator = () => {
   const [lastPeriodStart, setLastPeriodStart] = useState<string>("");
@@ -68,7 +69,7 @@ const FertilityCalculator = () => {
     }
   };
 
-  const handleCalculate = () => {
+  const handleCalculate = async () => {
     if (!lastPeriodStart || !lastPeriodEnd) return;
 
     try {
