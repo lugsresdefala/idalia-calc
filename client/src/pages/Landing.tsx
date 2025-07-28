@@ -38,9 +38,9 @@ export default function Landing() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/10">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900/95 to-cyan-900/90 tech-bg-pattern overflow-hidden">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/80 border-b">
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-slate-900/80 border-b border-cyan-500/20">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img 
@@ -73,7 +73,7 @@ export default function Landing() {
             <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
               Idalia Calc
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-cyan-100/80 mb-8 max-w-3xl mx-auto">
               Plataforma médica especializada em saúde reprodutiva com calculadoras avançadas e análise de dados baseada em evidências científicas
             </p>
             <div className="flex gap-4 justify-center">
@@ -98,7 +98,7 @@ export default function Landing() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-4 bg-secondary/5">
+      <section id="features" className="py-20 px-4 bg-slate-800/50">
         <div className="container mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -107,10 +107,10 @@ export default function Landing() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
               Recursos Completos para Saúde Reprodutiva
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-cyan-100/70 max-w-2xl mx-auto">
               Ferramentas profissionais baseadas nas recomendações da Febrasgo e ACOG
             </p>
           </motion.div>
@@ -124,10 +124,10 @@ export default function Landing() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="p-6 h-full hover:shadow-lg transition-shadow">
-                  <feature.icon className="h-12 w-12 text-teal-600 mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.description}</p>
+                <Card className="p-6 h-full glass-card tech-border bg-slate-800/60 border-cyan-500/20 hover:border-cyan-400/40 transition-all">
+                  <feature.icon className="h-12 w-12 text-cyan-400 mb-4" />
+                  <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
+                  <p className="text-blue-100/70">{feature.description}</p>
                 </Card>
               </motion.div>
             ))}
@@ -165,8 +165,8 @@ export default function Landing() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 border-t">
-        <div className="container mx-auto max-w-6xl text-center text-muted-foreground">
+      <footer className="py-8 px-4 border-t border-cyan-500/20 bg-slate-900/80">
+        <div className="container mx-auto max-w-6xl text-center text-cyan-100/60">
           <p className="mb-2">© 2025 Idalia Calc. Todos os direitos reservados.</p>
           <p className="text-sm">
             Dra. Idalia Aline de Souza • CRM: 220558
