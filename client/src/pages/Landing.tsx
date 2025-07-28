@@ -22,7 +22,7 @@ export default function Landing() {
               <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-blue-300 to-yellow-300">
                 Idalia Calc
               </h1>
-              <p className="text-xs text-blue-200/80">Medicina Reprodutiva Avançada</p>
+              <p className="text-xs text-blue-200/80">Saúde Reprodutiva</p>
             </div>
           </div>
           <Button
@@ -50,7 +50,7 @@ export default function Landing() {
               </span>
               <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300">
-                de Excelência
+                Especializada
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-blue-100/90 mb-8 max-w-4xl mx-auto leading-relaxed">
@@ -218,7 +218,7 @@ export default function Landing() {
               <img src="/idalia-logo.png" alt="Idalia Calc" className="h-10 w-10" />
               <div>
                 <h3 className="text-xl font-bold text-blue-100">Idalia Calc</h3>
-                <p className="text-blue-300/80 text-sm">Medicina Reprodutiva de Excelência</p>
+                <p className="text-blue-300/80 text-sm">Plataforma Médica Reprodutiva</p>
               </div>
             </div>
             <div className="text-center md:text-right">
