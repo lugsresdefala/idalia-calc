@@ -155,7 +155,7 @@ const Dashboard = ({ userId = 1 }: DashboardProps) => {
                   {hasMucusData ? cervicalMucus.length : 0}
                 </div>
                 <p className="text-sm text-gray-400">
-                  {hasMucusData ? "Observações registradas" : "Nenhuma observação ainda"}
+                  {hasMucusData ? "Observações no sistema" : "Nenhuma observação ainda"}
                 </p>
                 {!hasMucusData && (
                   <div className="mt-3 p-2 bg-teal-500/10 rounded-lg border border-teal-500/20">
