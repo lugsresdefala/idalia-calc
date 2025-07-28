@@ -41,18 +41,11 @@ export default function Landing() {
       <header className="fixed top-0 left-0 right-0 z-50 glass-panel backdrop-blur-lg border-b border-cyan-500/20">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <svg className="h-10 w-10" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 5C25 5 28 8 28 12C28 16 25 18 22 20C20 22 18 24 18 27V35" stroke="url(#gradient)" strokeWidth="2" strokeLinecap="round"/>
-              <circle cx="20" cy="20" r="15" stroke="url(#gradient)" strokeWidth="1.5" opacity="0.3"/>
-              <path d="M12 18C12 18 14 16 16 16C18 16 20 17 22 15C24 13 26 12 28 14" stroke="url(#gradient)" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
-              <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#FFD700"/>
-                  <stop offset="50%" stopColor="#FFA500"/>
-                  <stop offset="100%" stopColor="#FF8C00"/>
-                </linearGradient>
-              </defs>
-            </svg>
+            <img 
+              src="/idalia-logo.png" 
+              alt="Idalia Calc Logo" 
+              className="h-12 w-12 object-contain"
+            />
             <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-yellow-400 bg-clip-text text-transparent tech-text-glow">
               Idalia Calc
             </span>
@@ -72,19 +65,12 @@ export default function Landing() {
           {/* Logo Grande Central */}
           <div className="mb-8 flex justify-center">
             <div className="relative">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400/20 via-blue-400/20 to-yellow-400/20 blur-3xl"></div>
-              <svg className="h-32 w-32 relative z-10" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 5C25 5 28 8 28 12C28 16 25 18 22 20C20 22 18 24 18 27V35" stroke="url(#hero-gradient)" strokeWidth="2" strokeLinecap="round"/>
-                <circle cx="20" cy="20" r="15" stroke="url(#hero-gradient)" strokeWidth="1.5" opacity="0.3"/>
-                <path d="M12 18C12 18 14 16 16 16C18 16 20 17 22 15C24 13 26 12 28 14" stroke="url(#hero-gradient)" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
-                <defs>
-                  <linearGradient id="hero-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#FFD700"/>
-                    <stop offset="50%" stopColor="#FFA500"/>
-                    <stop offset="100%" stopColor="#FF8C00"/>
-                  </linearGradient>
-                </defs>
-              </svg>
+              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-yellow-400/20 via-orange-400/20 to-amber-400/20 blur-3xl"></div>
+              <img 
+                src="/idalia-logo.png" 
+                alt="Idalia Calc" 
+                className="h-32 w-32 relative z-10 drop-shadow-2xl hover:scale-105 transition-transform duration-300"
+              />
             </div>
           </div>
           
@@ -93,11 +79,14 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-yellow-400 bg-clip-text text-transparent tech-text-glow">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-yellow-400 bg-clip-text text-transparent tech-text-glow">
               Idalia Calc
             </h1>
             <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
-              Calculadoras médicas especializadas com base em evidências científicas
+              Calculadora de Fertilidade e Calculadora Gestacional
+            </p>
+            <p className="text-lg text-blue-100/80 mb-8">
+              Baseadas em protocolos Febrasgo e ACOG
             </p>
             <div className="flex gap-4 justify-center">
               <button
@@ -119,7 +108,7 @@ export default function Landing() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-4 bg-secondary/5">
+      <section id="features" className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -164,23 +153,21 @@ export default function Landing() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-r from-teal-600 to-blue-600 rounded-2xl p-12 text-center text-white"
+            className="glass-panel border border-cyan-500/30 rounded-2xl p-12 text-center"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Comece a Monitorar Sua Saúde Reprodutiva
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
+              Acesso Profissional
             </h2>
-            <p className="text-lg mb-8 opacity-90">
-              Acesso completo a todas as ferramentas e recursos profissionais
+            <p className="text-lg mb-8 text-blue-100">
+              Sistema completo com assinatura mensal ou tokens para uso avulso
             </p>
-            <Button
-              size="lg"
-              variant="secondary"
+            <button
               onClick={() => window.location.href = '/api/login'}
-              className="bg-white text-teal-600 hover:bg-gray-100"
+              className="px-8 py-4 rounded-xl bg-white text-teal-600 text-lg font-semibold hover:bg-gray-100 transition-all inline-flex items-center gap-2"
             >
               Criar Conta Gratuita
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+              <ArrowRight className="h-5 w-5" />
+            </button>
           </motion.div>
         </div>
       </section>
