@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { 
   Baby, 
-  Heart, 
   Activity,
   Ruler,
   Scale,

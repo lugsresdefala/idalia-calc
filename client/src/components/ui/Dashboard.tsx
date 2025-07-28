@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, TrendingUp, Thermometer, Droplets, Clock, Heart, Plus } from "lucide-react";
+import { Calendar, TrendingUp, Thermometer, Droplets, Clock, CheckCircle, Plus } from "lucide-react";
 
 interface DashboardProps {
   userId?: number;
@@ -225,7 +225,7 @@ const Dashboard = ({ userId = 1 }: DashboardProps) => {
             
             {hasTemperatures && hasMucusData && hasCycles && (
               <div className="text-center p-4 text-gray-400">
-                <Heart className="h-8 w-8 mx-auto mb-2 text-green-400" />
+                <CheckCircle className="h-8 w-8 mx-auto mb-2 text-green-400" />
                 <p>Todos os dados básicos registrados!</p>
                 <p className="text-sm">Continue monitorando regularmente</p>
               </div>

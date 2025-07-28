@@ -20,7 +20,7 @@ const MobileHome = () => {
       id: 'fertility',
       title: 'Calculadora de Fertilidade',
       subtitle: 'Janela fértil e ovulação',
-      icon: Heart,
+      icon: Calendar,
       color: 'from-pink-500 to-rose-400',
       borderColor: 'border-pink-500/30',
       bgColor: 'bg-pink-500/10',
@@ -87,7 +87,7 @@ const MobileHome = () => {
           <div className="mb-4">
             <Sparkles className="h-12 w-12 mx-auto text-yellow-400 mb-2" />
             <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-yellow-400">
-              Bem-vindo à Idalia Calc
+              Boas-vindas à Idalia Calc
             </h1>
             <p className="mobile-caption mt-2">
               Sua plataforma de saúde reprodutiva
