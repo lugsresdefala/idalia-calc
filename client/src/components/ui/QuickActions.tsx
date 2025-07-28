@@ -19,29 +19,7 @@ interface QuickActionsProps {
 }
 
 const QuickActions = ({ userId = 1 }: QuickActionsProps) => {
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      type: "temperature",
-      message: "Hora de medir a temperatura basal",
-      time: "07:00",
-      urgent: true
-    },
-    {
-      id: 2,
-      type: "observation",
-      message: "Registrar observações do muco cervical",
-      time: "Durante o dia",
-      urgent: false
-    },
-    {
-      id: 3,
-      type: "cycle",
-      message: "Período fértil começando em 2 dias",
-      time: "Previsão",
-      urgent: true
-    }
-  ]);
+  const [notifications, setNotifications] = useState<any[]>([]);
 
   const markAsComplete = (id: number) => {
     setNotifications(prev => prev.filter(n => n.id !== id));

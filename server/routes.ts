@@ -165,8 +165,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const cycle = await storage.createMenstrualCycle({
         userId,
-        periodStartDate: new Date(periodStartDate),
-        periodEndDate: new Date(periodEndDate),
+        periodStartDate: periodStartDate,
+        periodEndDate: periodEndDate,
         cycleLength,
         periodLength,
         notes
@@ -317,7 +317,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const newTemperature = await storage.createBasalTemperature({
         userId,
-        measurementDate: new Date(measurementDate),
+        measurementDate: measurementDate,
         temperature,
         measurementTime
       });
@@ -459,7 +459,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const newEntry = await storage.createCervicalMucus({
         userId,
-        observationDate: new Date(observationDate),
+        observationDate: observationDate,
         consistency,
         amount,
         notes
@@ -596,8 +596,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userId,
         calculatorType,
         inputData: JSON.stringify(inputData),
-        resultData: JSON.stringify(resultData),
-        createdAt: new Date()
+        resultData: JSON.stringify(resultData)
       });
       
       return res.status(201).json(historyEntry);

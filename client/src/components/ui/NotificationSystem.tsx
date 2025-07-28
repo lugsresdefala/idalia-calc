@@ -33,52 +33,7 @@ interface NotificationSystemProps {
 }
 
 const NotificationSystem = ({ userId = 1 }: NotificationSystemProps) => {
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: 1,
-      type: "reminder",
-      category: "temperature",
-      title: "Temperatura Basal",
-      message: "Hora de medir sua temperatura basal. Lembre-se de fazer isso antes de se levantar.",
-      time: new Date(),
-      read: false,
-      urgent: true,
-      actionRequired: true
-    },
-    {
-      id: 2,
-      type: "info",
-      category: "cycle",
-      title: "Período Fértil",
-      message: "Seu período fértil está começando em 2 dias. Considere aumentar a frequência de observações.",
-      time: new Date(Date.now() - 1000 * 60 * 30), // 30 minutos atrás
-      read: false,
-      urgent: false,
-      actionRequired: false
-    },
-    {
-      id: 3,
-      type: "alert",
-      category: "observation",
-      title: "Muco Cervical",
-      message: "Você não registrou observações de muco cervical há 3 dias. Isso pode afetar a precisão das previsões.",
-      time: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 horas atrás
-      read: true,
-      urgent: false,
-      actionRequired: true
-    },
-    {
-      id: 4,
-      type: "info",
-      category: "general",
-      title: "Análise de Ciclo",
-      message: "Seu relatório mensal está pronto! Seus ciclos continuam regulares com média de 28 dias.",
-      time: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 dia atrás
-      read: true,
-      urgent: false,
-      actionRequired: false
-    }
-  ]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   const [notificationSettings, setNotificationSettings] = useState({
     temperatureReminders: true,
