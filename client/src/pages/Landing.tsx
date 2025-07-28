@@ -1,0 +1,178 @@
+import { motion } from "framer-motion";
+import { ArrowRight, Activity, Heart, Baby, Calendar, Shield, BarChart3 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+
+export default function Landing() {
+  const features = [
+    {
+      icon: Heart,
+      title: "Calculadora de Fertilidade",
+      description: "Acompanhe sua janela fértil com precisão científica e análise detalhada do ciclo menstrual"
+    },
+    {
+      icon: Baby,
+      title: "Calculadora Gestacional",
+      description: "Calcule a idade gestacional e acompanhe o desenvolvimento fetal semana a semana"
+    },
+    {
+      icon: Activity,
+      title: "Monitoramento Biológico",
+      description: "Registre temperatura basal, características do muco cervical e sintomas diários"
+    },
+    {
+      icon: Calendar,
+      title: "Histórico Completo",
+      description: "Mantenha um registro detalhado de todos os seus ciclos e padrões reprodutivos"
+    },
+    {
+      icon: BarChart3,
+      title: "Análise Avançada",
+      description: "Visualize tendências e padrões com gráficos intuitivos e relatórios personalizados"
+    },
+    {
+      icon: Shield,
+      title: "Dados Seguros",
+      description: "Suas informações médicas são protegidas com criptografia e privacidade total"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/10">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/80 border-b">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <img 
+              src="/attached_assets/idalialogo_1752806026568.png" 
+              alt="Idalia Calc" 
+              className="h-10 w-10"
+            />
+            <span className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
+              Idalia Calc
+            </span>
+          </div>
+          <Button
+            onClick={() => window.location.href = '/api/login'}
+            className="bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700"
+          >
+            Entrar
+          </Button>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center"
+          >
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
+              Idalia Calc
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+              Plataforma médica especializada em saúde reprodutiva com calculadoras avançadas e análise de dados baseada em evidências científicas
+            </p>
+            <div className="flex gap-4 justify-center">
+              <Button
+                size="lg"
+                onClick={() => window.location.href = '/api/login'}
+                className="bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700"
+              >
+                Começar Agora
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Conhecer Recursos
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-20 px-4 bg-secondary/5">
+        <div className="container mx-auto max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Recursos Completos para Saúde Reprodutiva
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Ferramentas profissionais baseadas nas recomendações da Febrasgo e ACOG
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="p-6 h-full hover:shadow-lg transition-shadow">
+                  <feature.icon className="h-12 w-12 text-teal-600 mb-4" />
+                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="bg-gradient-to-r from-teal-600 to-blue-600 rounded-2xl p-12 text-center text-white"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Comece a Monitorar Sua Saúde Reprodutiva
+            </h2>
+            <p className="text-lg mb-8 opacity-90">
+              Acesso completo a todas as ferramentas e recursos profissionais
+            </p>
+            <Button
+              size="lg"
+              variant="secondary"
+              onClick={() => window.location.href = '/api/login'}
+              className="bg-white text-teal-600 hover:bg-gray-100"
+            >
+              Criar Conta Gratuita
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 px-4 border-t">
+        <div className="container mx-auto max-w-6xl text-center text-muted-foreground">
+          <p className="mb-2">© 2025 Idalia Calc. Todos os direitos reservados.</p>
+          <p className="text-sm">
+            Dra. Idalia Aline de Souza • CRM: 220558
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+}

@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { setupAuth, isAuthenticated } from "./replitAuth";
 import { 
   menstrualCycleSchema, 
   basalTemperatureSchema, 
@@ -11,6 +12,20 @@ import {
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Auth middleware
+  await setupAuth(app);
+
+  // Auth routes
+  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
   // API routes for validation of calculator inputs
   
   app.post('/api/validate/gestational', (req, res) => {
@@ -109,12 +124,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // =================== ROTAS PARA CICLOS MENSTRUAIS ===================
   
   // Listar ciclos menstruais
-  app.get('/api/menstrual-cycles/:userId', async (req, res) => {
+  app.get('/api/menstrual-cycles/:userId', isAuthenticated, async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
-      if (isNaN(userId)) {
-        return res.status(400).json({ message: 'ID de usuário inválido' });
-      }
+      const userId = req.params.userId;
       
       const cycles = await storage.getMenstrualCycles(userId);
       return res.status(200).json(cycles);
@@ -261,12 +273,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // =================== ROTAS PARA TEMPERATURA BASAL ===================
   
   // Listar temperaturas basais
-  app.get('/api/basal-temperatures/:userId', async (req, res) => {
+  app.get('/api/basal-temperatures/:userId', isAuthenticated, async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
-      if (isNaN(userId)) {
-        return res.status(400).json({ message: 'ID de usuário inválido' });
-      }
+      const userId = req.params.userId;
       
       const temperatures = await storage.getBasalTemperatures(userId);
       return res.status(200).json(temperatures);
@@ -297,7 +306,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Criar uma temperatura basal
-  app.post('/api/basal-temperatures', async (req, res) => {
+  app.post('/api/basal-temperatures', isAuthenticated, async (req: any, res) => {
     try {
       const result = basalTemperatureSchema.safeParse(req.body);
       
@@ -309,11 +318,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const { measurementDate, temperature, measurementTime } = result.data;
-      const userId = req.body.userId;
-      
-      if (!userId) {
-        return res.status(400).json({ message: 'ID de usuário é obrigatório' });
-      }
+      const userId = req.user.claims.sub;
       
       const newTemperature = await storage.createBasalTemperature({
         userId,

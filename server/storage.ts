@@ -5,8 +5,10 @@ import {
   cervicalMucus,
   fetalDevelopment,
   calculatorHistory,
+  paymentTokens,
+  subscriptionHistory,
   type User, 
-  type InsertUser,
+  type UpsertUser,
   type MenstrualCycle,
   type InsertMenstrualCycle,
   type BasalTemperature,
@@ -16,34 +18,37 @@ import {
   type FetalDevelopment,
   type InsertFetalDevelopment,
   type CalculatorHistory,
-  type InsertCalculatorHistory
+  type InsertCalculatorHistory,
+  type PaymentToken,
+  type InsertPaymentToken,
+  type SubscriptionHistory,
+  type InsertSubscriptionHistory
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and } from "drizzle-orm";
 
 // Interface de armazenamento expandida com as novas funcionalidades
 export interface IStorage {
-  // Usuários
-  getUser(id: number): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  // Usuários - MANDATORY for Replit Auth
+  getUser(id: string): Promise<User | undefined>;
+  upsertUser(user: UpsertUser): Promise<User>;
   
   // Ciclos menstruais
-  getMenstrualCycles(userId: number): Promise<MenstrualCycle[]>;
+  getMenstrualCycles(userId: string): Promise<MenstrualCycle[]>;
   getMenstrualCycle(id: number): Promise<MenstrualCycle | undefined>;
   createMenstrualCycle(cycle: InsertMenstrualCycle): Promise<MenstrualCycle>;
   updateMenstrualCycle(id: number, cycle: Partial<InsertMenstrualCycle>): Promise<MenstrualCycle | undefined>;
   deleteMenstrualCycle(id: number): Promise<boolean>;
   
   // Temperaturas basais
-  getBasalTemperatures(userId: number): Promise<BasalTemperature[]>;
+  getBasalTemperatures(userId: string): Promise<BasalTemperature[]>;
   getBasalTemperature(id: number): Promise<BasalTemperature | undefined>;
   createBasalTemperature(temp: InsertBasalTemperature): Promise<BasalTemperature>;
   updateBasalTemperature(id: number, temp: Partial<InsertBasalTemperature>): Promise<BasalTemperature | undefined>;
   deleteBasalTemperature(id: number): Promise<boolean>;
   
   // Muco cervical
-  getCervicalMucusEntries(userId: number): Promise<CervicalMucus[]>;
+  getCervicalMucusEntries(userId: string): Promise<CervicalMucus[]>;
   getCervicalMucus(id: number): Promise<CervicalMucus | undefined>;
   createCervicalMucus(mucus: InsertCervicalMucus): Promise<CervicalMucus>;
   updateCervicalMucus(id: number, mucus: Partial<InsertCervicalMucus>): Promise<CervicalMucus | undefined>;
@@ -56,30 +61,47 @@ export interface IStorage {
   updateFetalDevelopment(id: number, development: Partial<InsertFetalDevelopment>): Promise<FetalDevelopment | undefined>;
   
   // Histórico de cálculos
-  getCalculatorHistory(userId: number): Promise<CalculatorHistory[]>;
+  getCalculatorHistory(userId: string): Promise<CalculatorHistory[]>;
   saveCalculatorHistory(history: InsertCalculatorHistory): Promise<CalculatorHistory>;
+  
+  // Tokens de pagamento
+  getUserTokens(userId: string): Promise<number>;
+  addTokens(userId: string, amount: number, description: string, stripePaymentIntentId?: string): Promise<PaymentToken>;
+  useTokens(userId: string, amount: number, description: string): Promise<PaymentToken | null>;
+  
+  // Assinaturas
+  updateUserStripeInfo(userId: string, stripeCustomerId?: string, stripeSubscriptionId?: string): Promise<User>;
+  updateUserSubscription(userId: string, status: string, endDate?: Date): Promise<User>;
+  createSubscriptionHistory(sub: InsertSubscriptionHistory): Promise<SubscriptionHistory>;
 }
 
 // Implementação de armazenamento usando PostgreSQL
 export class DatabaseStorage implements IStorage {
-  // Usuários
-  async getUser(id: number): Promise<User | undefined> {
+  // Usuários - MANDATORY for Replit Auth
+  async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.username, username));
+  async upsertUser(userData: UpsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(userData)
+      .onConflictDoUpdate({
+        target: users.id,
+        set: {
+          ...userData,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
     return user;
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const [user] = await db.insert(users).values(insertUser).returning();
-    return user;
-  }
+
   
   // Ciclos menstruais
-  async getMenstrualCycles(userId: number): Promise<MenstrualCycle[]> {
+  async getMenstrualCycles(userId: string): Promise<MenstrualCycle[]> {
     return await db
       .select()
       .from(menstrualCycles)
@@ -121,7 +143,7 @@ export class DatabaseStorage implements IStorage {
   }
   
   // Temperaturas basais
-  async getBasalTemperatures(userId: number): Promise<BasalTemperature[]> {
+  async getBasalTemperatures(userId: string): Promise<BasalTemperature[]> {
     return await db
       .select()
       .from(basalTemperatures)
@@ -163,7 +185,7 @@ export class DatabaseStorage implements IStorage {
   }
   
   // Muco cervical
-  async getCervicalMucusEntries(userId: number): Promise<CervicalMucus[]> {
+  async getCervicalMucusEntries(userId: string): Promise<CervicalMucus[]> {
     return await db
       .select()
       .from(cervicalMucus)
@@ -238,7 +260,7 @@ export class DatabaseStorage implements IStorage {
   }
   
   // Histórico de cálculos
-  async getCalculatorHistory(userId: number): Promise<CalculatorHistory[]> {
+  async getCalculatorHistory(userId: string): Promise<CalculatorHistory[]> {
     return await db
       .select()
       .from(calculatorHistory)
@@ -252,6 +274,105 @@ export class DatabaseStorage implements IStorage {
       .values(history)
       .returning();
     return newHistory;
+  }
+
+  // Tokens de pagamento
+  async getUserTokens(userId: string): Promise<number> {
+    const user = await this.getUser(userId);
+    return user?.tokens || 0;
+  }
+
+  async addTokens(userId: string, amount: number, description: string, stripePaymentIntentId?: string): Promise<PaymentToken> {
+    // Adiciona tokens ao usuário
+    await db
+      .update(users)
+      .set({ 
+        tokens: db.sql`${users.tokens} + ${amount}`,
+        updatedAt: new Date()
+      })
+      .where(eq(users.id, userId));
+
+    // Registra a transação
+    const [token] = await db
+      .insert(paymentTokens)
+      .values({
+        userId,
+        amount,
+        type: 'purchase',
+        description,
+        stripePaymentIntentId
+      })
+      .returning();
+    
+    return token;
+  }
+
+  async useTokens(userId: string, amount: number, description: string): Promise<PaymentToken | null> {
+    const currentTokens = await this.getUserTokens(userId);
+    
+    if (currentTokens < amount) {
+      return null; // Tokens insuficientes
+    }
+
+    // Remove tokens do usuário
+    await db
+      .update(users)
+      .set({ 
+        tokens: db.sql`${users.tokens} - ${amount}`,
+        updatedAt: new Date()
+      })
+      .where(eq(users.id, userId));
+
+    // Registra o uso
+    const [token] = await db
+      .insert(paymentTokens)
+      .values({
+        userId,
+        amount: -amount,
+        type: 'used',
+        description
+      })
+      .returning();
+    
+    return token;
+  }
+
+  // Assinaturas
+  async updateUserStripeInfo(userId: string, stripeCustomerId?: string, stripeSubscriptionId?: string): Promise<User> {
+    const updateData: any = { updatedAt: new Date() };
+    if (stripeCustomerId) updateData.stripeCustomerId = stripeCustomerId;
+    if (stripeSubscriptionId) updateData.stripeSubscriptionId = stripeSubscriptionId;
+
+    const [user] = await db
+      .update(users)
+      .set(updateData)
+      .where(eq(users.id, userId))
+      .returning();
+    
+    return user;
+  }
+
+  async updateUserSubscription(userId: string, status: string, endDate?: Date): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({
+        subscriptionStatus: status,
+        subscriptionEndDate: endDate,
+        updatedAt: new Date()
+      })
+      .where(eq(users.id, userId))
+      .returning();
+    
+    return user;
+  }
+
+  async createSubscriptionHistory(sub: InsertSubscriptionHistory): Promise<SubscriptionHistory> {
+    const [history] = await db
+      .insert(subscriptionHistory)
+      .values(sub)
+      .returning();
+    
+    return history;
   }
 }
 
