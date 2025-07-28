@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Activity, Heart, Baby, Calendar, Shield, BarChart3 } from "lucide-react";
+import { ArrowRight, Activity, Baby, Calendar, Shield, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 export default function Landing() {
   const features = [
     {
-      icon: Heart,
+      icon: Calendar,
       title: "Calculadora de Fertilidade",
       description: "Acompanhe sua janela fértil com precisão científica e análise detalhada do ciclo menstrual"
     },
