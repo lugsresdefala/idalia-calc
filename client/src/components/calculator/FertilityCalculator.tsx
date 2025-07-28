@@ -136,6 +136,22 @@ const FertilityCalculator = () => {
         daysUntilNextPhase,
         nextPhase
       });
+      
+      // Salvar no histórico
+      try {
+        await apiRequest('POST', '/api/calculator-history', {
+          calculatorType: 'fertility',
+          inputData: JSON.stringify({ lastPeriodStart, lastPeriodEnd, cycleLength }),
+          resultData: JSON.stringify({
+            ...result,
+            currentCyclePhase,
+            daysUntilNextPhase,
+            nextPhase
+          })
+        });
+      } catch (error) {
+        console.error('Erro ao salvar histórico:', error);
+      }
     } catch (error) {
       console.error("Calculation error:", error);
     }
