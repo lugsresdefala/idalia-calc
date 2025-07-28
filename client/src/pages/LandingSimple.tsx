@@ -47,21 +47,21 @@ export default function Landing() {
           </section>
 
           {/* Duas Calculadoras */}
-          <section className="py-12 border-b border-gray-200">
-            <h2 className="text-center text-2xl font-bold text-gray-800 mb-8">
+          <section className="py-12 border-b border-cyan-500/10">
+            <h2 className="text-center text-2xl font-bold text-cyan-300 mb-8">
               Duas Calculadoras Que Mudam Vidas
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
               {/* Calculadora 1 */}
-              <div className="bg-white p-8 rounded-xl border-2 border-cyan-500/30 hover:border-cyan-500/50 transition-all hover:shadow-xl shadow-lg">
+              <div className="glass-panel p-8 border-2 border-cyan-500/30 hover:border-cyan-500/50 transition-all hover:shadow-xl hover:shadow-cyan-500/20">
                 <Calculator className="h-12 w-12 text-cyan-400 mb-4" />
-                <h3 className="text-2xl font-bold text-gray-800 mb-3">
+                <h3 className="text-2xl font-bold text-white mb-3">
                   Calculadora de Fertilidade
                 </h3>
-                <p className="text-gray-600 mb-4">
+                <p className="text-blue-100 mb-4">
                   Descubra o momento perfeito para realizar seu sonho
                 </p>
-              <ul className="space-y-2 text-gray-600">
+              <ul className="space-y-2 text-blue-100/80">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Análise inteligente do seu ciclo único</span>
@@ -78,15 +78,15 @@ export default function Landing() {
               </div>
 
               {/* Calculadora 2 */}
-              <div className="bg-white p-8 rounded-xl border-2 border-blue-500/30 hover:border-blue-500/50 transition-all hover:shadow-xl shadow-lg">
+              <div className="glass-panel p-8 border-2 border-blue-500/30 hover:border-blue-500/50 transition-all hover:shadow-xl hover:shadow-blue-500/20">
                 <Baby className="h-12 w-12 text-blue-400 mb-4" />
-                <h3 className="text-2xl font-bold text-gray-800 mb-3">
+                <h3 className="text-2xl font-bold text-white mb-3">
                   Calculadora Gestacional
                 </h3>
-                <p className="text-gray-600 mb-4">
+                <p className="text-blue-100 mb-4">
                   Viva cada momento da sua jornada com segurança
                 </p>
-              <ul className="space-y-2 text-gray-600">
+              <ul className="space-y-2 text-blue-100/80">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Acompanhamento semana a semana</span>
@@ -105,31 +105,31 @@ export default function Landing() {
           </section>
 
           {/* Sistema de Acesso */}
-          <section className="py-12 border-b border-gray-200">
-            <div className="bg-gradient-to-br from-yellow-50 to-orange-50 p-8 rounded-xl text-center border-2 border-yellow-400/30">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          <section className="py-12 border-b border-cyan-500/10">
+            <div className="glass-panel p-8 text-center border-2 border-yellow-500/30 bg-gradient-to-br from-slate-800/50 to-blue-900/30">
+              <h2 className="text-2xl font-bold text-yellow-300 mb-4">
                 💎 Planos de Acesso Flexíveis
               </h2>
             <div className="grid md:grid-cols-2 gap-6 text-left max-w-2xl mx-auto">
-                <div className="p-6 rounded-lg bg-white border-2 border-yellow-400 shadow-lg">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                <div className="p-6 rounded-lg bg-gradient-to-br from-yellow-500/10 to-orange-500/10 border border-yellow-500/20">
+                  <h3 className="text-lg font-semibold text-white mb-2">
                     ⭐ Assinatura Premium
                   </h3>
-                  <p className="text-gray-600 mb-2">
+                  <p className="text-blue-100/80 mb-2">
                     Acesso ilimitado e completo
                   </p>
-                  <p className="text-2xl font-bold text-yellow-600">
+                  <p className="text-2xl font-bold text-yellow-300">
                     R$ 29,90/mês
                   </p>
                 </div>
-                <div className="p-6 rounded-lg bg-white border-2 border-cyan-500 shadow-lg">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                <div className="p-6 rounded-lg bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/20">
+                  <h3 className="text-lg font-semibold text-white mb-2">
                     🎫 Tokens Avulsos
                   </h3>
-                  <p className="text-gray-600 mb-2">
+                  <p className="text-blue-100/80 mb-2">
                     Pague apenas quando usar
                   </p>
-                  <p className="text-lg text-cyan-600">
+                  <p className="text-lg text-cyan-300">
                     A partir de R$ 5,00
                   </p>
                 </div>
@@ -139,10 +139,10 @@ export default function Landing() {
 
           {/* CTA Final */}
           <section className="text-center py-16">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            <h2 className="text-3xl font-bold text-white mb-4">
               Pronta para começar sua jornada?
             </h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
               Mais de 10.000 pessoas já mudaram suas vidas com a Idalia Calc
             </p>
             <button
@@ -152,7 +152,7 @@ export default function Landing() {
               Começar Agora
               <ArrowRight className="h-5 w-5" />
             </button>
-            <p className="mt-4 text-gray-500 text-sm">
+            <p className="mt-4 text-blue-100/60 text-sm">
               🎯 Teste grátis por 7 dias • 💳 Sem cartão • ✅ Cancele quando quiser
             </p>
           </section>
