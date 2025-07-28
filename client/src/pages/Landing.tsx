@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Activity, Baby, Calendar, Shield, BarChart3, CheckCircle } from "lucide-react";
+import { ArrowRight, Activity, Heart, Baby, Calendar, Shield, BarChart3 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 export default function Landing() {
   const features = [
     {
-      icon: Activity,
+      icon: Heart,
       title: "Calculadora de Fertilidade",
       description: "Acompanhe sua janela fértil com precisão científica e análise detalhada do ciclo menstrual"
     },
@@ -36,79 +38,74 @@ export default function Landing() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900/50 to-cyan-900/30">
+    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/10">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 glass-panel backdrop-blur-lg border-b border-cyan-500/20">
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/80 border-b">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img 
-              src="/idalia-logo.png" 
-              alt="Idalia Calc Logo" 
-              className="h-12 w-12 object-contain"
-            />
-            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-yellow-400 bg-clip-text text-transparent tech-text-glow">
+            <svg className="h-10 w-10" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 5C25 5 28 8 28 12C28 16 25 18 22 20C20 22 18 24 18 27V35" stroke="url(#gradient)" strokeWidth="2" strokeLinecap="round"/>
+              <circle cx="20" cy="20" r="15" stroke="url(#gradient)" strokeWidth="1.5" opacity="0.3"/>
+              <path d="M12 18C12 18 14 16 16 16C18 16 20 17 22 15C24 13 26 12 28 14" stroke="url(#gradient)" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
+              <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#FFD700"/>
+                  <stop offset="50%" stopColor="#FFA500"/>
+                  <stop offset="100%" stopColor="#FF8C00"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <span className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
               Idalia Calc
             </span>
           </div>
-          <button
+          <Button
             onClick={() => window.location.href = '/api/login'}
-            className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium hover:from-cyan-600 hover:to-blue-600 transition-all transform hover:scale-105 shadow-lg shadow-cyan-500/25"
+            className="bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700"
           >
-            Entrar / Cadastrar
-          </button>
+            Entrar
+          </Button>
         </div>
       </header>
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4">
-        <div className="container mx-auto max-w-6xl text-center">
-          {/* Logo Grande Central */}
-          <div className="mb-8 flex justify-center">
-            <div className="relative">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-yellow-400/20 via-orange-400/20 to-amber-400/20 blur-3xl"></div>
-              <img 
-                src="/idalia-logo.png" 
-                alt="Idalia Calc" 
-                className="h-32 w-32 relative z-10 drop-shadow-2xl hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-          </div>
-          
+        <div className="container mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="text-center"
           >
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-yellow-400 bg-clip-text text-transparent tech-text-glow">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
               Idalia Calc
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
-              Calculadora de Fertilidade e Calculadora Gestacional
-            </p>
-            <p className="text-lg text-blue-100/80 mb-8">
-              Baseadas em protocolos Febrasgo e ACOG
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+              Plataforma médica especializada em saúde reprodutiva com calculadoras avançadas e análise de dados baseada em evidências científicas
             </p>
             <div className="flex gap-4 justify-center">
-              <button
+              <Button
+                size="lg"
                 onClick={() => window.location.href = '/api/login'}
-                className="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-lg font-semibold hover:from-cyan-600 hover:to-blue-600 transition-all transform hover:scale-105 shadow-xl shadow-cyan-500/25 inline-flex items-center gap-2"
+                className="bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700"
               >
                 Começar Agora
-                <ArrowRight className="h-5 w-5" />
-              </button>
-              <button
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
                 onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-8 py-4 rounded-xl glass-panel border border-cyan-500/20 text-cyan-300 text-lg font-semibold hover:bg-cyan-500/10 transition-all"
               >
                 Conhecer Recursos
-              </button>
+              </Button>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-4">
+      <section id="features" className="py-20 px-4 bg-secondary/5">
         <div className="container mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -117,11 +114,11 @@ export default function Landing() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
-              Recursos Principais
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Recursos Completos para Saúde Reprodutiva
             </h2>
-            <p className="text-lg text-blue-100 max-w-2xl mx-auto">
-              Ferramentas médicas baseadas nas recomendações da Febrasgo e ACOG
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Ferramentas profissionais baseadas nas recomendações da Febrasgo e ACOG
             </p>
           </motion.div>
 
@@ -134,11 +131,11 @@ export default function Landing() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <div className="glass-panel p-6 h-full border border-cyan-500/20 hover:border-cyan-500/40 transition-all">
-                  <feature.icon className="h-12 w-12 text-cyan-400 mb-4" />
-                  <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
-                  <p className="text-blue-100/80">{feature.description}</p>
-                </div>
+                <Card className="p-6 h-full hover:shadow-lg transition-shadow">
+                  <feature.icon className="h-12 w-12 text-teal-600 mb-4" />
+                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
+                </Card>
               </motion.div>
             ))}
           </div>
@@ -153,21 +150,23 @@ export default function Landing() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="glass-panel border border-cyan-500/30 rounded-2xl p-12 text-center"
+            className="bg-gradient-to-r from-teal-600 to-blue-600 rounded-2xl p-12 text-center text-white"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
-              Acesso Profissional
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Comece a Monitorar Sua Saúde Reprodutiva
             </h2>
-            <p className="text-lg mb-8 text-blue-100">
-              Sistema completo com assinatura mensal ou tokens para uso avulso
+            <p className="text-lg mb-8 opacity-90">
+              Acesso completo a todas as ferramentas e recursos profissionais
             </p>
-            <button
+            <Button
+              size="lg"
+              variant="secondary"
               onClick={() => window.location.href = '/api/login'}
-              className="px-8 py-4 rounded-xl bg-white text-teal-600 text-lg font-semibold hover:bg-gray-100 transition-all inline-flex items-center gap-2"
+              className="bg-white text-teal-600 hover:bg-gray-100"
             >
               Criar Conta Gratuita
-              <ArrowRight className="h-5 w-5" />
-            </button>
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
           </motion.div>
         </div>
       </section>

@@ -1,9 +1,7 @@
 import { Link } from "wouter";
-import { Activity, Calculator, BarChart3, Bell, FileText, LogIn, CreditCard } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
+import { Activity, Calculator, BarChart3, Bell, FileText } from "lucide-react";
 
 const Header = () => {
-  const { isAuthenticated, user } = useAuth();
   return (
     <header className="mb-8">
       <div className="flex items-center justify-center mb-4">
@@ -24,7 +22,7 @@ const Header = () => {
           Idalia Calc
         </h1>
         <p className="text-blue-100 max-w-2xl mx-auto text-lg mb-4">
-          Calculadoras médicas especializadas
+          Plataforma médica especializada em saúde reprodutiva e análise de fertilidade
         </p>
         
         {/* Navegação */}
@@ -50,40 +48,6 @@ const Header = () => {
             Algoritmos
           </Link>
         </nav>
-        
-        {/* Botões de Autenticação e Assinatura */}
-        <div className="mt-6 flex justify-center gap-4">
-          {!isAuthenticated ? (
-            <button 
-              onClick={() => window.location.href = '/api/login'}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-600 hover:to-blue-600 transition-all transform hover:scale-105 shadow-lg shadow-cyan-500/25"
-            >
-              <LogIn className="h-5 w-5" />
-              Entrar / Cadastrar
-            </button>
-          ) : (
-            <>
-              <div className="flex items-center gap-4">
-                <span className="text-cyan-300">Olá, {user?.firstName || 'Usuário'}</span>
-                {!user?.subscriptionActive && (
-                  <button 
-                    onClick={() => window.location.href = '/subscribe'}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 text-white hover:from-yellow-600 hover:to-orange-600 transition-all"
-                  >
-                    <CreditCard className="h-4 w-4" />
-                    Assinar Premium
-                  </button>
-                )}
-                <button 
-                  onClick={() => window.location.href = '/api/logout'}
-                  className="px-4 py-2 rounded-lg bg-red-500/20 text-red-300 hover:bg-red-500/30 transition-colors border border-red-500/30"
-                >
-                  Sair
-                </button>
-              </div>
-            </>
-          )}
-        </div>
       </div>
     </header>
   );
