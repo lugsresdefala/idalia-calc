@@ -81,7 +81,7 @@ export default function Landing() {
               Idalia Calc
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Plataforma médica especializada em saúde reprodutiva com calculadoras avançadas e análise de dados baseada em evidências científicas
+              Duas calculadoras médicas especializadas baseadas em evidências científicas
             </p>
             <div className="flex gap-4 justify-center">
               <Button

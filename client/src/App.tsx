@@ -42,20 +42,32 @@ function Router() {
 
   return (
     <div className={`min-h-screen ${isMobile ? 'bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800' : ''}`}>
-      {isMobile ? <MobileHeader /> : <Header />}
+      {isAuthenticated && (isMobile ? <MobileHeader /> : <Header />)}
       
       <main className={isMobile ? '' : 'container mx-auto px-4'}>
         <Switch>
-          <Route path="/" component={Home} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/notifications" component={Notifications} />
-          <Route path="/history" component={History} />
-          <Route path="/subscribe" component={Subscribe} />
-          <Route path="/algorithms" component={Algorithms} />
-          {/* Rota personalizada em português */}
-          <Route path="/algoritmos" component={Algorithms} />
-          {/* Fallback para 404 */}
-          <Route component={NotFound} />
+          {isLoading ? (
+            <div className="flex justify-center items-center h-screen">
+              <div className="animate-spin w-8 h-8 border-4 border-cyan-500 border-t-transparent rounded-full" />
+            </div>
+          ) : !isAuthenticated ? (
+            <>
+              <Route path="/" component={Landing} />
+              <Route path="/algoritmos" component={Algorithms} />
+              <Route component={Landing} />
+            </>
+          ) : (
+            <>
+              <Route path="/" component={Home} />
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/notifications" component={Notifications} />
+              <Route path="/history" component={History} />
+              <Route path="/subscribe" component={Subscribe} />
+              <Route path="/algorithms" component={Algorithms} />
+              <Route path="/algoritmos" component={Algorithms} />
+              <Route component={NotFound} />
+            </>
+          )}
         </Switch>
       </main>
     </div>
