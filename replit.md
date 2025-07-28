@@ -97,3 +97,7 @@ IdaliaCalc é uma plataforma médica especializada em saúde reprodutiva, oferec
 3. Previsões avançadas com IA
 4. Sincronização com wearables
 5. Compartilhamento com profissionais de saúde
+
+## Notas Importantes
+- **Autenticação**: Usuário preferiu manter a plataforma sem login/autenticação por enquanto
+- **Acesso**: Plataforma deve permanecer acessível publicamente sem necessidade de cadastro
