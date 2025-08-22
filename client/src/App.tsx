@@ -44,18 +44,13 @@ function Router() {
       {isAuthenticated && (isMobile ? <MobileHeader /> : <Header />)}
       
       <Switch>
-        {isLoading || !isAuthenticated ? (
-          <Route path="/" component={Landing} />
-        ) : (
-          <main className={isMobile ? '' : 'container mx-auto px-4'}>
-            <Route path="/" component={Home} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/notifications" component={Notifications} />
-            <Route path="/history" component={History} />
-            <Route path="/algorithms" component={Algorithms} />
-            <Route path="/algoritmos" component={Algorithms} />
-          </main>
-        )}
+        <Route path="/" component={Landing} />
+        <Route path="/app" component={Home} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/notifications" component={Notifications} />
+        <Route path="/history" component={History} />
+        <Route path="/algorithms" component={Algorithms} />
+        <Route path="/algoritmos" component={Algorithms} />
         <Route component={NotFound} />
       </Switch>
     </div>
