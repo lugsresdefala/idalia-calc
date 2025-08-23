@@ -47,6 +47,7 @@ export const users = pgTable("users", {
   usedCredits: integer("used_credits").default(0), // créditos usados no mês
   totalCalculations: integer("total_calculations").default(0), // total histórico
   lastCreditReset: timestamp("last_credit_reset").defaultNow(),
+  hasUsedFreeTrial: boolean("has_used_free_trial").default(false), // se já usou o teste gratuito
   
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),

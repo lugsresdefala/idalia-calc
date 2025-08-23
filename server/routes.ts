@@ -676,6 +676,127 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // =================== ROTAS DE CONTROLE DE ACESSO ===================
+  
+  // Verificar acesso a cálculos completos
+  app.get('/api/check-calculation-access', async (req: any, res) => {
+    // Se não estiver autenticado, retorna acesso limitado
+    if (!req.isAuthenticated()) {
+      return res.json({
+        hasFullAccess: false,
+        reason: 'not_authenticated',
+        message: 'Faça login para ver resultados completos'
+      });
+    }
+
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user) {
+        return res.json({
+          hasFullAccess: false,
+          reason: 'user_not_found',
+          message: 'Usuário não encontrado'
+        });
+      }
+
+      // Se tem assinatura ativa, acesso total
+      if (user.subscriptionStatus === 'active' && user.plan !== 'free') {
+        return res.json({
+          hasFullAccess: true,
+          reason: 'subscription_active',
+          remainingCredits: user.monthlyCredits === -1 ? 'unlimited' : (user.monthlyCredits - user.usedCredits)
+        });
+      }
+
+      // Se ainda não usou o teste gratuito, pode usar uma vez
+      if (!user.hasUsedFreeTrial) {
+        return res.json({
+          hasFullAccess: true,
+          reason: 'free_trial',
+          message: 'Você tem 1 uso gratuito disponível!'
+        });
+      }
+
+      // Já usou teste gratuito e não tem assinatura
+      return res.json({
+        hasFullAccess: false,
+        reason: 'trial_used',
+        message: 'Seu teste gratuito já foi utilizado. Assine para continuar!'
+      });
+
+    } catch (error) {
+      console.error('Erro ao verificar acesso:', error);
+      return res.status(500).json({ 
+        hasFullAccess: false,
+        message: 'Erro ao verificar acesso' 
+      });
+    }
+  });
+
+  // Registrar uso de cálculo
+  app.post('/api/register-calculation-use', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { calculationType, calculationData } = req.body;
+      
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'Usuário não encontrado' });
+      }
+
+      // Se está usando o teste gratuito
+      if (!user.hasUsedFreeTrial && user.plan === 'free') {
+        await storage.updateUser(userId, {
+          hasUsedFreeTrial: true,
+          totalCalculations: user.totalCalculations + 1
+        });
+        
+        // Registrar no histórico
+        await storage.consumeCredit(userId, calculationType, calculationData);
+        
+        return res.json({
+          success: true,
+          message: 'Teste gratuito utilizado com sucesso!',
+          remainingAccess: false
+        });
+      }
+
+      // Se tem assinatura ativa
+      if (user.subscriptionStatus === 'active' && user.plan !== 'free') {
+        // Atualizar contadores
+        await storage.updateUser(userId, {
+          usedCredits: user.usedCredits + 1,
+          totalCalculations: user.totalCalculations + 1
+        });
+        
+        // Registrar no histórico
+        await storage.consumeCredit(userId, calculationType, calculationData);
+        
+        const remainingCredits = user.monthlyCredits === -1 ? 
+          'unlimited' : 
+          (user.monthlyCredits - user.usedCredits - 1);
+        
+        return res.json({
+          success: true,
+          remainingCredits,
+          remainingAccess: user.monthlyCredits === -1 || user.usedCredits + 1 < user.monthlyCredits
+        });
+      }
+
+      // Não tem mais acesso
+      return res.status(403).json({
+        success: false,
+        message: 'Você não tem créditos disponíveis. Assine para continuar!'
+      });
+
+    } catch (error) {
+      console.error('Erro ao registrar uso:', error);
+      return res.status(500).json({ message: 'Erro ao registrar uso' });
+    }
+  });
+
   // =================== ROTAS DE PAGAMENTO STRIPE ===================
   
   // Criar sessão de checkout para assinatura

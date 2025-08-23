@@ -1,11 +1,13 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { 
   Info, 
   Droplets, 
@@ -13,7 +15,10 @@ import {
   ChevronDown, 
   ChevronUp,
   Calendar as CalendarIcon,
-  ArrowRight
+  ArrowRight,
+  Lock,
+  Sparkles,
+  LogIn
 } from "lucide-react";
 import { 
   calculateFertilePeriod, 
@@ -34,14 +39,23 @@ import { ptBR } from "date-fns/locale";
 import CycleVisualization from "@/components/ui/CycleVisualization";
 import TemperatureChart from "@/components/ui/TemperatureChart";
 import { apiRequest } from "@/lib/queryClient";
+import { useAuth } from "@/hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "wouter";
+import { useToast } from "@/hooks/use-toast";
 
 const FertilityCalculator = () => {
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
   const [lastPeriodStart, setLastPeriodStart] = useState<string>("");
   const [lastPeriodEnd, setLastPeriodEnd] = useState<string>("");
   const [cycleLength, setCycleLength] = useState<number>(28);
   const [cycleHistory, setCycleHistory] = useState<CycleHistory[]>([]);
   const [currentSelection, setCurrentSelection] = useState<{start?: Date, end?: Date}>({});
   const [expandedSection, setExpandedSection] = useState<string | null>("bodyChanges");
+  const [showPartialResults, setShowPartialResults] = useState(false);
+  const [hasFullAccess, setHasFullAccess] = useState(false);
+  const [accessMessage, setAccessMessage] = useState("");
   const [results, setResults] = useState<{
     ovulationDay: Date;
     fertileStart: Date;
@@ -66,6 +80,23 @@ const FertilityCalculator = () => {
       
       setCycleHistory([...cycleHistory, newCycle]);
       setCurrentSelection({});
+    }
+  };
+
+  // Verificar acesso ao carregar e quando o status de autenticação mudar
+  useEffect(() => {
+    checkAccess();
+  }, [isAuthenticated]);
+
+  const checkAccess = async () => {
+    try {
+      const response = await fetch('/api/check-calculation-access');
+      const data = await response.json();
+      setHasFullAccess(data.hasFullAccess);
+      setAccessMessage(data.message || '');
+    } catch (error) {
+      console.error('Erro ao verificar acesso:', error);
+      setHasFullAccess(false);
     }
   };
 
@@ -137,20 +168,53 @@ const FertilityCalculator = () => {
         nextPhase
       });
       
-      // Salvar no histórico
-      try {
-        await apiRequest('POST', '/api/calculator-history', {
-          calculatorType: 'fertility',
-          inputData: JSON.stringify({ lastPeriodStart, lastPeriodEnd, cycleLength }),
-          resultData: JSON.stringify({
-            ...result,
-            currentCyclePhase,
-            daysUntilNextPhase,
-            nextPhase
-          })
-        });
-      } catch (error) {
-        console.error('Erro ao salvar histórico:', error);
+      // Se não tem acesso completo, mostrar resultados parciais
+      if (!hasFullAccess) {
+        setShowPartialResults(true);
+        return;
+      }
+      
+      // Se tem acesso completo e está autenticado, registrar uso
+      if (isAuthenticated) {
+        try {
+          await apiRequest('POST', '/api/register-calculation-use', {
+            calculationType: 'fertility',
+            calculationData: {
+              lastPeriodStart,
+              lastPeriodEnd,
+              cycleLength,
+              result: {
+                ...result,
+                currentCyclePhase,
+                daysUntilNextPhase,
+                nextPhase
+              }
+            }
+          });
+          
+          // Revalidar acesso após uso
+          await checkAccess();
+        } catch (error) {
+          console.error('Erro ao registrar uso:', error);
+        }
+      }
+      
+      // Salvar no histórico se estiver autenticado
+      if (isAuthenticated) {
+        try {
+          await apiRequest('POST', '/api/calculator-history', {
+            calculatorType: 'fertility',
+            inputData: JSON.stringify({ lastPeriodStart, lastPeriodEnd, cycleLength }),
+            resultData: JSON.stringify({
+              ...result,
+              currentCyclePhase,
+              daysUntilNextPhase,
+              nextPhase
+            })
+          });
+        } catch (error) {
+          console.error('Erro ao salvar histórico:', error);
+        }
       }
     } catch (error) {
       console.error("Calculation error:", error);
@@ -408,9 +472,56 @@ const FertilityCalculator = () => {
 
       {results && (
         <div className="mt-8">
-          <Card className="glass-card border-blue-400/30 overflow-hidden">
+          {/* Alerta de acesso se não estiver autenticado ou sem assinatura */}
+          {!hasFullAccess && (
+            <Alert className="mb-4 border-cyan-400 bg-cyan-900/20">
+              <Sparkles className="h-4 w-4" />
+              <AlertTitle>{!isAuthenticated ? 'Faça login para ver o resultado completo' : accessMessage}</AlertTitle>
+              <AlertDescription className="mt-2 space-y-2">
+                {!isAuthenticated ? (
+                  <>
+                    <p>Você está vendo uma versão limitada do resultado.</p>
+                    <div className="flex gap-2 mt-3">
+                      <Button 
+                        onClick={() => window.location.href = '/api/login'}
+                        className="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600"
+                      >
+                        <LogIn className="mr-2 h-4 w-4" />
+                        Fazer Login
+                      </Button>
+                      <Link href="/subscription">
+                        <Button variant="outline" className="border-cyan-400 text-cyan-300">
+                          Ver Planos
+                        </Button>
+                      </Link>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <p>{accessMessage}</p>
+                    <Link href="/subscription">
+                      <Button className="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 mt-2">
+                        <Sparkles className="mr-2 h-4 w-4" />
+                        Assinar Agora
+                      </Button>
+                    </Link>
+                  </>
+                )}
+              </AlertDescription>
+            </Alert>
+          )}
+
+          <Card className="glass-card border-blue-400/30 overflow-hidden relative">
             <CardHeader className="glass-header pb-4">
-              <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-200 tech-text-glow">Análise do Ciclo</CardTitle>
+              <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-200 tech-text-glow">
+                Análise do Ciclo
+                {!hasFullAccess && (
+                  <Badge className="ml-3 bg-yellow-500/20 text-yellow-300 border-yellow-500/30">
+                    <Lock className="mr-1 h-3 w-3" />
+                    Parcial
+                  </Badge>
+                )}
+              </CardTitle>
               <CardDescription className="text-blue-200">
                 Hoje você está na fase <span className="font-bold text-blue-300 tech-text-glow">{results.currentCyclePhase}</span> do seu ciclo
                 {results.daysUntilNextPhase > 0 && 
@@ -421,21 +532,41 @@ const FertilityCalculator = () => {
             
             <CardContent className="pt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <Card className="glass-panel tech-border">
-                  <CardContent className="p-4">
+                <Card className="glass-panel tech-border relative overflow-hidden">
+                  {!hasFullAccess && (
+                    <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-slate-900/80 to-slate-900/95 backdrop-blur-sm flex items-center justify-center">
+                      <Lock className="h-8 w-8 text-cyan-400 drop-shadow-lg" />
+                    </div>
+                  )}
+                  <CardContent className={`p-4 ${!hasFullAccess ? 'blur-sm' : ''}`}>
                     <p className="text-sm text-blue-300 mb-1">Janela Fértil</p>
                     <p className="text-xl font-medium text-blue-200 tech-text-glow">
-                      {format(results.fertileStart, "dd/MM/yyyy", { locale: ptBR })} a {" "}
-                      {format(results.fertileEnd, "dd/MM/yyyy", { locale: ptBR })}
+                      {hasFullAccess ? (
+                        <>
+                          {format(results.fertileStart, "dd/MM/yyyy", { locale: ptBR })} a {" "}
+                          {format(results.fertileEnd, "dd/MM/yyyy", { locale: ptBR })}
+                        </>
+                      ) : (
+                        "** / ** / **** a ** / ** / ****"
+                      )}
                     </p>
                     <p className="text-sm text-blue-300/70 mt-2">Durante estes dias, a probabilidade de concepção é elevada</p>
                   </CardContent>
                 </Card>
-                <Card className="glass-panel tech-border pulse-animation">
-                  <CardContent className="p-4">
+                <Card className="glass-panel tech-border pulse-animation relative overflow-hidden">
+                  {!hasFullAccess && (
+                    <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-slate-900/80 to-slate-900/95 backdrop-blur-sm flex items-center justify-center">
+                      <Lock className="h-8 w-8 text-cyan-400 drop-shadow-lg" />
+                    </div>
+                  )}
+                  <CardContent className={`p-4 ${!hasFullAccess ? 'blur-sm' : ''}`}>
                     <p className="text-sm text-blue-300 mb-1">Dia Provável da Ovulação</p>
                     <p className="text-xl font-medium text-blue-200 tech-text-glow">
-                      {format(results.ovulationDay, "dd/MM/yyyy", { locale: ptBR })}
+                      {hasFullAccess ? (
+                        format(results.ovulationDay, "dd/MM/yyyy", { locale: ptBR })
+                      ) : (
+                        "** / ** / ****"
+                      )}
                     </p>
                     <p className="text-sm text-blue-300/70 mt-2">Período de 24 horas de viabilidade máxima do óvulo pós-ovulação</p>
                   </CardContent>
@@ -443,19 +574,29 @@ const FertilityCalculator = () => {
               </div>
               
               {/* Seção de características corporais na fase atual */}
-              <div className="mb-6">
+              <div className="mb-6 relative">
+                {!hasFullAccess && (
+                  <div className="absolute inset-0 z-10 pointer-events-none">
+                    <div className="h-full w-full bg-gradient-to-b from-transparent via-slate-900/60 to-slate-900/90" />
+                  </div>
+                )}
                 <button 
-                  onClick={() => toggleSection('bodyChanges')}
-                  className="w-full flex items-center justify-between p-2 sm:p-3 tech-gradient rounded-lg tech-border mb-2"
+                  onClick={() => hasFullAccess && toggleSection('bodyChanges')}
+                  className={`w-full flex items-center justify-between p-2 sm:p-3 tech-gradient rounded-lg tech-border mb-2 ${!hasFullAccess ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!hasFullAccess}
                 >
-                  <span className="text-sm sm:text-base font-semibold text-blue-100">Biomarcadores na Fase {results.currentCyclePhase}</span>
-                  {expandedSection === 'bodyChanges' ? 
-                    <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200 tech-glow" /> : 
-                    <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200" />
-                  }
+                  <span className="text-sm sm:text-base font-semibold text-blue-100">
+                    Biomarcadores na Fase {results.currentCyclePhase}
+                    {!hasFullAccess && <Lock className="inline ml-2 h-4 w-4" />}
+                  </span>
+                  {hasFullAccess && (
+                    expandedSection === 'bodyChanges' ? 
+                      <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200 tech-glow" /> : 
+                      <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200" />
+                  )}
                 </button>
                 
-                {expandedSection === 'bodyChanges' && renderCyclePhaseInfo()}
+                {expandedSection === 'bodyChanges' && hasFullAccess && renderCyclePhaseInfo()}
               </div>
               
               {/* Próxima menstruação */}
@@ -489,18 +630,20 @@ const FertilityCalculator = () => {
               </div>
               
               {/* Visualizações Gráficas */}
-              <div className="mb-6 space-y-6">
-                <CycleVisualization 
-                  cycleLength={cycleLength}
-                  currentDay={Math.abs(differenceInDays(new Date(), new Date(lastPeriodStart))) % cycleLength + 1}
-                  periodLength={5}
-                  ovulationDay={Math.round(cycleLength - 14)}
-                />
-                
-                <TemperatureChart 
-                  ovulationDay={Math.round(cycleLength - 14)}
-                />
-              </div>
+              {hasFullAccess && (
+                <div className="mb-6 space-y-6">
+                  <CycleVisualization 
+                    cycleLength={cycleLength}
+                    currentDay={Math.abs(differenceInDays(new Date(), new Date(lastPeriodStart))) % cycleLength + 1}
+                    periodLength={5}
+                    ovulationDay={Math.round(cycleLength - 14)}
+                  />
+                  
+                  <TemperatureChart 
+                    ovulationDay={Math.round(cycleLength - 14)}
+                  />
+                </div>
+              )}
               
               {/* Calendário */}
               <div>

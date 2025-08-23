@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,8 @@ import {
   SelectValue 
 } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { 
   Info, 
   Calendar, 
@@ -26,7 +28,10 @@ import {
   ChevronUp,
   AlertCircle,
   HeartPulse,
-  Salad
+  Salad,
+  Lock,
+  Sparkles,
+  LogIn
 } from "lucide-react";
 import { 
   calculateGestationalAgeFromLMP, 
@@ -39,10 +44,15 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { apiRequest } from "@/lib/queryClient";
 import GestationalVisualization from "@/components/ui/GestationalVisualization";
+import { useAuth } from "@/hooks/useAuth";
+import { Link } from "wouter";
+import { useToast } from "@/hooks/use-toast";
 
 type CalculationType = "lmp" | "ultrasound" | "transfer";
 
 const GestationalCalculator = () => {
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
   const [calculationType, setCalculationType] = useState<CalculationType>("lmp");
   const [lmpDate, setLmpDate] = useState<string>("");
   const [ultrasoundDate, setUltrasoundDate] = useState<string>("");
@@ -51,6 +61,8 @@ const GestationalCalculator = () => {
   const [transferDate, setTransferDate] = useState<string>("");
   const [embryoDays, setEmbryoDays] = useState<string>("5");
   const [expandedSection, setExpandedSection] = useState<string | null>("development");
+  const [hasFullAccess, setHasFullAccess] = useState(false);
+  const [accessMessage, setAccessMessage] = useState("");
   const [results, setResults] = useState<{
     gestationalAge: string;
     weeks: number;
@@ -74,6 +86,23 @@ const GestationalCalculator = () => {
       special_care: string;
     };
   } | null>(null);
+
+  // Verificar acesso ao carregar e quando o status de autenticação mudar
+  useEffect(() => {
+    checkAccess();
+  }, [isAuthenticated]);
+
+  const checkAccess = async () => {
+    try {
+      const response = await fetch('/api/check-calculation-access');
+      const data = await response.json();
+      setHasFullAccess(data.hasFullAccess);
+      setAccessMessage(data.message || '');
+    } catch (error) {
+      console.error('Erro ao verificar acesso:', error);
+      setHasFullAccess(false);
+    }
+  };
 
   const handleCalculate = async () => {
     try {
@@ -110,33 +139,70 @@ const GestationalCalculator = () => {
           prenatalCare: result.prenatalCare
         });
         
-        // Salvar no histórico
-        try {
-          await apiRequest('POST', '/api/calculator-history', {
-            calculatorType: 'gestational',
-            inputData: JSON.stringify({ 
-              calculationType,
-              lmpDate,
-              ultrasoundDate,
-              ultrasoundWeeks,
-              ultrasoundDays,
-              transferDate,
-              embryoDays 
-            }),
-            resultData: JSON.stringify({
-              gestationalAge: `${result.weeks} semanas e ${result.days} dias`,
-              weeks: result.weeks,
-              days: result.days,
-              dueDate: format(result.dueDate, "dd/MM/yyyy", { locale: ptBR }),
-              firstTrimester: format(result.firstTrimesterEnd, "dd/MM/yyyy", { locale: ptBR }),
-              secondTrimester: format(result.secondTrimesterEnd, "dd/MM/yyyy", { locale: ptBR }),
-              currentTrimester: result.currentTrimester,
-              developmentInfo: result.developmentInfo,
-              prenatalCare: result.prenatalCare
-            })
-          });
-        } catch (error) {
-          console.error('Erro ao salvar histórico:', error);
+        // Se não tem acesso completo, não registrar uso nem salvar histórico
+        if (!hasFullAccess) {
+          return;
+        }
+        
+        // Se tem acesso completo e está autenticado, registrar uso
+        if (isAuthenticated) {
+          try {
+            await apiRequest('POST', '/api/register-calculation-use', {
+              calculationType: 'gestational',
+              calculationData: {
+                calculationType,
+                lmpDate,
+                ultrasoundDate,
+                ultrasoundWeeks,
+                ultrasoundDays,
+                transferDate,
+                embryoDays,
+                result: {
+                  gestationalAge: `${result.weeks} semanas e ${result.days} dias`,
+                  weeks: result.weeks,
+                  days: result.days,
+                  dueDate: format(result.dueDate, "dd/MM/yyyy", { locale: ptBR }),
+                  currentTrimester: result.currentTrimester
+                }
+              }
+            });
+            
+            // Revalidar acesso após uso
+            await checkAccess();
+          } catch (error) {
+            console.error('Erro ao registrar uso:', error);
+          }
+        }
+        
+        // Salvar no histórico se estiver autenticado
+        if (isAuthenticated) {
+          try {
+            await apiRequest('POST', '/api/calculator-history', {
+              calculatorType: 'gestational',
+              inputData: JSON.stringify({ 
+                calculationType,
+                lmpDate,
+                ultrasoundDate,
+                ultrasoundWeeks,
+                ultrasoundDays,
+                transferDate,
+                embryoDays 
+              }),
+              resultData: JSON.stringify({
+                gestationalAge: `${result.weeks} semanas e ${result.days} dias`,
+                weeks: result.weeks,
+                days: result.days,
+                dueDate: format(result.dueDate, "dd/MM/yyyy", { locale: ptBR }),
+                firstTrimester: format(result.firstTrimesterEnd, "dd/MM/yyyy", { locale: ptBR }),
+                secondTrimester: format(result.secondTrimesterEnd, "dd/MM/yyyy", { locale: ptBR }),
+                currentTrimester: result.currentTrimester,
+                developmentInfo: result.developmentInfo,
+                prenatalCare: result.prenatalCare
+              })
+            });
+          } catch (error) {
+            console.error('Erro ao salvar histórico:', error);
+          }
         }
       }
     } catch (error) {
@@ -377,9 +443,56 @@ const GestationalCalculator = () => {
 
       {results && (
         <div className="mt-8">
-          <Card className="glass-card border-blue-400/30 overflow-hidden">
+          {/* Alerta de acesso se não estiver autenticado ou sem assinatura */}
+          {!hasFullAccess && (
+            <Alert className="mb-4 border-cyan-400 bg-cyan-900/20">
+              <Sparkles className="h-4 w-4" />
+              <AlertTitle>{!isAuthenticated ? 'Faça login para ver o resultado completo' : accessMessage}</AlertTitle>
+              <AlertDescription className="mt-2 space-y-2">
+                {!isAuthenticated ? (
+                  <>
+                    <p>Você está vendo uma versão limitada do resultado.</p>
+                    <div className="flex gap-2 mt-3">
+                      <Button 
+                        onClick={() => window.location.href = '/api/login'}
+                        className="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600"
+                      >
+                        <LogIn className="mr-2 h-4 w-4" />
+                        Fazer Login
+                      </Button>
+                      <Link href="/subscription">
+                        <Button variant="outline" className="border-cyan-400 text-cyan-300">
+                          Ver Planos
+                        </Button>
+                      </Link>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <p>{accessMessage}</p>
+                    <Link href="/subscription">
+                      <Button className="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 mt-2">
+                        <Sparkles className="mr-2 h-4 w-4" />
+                        Assinar Agora
+                      </Button>
+                    </Link>
+                  </>
+                )}
+              </AlertDescription>
+            </Alert>
+          )}
+
+          <Card className="glass-card border-blue-400/30 overflow-hidden relative">
             <CardHeader className="glass-header pb-4">
-              <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-200 tech-text-glow">Análise Gestacional</CardTitle>
+              <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-200 tech-text-glow">
+                Análise Gestacional
+                {!hasFullAccess && (
+                  <Badge className="ml-3 bg-yellow-500/20 text-yellow-300 border-yellow-500/30">
+                    <Lock className="mr-1 h-3 w-3" />
+                    Parcial
+                  </Badge>
+                )}
+              </CardTitle>
               <CardDescription className="text-blue-200">
                 <span className="font-semibold tech-text-glow">{results.gestationalAge}</span> - {results.currentTrimester}º Trimestre
               </CardDescription>
@@ -387,13 +500,20 @@ const GestationalCalculator = () => {
             
             <CardContent className="pt-4 sm:pt-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-6">
-                <Card className="glass-panel tech-border">
-                  <CardContent className="p-3 sm:p-4">
+                <Card className="glass-panel tech-border relative overflow-hidden">
+                  {!hasFullAccess && (
+                    <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-slate-900/80 to-slate-900/95 backdrop-blur-sm flex items-center justify-center">
+                      <Lock className="h-8 w-8 text-cyan-400 drop-shadow-lg" />
+                    </div>
+                  )}
+                  <CardContent className={`p-3 sm:p-4 ${!hasFullAccess ? 'blur-sm' : ''}`}>
                     <div className="flex items-center mb-2">
                       <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 tech-glow mr-2" />
                       <p className="text-xs sm:text-sm text-blue-300">Data Provável do Parto</p>
                     </div>
-                    <p className="text-base sm:text-xl font-medium text-blue-200 tech-text-glow">{results.dueDate}</p>
+                    <p className="text-base sm:text-xl font-medium text-blue-200 tech-text-glow">
+                      {hasFullAccess ? results.dueDate : "** / ** / ****"}
+                    </p>
                   </CardContent>
                 </Card>
                 <Card className="glass-panel tech-border col-span-1 md:col-span-2">
@@ -417,19 +537,32 @@ const GestationalCalculator = () => {
               </div>
               
               {/* Desenvolvimento Fetal */}
-              <div className="mb-6">
+              <div className="mb-6 relative">
+                {!hasFullAccess && (
+                  <div className="absolute inset-0 z-10 pointer-events-none">
+                    <div className="h-full w-full bg-gradient-to-b from-transparent via-slate-900/60 to-slate-900/90" />
+                  </div>
+                )}
                 <button 
-                  onClick={() => toggleSection('development')}
-                  className="w-full flex items-center justify-between p-2 sm:p-3 tech-gradient rounded-lg tech-border mb-2"
+                  onClick={() => hasFullAccess && toggleSection('development')}
+                  className={`w-full flex items-center justify-between p-2 sm:p-3 tech-gradient rounded-lg tech-border mb-2 ${!hasFullAccess ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!hasFullAccess}
                 >
                   <div className="flex items-center">
                     <Baby className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-cyan-300 tech-glow" />
-                    <span className="text-sm sm:text-base font-semibold text-blue-100">Desenvolvimento Fetal</span>
+                    <span className="text-sm sm:text-base font-semibold text-blue-100">
+                      Desenvolvimento Fetal
+                      {!hasFullAccess && <Lock className="inline ml-2 h-4 w-4" />}
+                    </span>
                   </div>
-                  {expandedSection === 'development' ? <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200 tech-glow" /> : <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200" />}
+                  {hasFullAccess && (
+                    expandedSection === 'development' ? 
+                      <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200 tech-glow" /> : 
+                      <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200" />
+                  )}
                 </button>
                 
-                {expandedSection === 'development' && (
+                {expandedSection === 'development' && hasFullAccess && (
                   <div className="mt-2 sm:mt-3 p-3 sm:p-4 glass-panel rounded-lg tech-border">
                     <h4 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 tech-text-glow">{results.developmentInfo.title}</h4>
                     
@@ -462,19 +595,32 @@ const GestationalCalculator = () => {
               </div>
               
               {/* Recomendações Pré-Natal */}
-              <div className="mb-6">
+              <div className="mb-6 relative">
+                {!hasFullAccess && (
+                  <div className="absolute inset-0 z-10 pointer-events-none">
+                    <div className="h-full w-full bg-gradient-to-b from-transparent via-slate-900/60 to-slate-900/90" />
+                  </div>
+                )}
                 <button 
-                  onClick={() => toggleSection('prenatal')}
-                  className="w-full flex items-center justify-between p-2 sm:p-3 tech-gradient rounded-lg tech-border mb-2"
+                  onClick={() => hasFullAccess && toggleSection('prenatal')}
+                  className={`w-full flex items-center justify-between p-2 sm:p-3 tech-gradient rounded-lg tech-border mb-2 ${!hasFullAccess ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!hasFullAccess}
                 >
                   <div className="flex items-center">
                     <Stethoscope className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-teal-300 tech-glow" />
-                    <span className="text-sm sm:text-base font-semibold text-blue-100">Cuidados Pré-Natais</span>
+                    <span className="text-sm sm:text-base font-semibold text-blue-100">
+                      Cuidados Pré-Natais
+                      {!hasFullAccess && <Lock className="inline ml-2 h-4 w-4" />}
+                    </span>
                   </div>
-                  {expandedSection === 'prenatal' ? <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200 tech-glow" /> : <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200" />}
+                  {hasFullAccess && (
+                    expandedSection === 'prenatal' ? 
+                      <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200 tech-glow" /> : 
+                      <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-blue-200" />
+                  )}
                 </button>
                 
-                {expandedSection === 'prenatal' && (
+                {expandedSection === 'prenatal' && hasFullAccess && (
                   <div className="mt-2 sm:mt-3">
                     <div className="mb-3 sm:mb-4 glass-panel rounded-lg tech-border p-3 sm:p-4">
                       <div className="flex items-center mb-1 sm:mb-2">
@@ -522,12 +668,14 @@ const GestationalCalculator = () => {
               </div>
               
               {/* Visualização Gráfica do Desenvolvimento */}
-              <div className="mb-6">
-                <GestationalVisualization 
-                  currentWeek={results.weeks}
-                  dueDate={new Date(results.dueDate)}
-                />
-              </div>
+              {hasFullAccess && (
+                <div className="mb-6">
+                  <GestationalVisualization 
+                    currentWeek={results.weeks}
+                    dueDate={new Date(results.dueDate)}
+                  />
+                </div>
+              )}
               
               {/* Observações */}
               <div className="glass-panel tech-border-accent rounded-lg p-3 sm:p-4 text-xs sm:text-sm text-blue-200">
