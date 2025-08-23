@@ -1,9 +1,22 @@
 import { sql } from 'drizzle-orm';
-import { pgTable, text, serial, integer, boolean, date, timestamp, numeric, varchar, jsonb, index } from "drizzle-orm/pg-core";
+import {
+  index,
+  jsonb,
+  pgTable,
+  timestamp,
+  varchar,
+  integer,
+  boolean,
+  text,
+  real,
+  date,
+  decimal
+} from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// Session storage table - MANDATORY for Replit Auth
+// Session storage table - OBRIGATÓRIO para autenticação
 export const sessions = pgTable(
   "sessions",
   {
@@ -11,208 +24,214 @@ export const sessions = pgTable(
     sess: jsonb("sess").notNull(),
     expire: timestamp("expire").notNull(),
   },
-  (table) => [index("IDX_session_expire").on(table.expire)],
+  (table) => [index("IDX_session_expire").on(table.expire)]
 );
 
-// User storage table - MANDATORY for Replit Auth
+// User storage table - Sistema de usuários completo
 export const users = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  email: varchar("email").unique(),
+  email: varchar("email").unique().notNull(),
   firstName: varchar("first_name"),
   lastName: varchar("last_name"),
   profileImageUrl: varchar("profile_image_url"),
-  // Additional fields for payment system
+  
+  // Campos de assinatura
+  plan: varchar("plan").default("free"), // free, basic, pro, clinic
   stripeCustomerId: varchar("stripe_customer_id"),
   stripeSubscriptionId: varchar("stripe_subscription_id"),
-  tokens: integer("tokens").default(0),
-  subscriptionStatus: varchar("subscription_status").default('free'),
+  subscriptionStatus: varchar("subscription_status").default("inactive"), // active, inactive, cancelled, past_due
   subscriptionEndDate: timestamp("subscription_end_date"),
+  
+  // Controle de uso/créditos
+  monthlyCredits: integer("monthly_credits").default(5), // créditos mensais disponíveis
+  usedCredits: integer("used_credits").default(0), // créditos usados no mês
+  totalCalculations: integer("total_calculations").default(0), // total histórico
+  lastCreditReset: timestamp("last_credit_reset").defaultNow(),
+  
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-// Calculator history to save previous calculations
-export const calculatorHistory = pgTable("calculator_history", {
-  id: serial("id").primaryKey(),
-  userId: varchar("user_id").references(() => users.id),
-  calculatorType: text("calculator_type").notNull(), // "gestational" or "fertility"
-  inputData: text("input_data").notNull(), // JSON string of input data
-  resultData: text("result_data").notNull(), // JSON string of calculation result
-  createdAt: date("created_at").notNull().defaultNow(),
-});
-
-// Nova tabela para armazenar histórico de ciclos menstruais
-export const menstrualCycles = pgTable("menstrual_cycles", {
-  id: serial("id").primaryKey(),
-  userId: varchar("user_id").references(() => users.id),
-  periodStartDate: date("period_start_date").notNull(),
-  periodEndDate: date("period_end_date").notNull(),
-  cycleLength: integer("cycle_length").notNull(),
-  periodLength: integer("period_length").notNull(),
-  notes: text("notes"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
-// Nova tabela para armazenar temperaturas basais
-export const basalTemperatures = pgTable("basal_temperatures", {
-  id: serial("id").primaryKey(),
-  userId: varchar("user_id").references(() => users.id),
-  measurementDate: date("measurement_date").notNull(),
-  temperature: numeric("temperature").notNull(), // 36.5
-  measurementTime: text("measurement_time"), // "07:30"
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
-// Nova tabela para armazenar análises de muco cervical
-export const cervicalMucus = pgTable("cervical_mucus", {
-  id: serial("id").primaryKey(),
-  userId: varchar("user_id").references(() => users.id),
-  observationDate: date("observation_date").notNull(),
-  consistency: text("consistency"), // "creamy", "stretchy", "watery", etc.
-  amount: text("amount"), // "light", "moderate", "heavy"
-  notes: text("notes"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
-// Nova tabela para armazenar marcos de desenvolvimento fetal por semana
-export const fetalDevelopment = pgTable("fetal_development", {
-  id: serial("id").primaryKey(),
-  week: integer("week").notNull().unique(),
-  developmentDescription: text("development_description").notNull(),
-  maternalChanges: text("maternal_changes"),
-  recommendedExams: text("recommended_exams"),
-  importantMilestones: text("important_milestones"),
-  vaccineRecommendations: text("vaccine_recommendations"),
-  size: text("size"), // "Tamanho de uma uva"
-  weight: text("weight"), // "Aproximadamente 10g"
-});
-
-// Payment tokens table
-export const paymentTokens = pgTable("payment_tokens", {
-  id: serial("id").primaryKey(),
-  userId: varchar("user_id").references(() => users.id),
-  amount: integer("amount").notNull(),
-  type: varchar("type").notNull(), // "purchase" or "used"
+// Planos de assinatura
+export const plans = pgTable("plans", {
+  id: varchar("id").primaryKey(),
+  name: varchar("name").notNull(),
   description: text("description"),
-  stripePaymentIntentId: varchar("stripe_payment_intent_id"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  monthlyPrice: decimal("monthly_price", { precision: 10, scale: 2 }).notNull(),
+  yearlyPrice: decimal("yearly_price", { precision: 10, scale: 2 }),
+  monthlyCredits: integer("monthly_credits").notNull(), // -1 para ilimitado
+  features: jsonb("features").$type<string[]>().notNull(),
+  stripePriceIdMonthly: varchar("stripe_price_id_monthly"),
+  stripePriceIdYearly: varchar("stripe_price_id_yearly"),
+  popular: boolean("popular").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-// Subscription history table
-export const subscriptionHistory = pgTable("subscription_history", {
-  id: serial("id").primaryKey(),
-  userId: varchar("user_id").references(() => users.id),
-  stripeSubscriptionId: varchar("stripe_subscription_id"),
-  status: varchar("status").notNull(), // "active", "cancelled", "expired"
-  plan: varchar("plan").notNull(), // "monthly", "annual"
-  startDate: timestamp("start_date").notNull(),
-  endDate: timestamp("end_date"),
-  cancelledAt: timestamp("cancelled_at"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+// Histórico de uso/consumo
+export const usageHistory = pgTable("usage_history", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  calculationType: varchar("calculation_type").notNull(), // fertility, gestational, analysis
+  creditsUsed: integer("credits_used").default(1),
+  calculationData: jsonb("calculation_data"), // dados do cálculo realizado
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-// Schemas for validation
-export const gestationalInputSchema = z.object({
-  calculationType: z.enum(["lmp", "ultrasound", "transfer"]),
-  date: z.string().min(1),
-  ultrasoundWeeks: z.number().optional(),
-  ultrasoundDays: z.number().optional(),
-  embryoDays: z.number().optional(),
+// Ciclos menstruais - Dados de fertilidade
+export const cycles = pgTable("cycles", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  periodStart: date("period_start").notNull(),
+  periodEnd: date("period_end"),
+  cycleLength: integer("cycle_length").default(28),
+  ovulationDate: date("ovulation_date"),
+  fertileStart: date("fertile_start"),
+  fertileEnd: date("fertile_end"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export const fertilityInputSchema = z.object({
-  periodStart: z.string().min(1),
-  periodEnd: z.string().min(1),
-  cycleLength: z.number().min(21).max(45).default(28),
+// Temperatura basal
+export const basalTemperatures = pgTable("basal_temperatures", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  cycleId: varchar("cycle_id").references(() => cycles.id),
+  date: date("date").notNull(),
+  temperature: real("temperature").notNull(),
+  time: varchar("time"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-// Esquema para histórico de ciclos menstruais
-export const menstrualCycleSchema = z.object({
-  periodStartDate: z.string().min(1),
-  periodEndDate: z.string().min(1),
-  cycleLength: z.number().min(21).max(45),
-  periodLength: z.number().min(1).max(10),
-  notes: z.string().optional(),
+// Análise de muco cervical
+export const mucusObservations = pgTable("mucus_observations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  cycleId: varchar("cycle_id").references(() => cycles.id),
+  date: date("date").notNull(),
+  consistency: varchar("consistency"), // dry, sticky, creamy, watery, eggwhite
+  amount: varchar("amount"), // none, light, moderate, heavy
+  color: varchar("color"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-// Esquema para temperatura basal
-export const basalTemperatureSchema = z.object({
-  measurementDate: z.string().min(1),
-  temperature: z.number().min(35).max(38),
-  measurementTime: z.string().optional(),
+// Gestações
+export const pregnancies = pgTable("pregnancies", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  lmpDate: date("lmp_date"), // última menstruação
+  dueDate: date("due_date"),
+  conceptionDate: date("conception_date"),
+  currentWeek: integer("current_week"),
+  currentDay: integer("current_day"),
+  notes: text("notes"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-// Esquema para muco cervical
-export const cervicalMucusSchema = z.object({
-  observationDate: z.string().min(1),
-  consistency: z.string().optional(),
-  amount: z.string().optional(),
-  notes: z.string().optional(),
+// Histórico de cálculos
+export const calculations = pgTable("calculations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  type: varchar("type").notNull(), // fertility, gestational
+  inputData: jsonb("input_data").notNull(),
+  resultData: jsonb("result_data").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-// Insert schemas (removed old insertUserSchema since we use upsertUserSchema for Replit Auth)
+// Notificações
+export const notifications = pgTable("notifications", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  type: varchar("type").notNull(), // reminder, alert, info, promotion
+  title: varchar("title").notNull(),
+  message: text("message").notNull(),
+  isRead: boolean("is_read").default(false),
+  actionUrl: varchar("action_url"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
 
-export const insertCalculatorHistorySchema = createInsertSchema(calculatorHistory).omit({
+// Relações
+export const usersRelations = relations(users, ({ many }) => ({
+  cycles: many(cycles),
+  temperatures: many(basalTemperatures),
+  mucusObservations: many(mucusObservations),
+  pregnancies: many(pregnancies),
+  calculations: many(calculations),
+  notifications: many(notifications),
+  usageHistory: many(usageHistory),
+}));
+
+export const cyclesRelations = relations(cycles, ({ one, many }) => ({
+  user: one(users, {
+    fields: [cycles.userId],
+    references: [users.id],
+  }),
+  temperatures: many(basalTemperatures),
+  mucusObservations: many(mucusObservations),
+}));
+
+// Types e Schemas
+export type UpsertUser = typeof users.$inferInsert;
+export type User = typeof users.$inferSelect;
+
+export type Plan = typeof plans.$inferSelect;
+export type InsertPlan = typeof plans.$inferInsert;
+
+export type Cycle = typeof cycles.$inferSelect;
+export type InsertCycle = typeof cycles.$inferInsert;
+
+export type BasalTemperature = typeof basalTemperatures.$inferSelect;
+export type InsertBasalTemperature = typeof basalTemperatures.$inferInsert;
+
+export type MucusObservation = typeof mucusObservations.$inferSelect;
+export type InsertMucusObservation = typeof mucusObservations.$inferInsert;
+
+export type Pregnancy = typeof pregnancies.$inferSelect;
+export type InsertPregnancy = typeof pregnancies.$inferInsert;
+
+export type Calculation = typeof calculations.$inferSelect;
+export type InsertCalculation = typeof calculations.$inferInsert;
+
+export type Notification = typeof notifications.$inferSelect;
+export type InsertNotification = typeof notifications.$inferInsert;
+
+export type UsageHistory = typeof usageHistory.$inferSelect;
+export type InsertUsageHistory = typeof usageHistory.$inferInsert;
+
+// Schemas de validação
+export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
-  createdAt: true,
-});
-
-export const insertMenstrualCycleSchema = createInsertSchema(menstrualCycles).omit({
-  id: true,
-  createdAt: true,
-});
-
-export const insertBasalTemperatureSchema = createInsertSchema(basalTemperatures).omit({
-  id: true,
-  createdAt: true,
-});
-
-export const insertCervicalMucusSchema = createInsertSchema(cervicalMucus).omit({
-  id: true,
-  createdAt: true,
-});
-
-export const insertFetalDevelopmentSchema = createInsertSchema(fetalDevelopment).omit({
-  id: true,
-});
-
-// Upsert user schema
-export const upsertUserSchema = createInsertSchema(users).omit({
   createdAt: true,
   updatedAt: true,
-  tokens: true,
-  subscriptionStatus: true,
-  subscriptionEndDate: true,
 });
 
-// Insert token history schema
-export const insertTokenSchema = createInsertSchema(paymentTokens).omit({
+export const insertCycleSchema = createInsertSchema(cycles).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertTemperatureSchema = createInsertSchema(basalTemperatures).omit({
   id: true,
   createdAt: true,
 });
 
-// Insert subscription history schema
-export const insertSubscriptionSchema = createInsertSchema(subscriptionHistory).omit({
+export const insertMucusSchema = createInsertSchema(mucusObservations).omit({
   id: true,
   createdAt: true,
 });
 
-// Types
-export type UpsertUser = z.infer<typeof upsertUserSchema>;
-export type User = typeof users.$inferSelect;
-export type CalculatorHistory = typeof calculatorHistory.$inferSelect;
-export type InsertCalculatorHistory = z.infer<typeof insertCalculatorHistorySchema>;
-export type GestationalInput = z.infer<typeof gestationalInputSchema>;
-export type FertilityInput = z.infer<typeof fertilityInputSchema>;
-export type MenstrualCycle = typeof menstrualCycles.$inferSelect;
-export type InsertMenstrualCycle = z.infer<typeof insertMenstrualCycleSchema>;
-export type BasalTemperature = typeof basalTemperatures.$inferSelect;
-export type InsertBasalTemperature = z.infer<typeof insertBasalTemperatureSchema>;
-export type CervicalMucus = typeof cervicalMucus.$inferSelect;
-export type InsertCervicalMucus = z.infer<typeof insertCervicalMucusSchema>;
-export type FetalDevelopment = typeof fetalDevelopment.$inferSelect;
-export type InsertFetalDevelopment = z.infer<typeof insertFetalDevelopmentSchema>;
-export type PaymentToken = typeof paymentTokens.$inferSelect;
-export type InsertPaymentToken = z.infer<typeof insertTokenSchema>;
-export type SubscriptionHistory = typeof subscriptionHistory.$inferSelect;
-export type InsertSubscriptionHistory = z.infer<typeof insertSubscriptionSchema>;
+export const insertPregnancySchema = createInsertSchema(pregnancies).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertCalculationSchema = createInsertSchema(calculations).omit({
+  id: true,
+  createdAt: true,
+});
