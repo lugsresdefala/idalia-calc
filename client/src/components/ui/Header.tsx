@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Activity, Calculator, BarChart3, Bell, FileText } from "lucide-react";
+import { Activity, Calculator, BarChart3, Bell, FileText, CreditCard } from "lucide-react";
 
 const Header = () => {
   return (
@@ -42,6 +42,10 @@ const Header = () => {
           <Link href="/history" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass-panel text-purple-300 hover:text-purple-200 transition-all duration-300 tech-border-faint">
             <FileText className="h-4 w-4" />
             Histórico
+          </Link>
+          <Link href="/subscription" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass-panel text-emerald-300 hover:text-emerald-200 transition-all duration-300 tech-border-faint">
+            <CreditCard className="h-4 w-4" />
+            Assinatura
           </Link>
           <Link href="/algoritmos" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass-panel text-teal-300 hover:text-teal-200 transition-all duration-300 tech-border-faint">
             <Activity className="h-4 w-4" />

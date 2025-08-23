@@ -11,6 +11,7 @@ import Algorithms from "@/pages/Algorithms";
 import Dashboard from "@/pages/Dashboard";
 import Notifications from "@/pages/Notifications";
 import History from "@/pages/History";
+import Subscription from "@/pages/Subscription";
 import Header from "./components/ui/Header";
 import MobileHeader from "./components/ui/MobileHeader";
 import "./styles/global.css";
@@ -49,6 +50,7 @@ function Router() {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/notifications" component={Notifications} />
         <Route path="/history" component={History} />
+        <Route path="/subscription" component={Subscription} />
         <Route path="/algorithms" component={Algorithms} />
         <Route path="/algoritmos" component={Algorithms} />
         <Route component={NotFound} />

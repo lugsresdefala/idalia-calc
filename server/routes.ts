@@ -1,4 +1,5 @@
 import type { Express } from "express";
+import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
@@ -9,6 +10,15 @@ import {
   insertCalculationSchema
 } from "@shared/schema";
 import { z } from "zod";
+import Stripe from "stripe";
+
+// Configurar Stripe
+if (!process.env.STRIPE_SECRET_KEY) {
+  console.warn('WARNING: STRIPE_SECRET_KEY not set - payment features disabled');
+}
+const stripe = process.env.STRIPE_SECRET_KEY 
+  ? new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-12-18.acacia" })
+  : null;
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
@@ -663,6 +673,207 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Erro ao buscar histórico:', error);
       return res.status(500).json({ message: 'Erro ao buscar histórico' });
+    }
+  });
+
+  // =================== ROTAS DE PAGAMENTO STRIPE ===================
+  
+  // Criar sessão de checkout para assinatura
+  app.post('/api/create-subscription', isAuthenticated, async (req: any, res) => {
+    if (!stripe) {
+      return res.status(503).json({ message: "Sistema de pagamento não configurado" });
+    }
+
+    try {
+      const userId = req.user.claims.sub;
+      const { priceId, planId } = req.body;
+      
+      // Buscar ou criar customer no Stripe
+      let user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ message: "Usuário não encontrado" });
+      }
+
+      let customerId = user.stripeCustomerId;
+      
+      if (!customerId) {
+        // Criar customer no Stripe
+        const customer = await stripe.customers.create({
+          email: user.email,
+          metadata: {
+            userId: userId
+          }
+        });
+        
+        // Salvar customer ID no banco
+        await storage.updateUser(userId, {
+          stripeCustomerId: customer.id
+        });
+        
+        customerId = customer.id;
+      }
+
+      // Criar subscription com payment intent
+      const subscription = await stripe.subscriptions.create({
+        customer: customerId,
+        items: [
+          {
+            price: priceId, // Este price ID deve ser criado no Dashboard do Stripe
+          },
+        ],
+        payment_behavior: 'default_incomplete',
+        payment_settings: { 
+          save_default_payment_method: 'on_subscription' 
+        },
+        expand: ['latest_invoice.payment_intent'],
+      });
+
+      const invoice = subscription.latest_invoice as Stripe.Invoice;
+      const paymentIntent = invoice.payment_intent as Stripe.PaymentIntent;
+
+      res.json({
+        subscriptionId: subscription.id,
+        clientSecret: paymentIntent.client_secret,
+      });
+    } catch (error: any) {
+      console.error('Erro ao criar assinatura:', error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Webhook do Stripe para atualizar status de assinatura
+  app.post('/api/stripe-webhook', express.raw({type: 'application/json'}), async (req, res) => {
+    if (!stripe) {
+      return res.status(503).json({ message: "Sistema de pagamento não configurado" });
+    }
+
+    const sig = req.headers['stripe-signature'] as string;
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+    if (!webhookSecret) {
+      console.warn('STRIPE_WEBHOOK_SECRET não configurado');
+      return res.status(200).json({ received: true });
+    }
+
+    let event: Stripe.Event;
+
+    try {
+      event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+    } catch (err: any) {
+      console.error('Webhook signature verification failed:', err.message);
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    // Handle the event
+    switch (event.type) {
+      case 'customer.subscription.created':
+      case 'customer.subscription.updated':
+        const subscription = event.data.object as Stripe.Subscription;
+        
+        // Atualizar status da assinatura no banco
+        await storage.updateUserSubscription(
+          subscription.metadata.userId || '',
+          {
+            stripeSubscriptionId: subscription.id,
+            subscriptionStatus: subscription.status,
+            plan: subscription.items.data[0].price.metadata.plan || 'professional',
+            subscriptionEndDate: new Date(subscription.current_period_end * 1000)
+          }
+        );
+        break;
+
+      case 'customer.subscription.deleted':
+        const cancelledSub = event.data.object as Stripe.Subscription;
+        
+        // Cancelar assinatura no banco
+        await storage.updateUserSubscription(
+          cancelledSub.metadata.userId || '',
+          {
+            subscriptionStatus: 'cancelled',
+            plan: 'free',
+            monthlyCredits: 5
+          }
+        );
+        break;
+
+      case 'invoice.payment_succeeded':
+        const invoice = event.data.object as Stripe.Invoice;
+        console.log('Pagamento recebido para:', invoice.customer);
+        break;
+
+      case 'invoice.payment_failed':
+        const failedInvoice = event.data.object as Stripe.Invoice;
+        
+        // Marcar assinatura como past_due
+        await storage.updateUserSubscription(
+          failedInvoice.metadata.userId || '',
+          {
+            subscriptionStatus: 'past_due'
+          }
+        );
+        break;
+
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+
+    res.json({ received: true });
+  });
+
+  // Obter status da assinatura
+  app.get('/api/subscription-status', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "Usuário não encontrado" });
+      }
+
+      res.json({
+        plan: user.plan || 'free',
+        subscriptionStatus: user.subscriptionStatus || 'inactive',
+        monthlyCredits: user.monthlyCredits || 5,
+        usedCredits: user.usedCredits || 0,
+        subscriptionEndDate: user.subscriptionEndDate
+      });
+    } catch (error) {
+      console.error('Erro ao buscar status da assinatura:', error);
+      res.status(500).json({ message: "Erro ao buscar status da assinatura" });
+    }
+  });
+
+  // Cancelar assinatura
+  app.post('/api/cancel-subscription', isAuthenticated, async (req: any, res) => {
+    if (!stripe) {
+      return res.status(503).json({ message: "Sistema de pagamento não configurado" });
+    }
+
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || !user.stripeSubscriptionId) {
+        return res.status(404).json({ message: "Assinatura não encontrada" });
+      }
+
+      // Cancelar no Stripe
+      const subscription = await stripe.subscriptions.cancel(user.stripeSubscriptionId);
+
+      // Atualizar no banco
+      await storage.updateUserSubscription(userId, {
+        subscriptionStatus: 'cancelled',
+        plan: 'free',
+        monthlyCredits: 5
+      });
+
+      res.json({ 
+        message: "Assinatura cancelada com sucesso",
+        subscription 
+      });
+    } catch (error: any) {
+      console.error('Erro ao cancelar assinatura:', error);
+      res.status(500).json({ message: error.message });
     }
   });
 

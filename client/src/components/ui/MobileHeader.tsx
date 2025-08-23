@@ -7,7 +7,8 @@ import {
   Activity, 
   Menu, 
   X,
-  Home
+  Home,
+  CreditCard
 } from "lucide-react";
 
 const MobileHeader = () => {
@@ -18,6 +19,7 @@ const MobileHeader = () => {
     { path: "/", icon: Home, label: "Início", active: location === "/" },
     { path: "/dashboard", icon: BarChart3, label: "Dashboard", active: location === "/dashboard" },
     { path: "/notifications", icon: Bell, label: "Notificações", active: location === "/notifications" },
+    { path: "/subscription", icon: CreditCard, label: "Assinatura", active: location === "/subscription" },
     { path: "/algoritmos", icon: Activity, label: "Algoritmos", active: location === "/algoritmos" }
   ];
 
