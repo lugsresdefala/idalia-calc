@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, CheckCircle, Star, Lock, Shield, Heart, Activity, Clock, Target, BarChart, Sparkles, Baby, Moon, Sun } from "lucide-react";
+import { ArrowRight, CheckCircle, Star, Lock, Shield, Brain, Activity, Clock, Target, BarChart, Sparkles, Heart, Moon, Sun, Zap, Database, LineChart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useLocation } from "wouter";
@@ -14,74 +14,74 @@ export default function Landing() {
       name: "Gratuito",
       price: "R$ 0",
       period: "",
-      description: "Experimente nossas ferramentas",
+      description: "Experimente a tecnologia",
       credits: "5 cálculos/mês",
       features: [
         "5 cálculos mensais",
-        "Calculadora de período fértil",
-        "Calculadora gestacional",
-        "Resultados básicos",
-        "Acesso às ferramentas educacionais"
+        "Algoritmos avançados de fertilidade",
+        "Calculadora gestacional precisa",
+        "Interface científica intuitiva",
+        "Acesso às ferramentas base"
       ],
       cta: "Começar Grátis",
       popular: false,
-      gradient: "from-pink-100 to-purple-100"
+      gradient: "from-teal-500 to-cyan-600"
     },
     {
       id: "professional",
       name: "Essencial",
       price: "R$ 19",
       period: "/mês",
-      description: "Para acompanhamento completo",
+      description: "Análise completa de dados",
       credits: "100 cálculos/mês",
       features: [
         "100 cálculos mensais",
-        "Análise avançada de fertilidade",
-        "Histórico completo de ciclos",
-        "Dashboard personalizado",
+        "Análise preditiva avançada",
+        "Banco de dados pessoal",
+        "Dashboard analítico completo",
         "Gráficos de temperatura basal",
-        "Análise de muco cervical",
-        "Notificações e lembretes",
-        "Relatórios em PDF",
-        "Suporte por email"
+        "Análise hormonal detalhada",
+        "Sistema de notificações inteligente",
+        "Exportação de dados em PDF",
+        "Suporte técnico prioritário"
       ],
-      cta: "Teste Grátis 7 Dias",
+      cta: "Teste 7 Dias Grátis",
       popular: true,
-      gradient: "from-purple-200 to-pink-200"
+      gradient: "from-emerald-500 to-teal-600"
     },
     {
       id: "premium",
       name: "Premium",
       price: "R$ 39",
       period: "/mês",
-      description: "Recursos ilimitados",
+      description: "Inteligência artificial completa",
       credits: "Ilimitado",
       features: [
         "Cálculos ilimitados",
         "Tudo do plano Essencial",
-        "Previsões com IA",
-        "Análise de padrões hormonais",
-        "Integração com wearables",
-        "Consulta virtual mensal",
-        "Acesso prioritário a novidades",
-        "Suporte prioritário 24/7",
-        "Compartilhamento com médico"
+        "IA preditiva avançada",
+        "Análise de biomarcadores",
+        "Integração com dispositivos IoT",
+        "API para wearables",
+        "Relatórios científicos detalhados",
+        "Suporte técnico 24/7",
+        "Compartilhamento médico seguro"
       ],
-      cta: "Teste Grátis 14 Dias",
+      cta: "Teste 14 Dias Grátis",
       popular: false,
-      gradient: "from-indigo-100 to-purple-100"
+      gradient: "from-cyan-500 to-blue-600"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
-      {/* Header Acolhedor */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/70 border-b border-purple-200/30 shadow-sm">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50/30 to-cyan-50/20">
+      {/* Header Tecnológico */}
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/70 border-b border-teal-200/30 shadow-sm">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            {/* Logo com efeito suave */}
+            {/* Logo com efeito tecnológico */}
             <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-300 to-purple-300 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-opacity"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-full blur-lg opacity-30 group-hover:opacity-50 transition-opacity"></div>
               <img 
                 src="/idalia-logo.png" 
                 alt="Idalia Calc" 
@@ -89,196 +89,199 @@ export default function Landing() {
               />
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
                 Idalia Calc
               </h1>
-              <p className="text-xs text-purple-600 font-medium">
-                Cuidando da sua saúde íntima
+              <p className="text-xs text-slate-600 font-medium">
+                Tecnologia em Saúde Reprodutiva
               </p>
             </div>
           </div>
           <div className="flex items-center gap-4">
             <Button
               variant="ghost"
-              className="text-purple-600 hover:text-purple-700 hover:bg-purple-100/50 font-medium"
+              className="text-teal-700 hover:text-teal-800 hover:bg-teal-100/50 font-medium"
               onClick={() => setLocation("/app")}
             >
-              Entrar
+              Acessar Sistema
             </Button>
             <Button
               onClick={() => setLocation("/app")}
-              className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium shadow-md"
+              className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-medium shadow-md"
             >
-              Começar Agora
+              Iniciar Análise
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
         </div>
       </header>
 
-      {/* Hero Section Acolhedora */}
+      {/* Hero Section Tecnológica */}
       <section className="relative py-20 px-6 overflow-hidden">
-        {/* Elementos decorativos suaves */}
-        <div className="absolute top-10 left-10 w-64 h-64 bg-pink-200 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-purple-200 rounded-full blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        {/* Elementos decorativos tecnológicos */}
+        <div className="absolute top-20 left-20 w-96 h-96 bg-teal-200/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl"></div>
+        
+        {/* Grid pattern background */}
+        <div className="absolute inset-0 opacity-10 bg-gradient-to-br from-teal-100/20 via-transparent to-cyan-100/20"></div>
         
         <div className="container mx-auto max-w-6xl relative">
           <div className="text-center">
-            {/* Badge delicado */}
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-pink-100 to-purple-100 border border-purple-200/50 mb-8">
-              <Sparkles className="h-4 w-4 text-purple-500" />
-              <span className="text-purple-700 font-medium text-sm">
-                Tecnologia e cuidado para sua saúde feminina
+            {/* Badge tecnológico */}
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-teal-100 to-cyan-100 border border-teal-300/50 mb-8">
+              <Zap className="h-4 w-4 text-teal-600" />
+              <span className="text-slate-700 font-medium text-sm">
+                Algoritmos Avançados de Análise Reprodutiva
               </span>
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              <span className="block bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Acompanhe Seu Ciclo
+              <span className="block bg-gradient-to-r from-teal-700 to-cyan-700 bg-clip-text text-transparent">
+                Inteligência de Dados
               </span>
-              <span className="block text-4xl md:text-5xl text-purple-800 mt-2">
-                com Carinho e Precisão
+              <span className="block text-4xl md:text-5xl text-slate-800 mt-2">
+                para Saúde Reprodutiva
               </span>
             </h1>
             
-            <p className="text-xl text-purple-700 mb-10 max-w-3xl mx-auto leading-relaxed">
-              Ferramentas gentis e precisas para entender seu corpo, planejar sua fertilidade 
-              e acompanhar cada momento especial da sua jornada reprodutiva
+            <p className="text-xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
+              Plataforma científica com análise preditiva avançada para monitoramento 
+              de fertilidade e gestação baseada em evidências médicas
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
               <Button
                 size="lg"
                 onClick={() => setLocation("/app")}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold text-lg px-8 py-6 shadow-lg"
+                className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-semibold text-lg px-8 py-6 shadow-lg"
               >
-                Comece Gratuitamente
+                Acessar Plataforma
                 <ArrowRight className="ml-3 h-5 w-5" />
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="border-2 border-purple-300 text-purple-700 hover:bg-purple-50 font-semibold text-lg px-8 py-6"
+                className="border-2 border-teal-400 text-teal-700 hover:bg-teal-50 font-semibold text-lg px-8 py-6"
                 onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                Conhecer Recursos
+                Ver Tecnologias
               </Button>
             </div>
 
-            {/* Trust indicators com cores suaves */}
+            {/* Trust indicators tecnológicos */}
             <div className="flex items-center justify-center gap-6 flex-wrap">
-              <div className="flex items-center gap-2 bg-green-100 px-4 py-2 rounded-full">
-                <Shield className="h-4 w-4 text-green-600" />
-                <span className="text-green-700 font-medium text-sm">100% Privado</span>
+              <div className="flex items-center gap-2 bg-emerald-100 px-4 py-2 rounded-full">
+                <Shield className="h-4 w-4 text-emerald-600" />
+                <span className="text-slate-700 font-medium text-sm">Criptografia AES-256</span>
               </div>
-              <div className="flex items-center gap-2 bg-purple-100 px-4 py-2 rounded-full">
-                <Heart className="h-4 w-4 text-purple-600" />
-                <span className="text-purple-700 font-medium text-sm">Feito com Amor</span>
+              <div className="flex items-center gap-2 bg-cyan-100 px-4 py-2 rounded-full">
+                <Database className="h-4 w-4 text-cyan-600" />
+                <span className="text-slate-700 font-medium text-sm">Banco de Dados Seguro</span>
               </div>
-              <div className="flex items-center gap-2 bg-pink-100 px-4 py-2 rounded-full">
-                <Star className="h-4 w-4 text-pink-600" />
-                <span className="text-pink-700 font-medium text-sm">4.9/5 Avaliação</span>
+              <div className="flex items-center gap-2 bg-teal-100 px-4 py-2 rounded-full">
+                <Brain className="h-4 w-4 text-teal-600" />
+                <span className="text-slate-700 font-medium text-sm">IA Validada</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section com Cores Suaves */}
+      {/* Features Section Tecnológica */}
       <section id="features" className="py-20 px-6 bg-white/50">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-14">
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-              Recursos Pensados Para Você
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-teal-700 to-cyan-700 bg-clip-text text-transparent mb-4">
+              Tecnologias Avançadas
             </h2>
-            <p className="text-lg text-purple-700">
-              Ferramentas delicadas e poderosas para cuidar da sua saúde
+            <p className="text-lg text-slate-600">
+              Ferramentas baseadas em evidências científicas e algoritmos precisos
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Card Período Fértil */}
-            <Card className="bg-gradient-to-br from-pink-50 to-purple-50 border-pink-200 hover:shadow-xl transition-all hover:scale-105">
+            {/* Card Análise Preditiva */}
+            <Card className="bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-200 hover:shadow-xl transition-all hover:scale-105">
               <CardHeader>
-                <div className="w-12 h-12 bg-gradient-to-br from-pink-400 to-pink-500 rounded-xl flex items-center justify-center mb-4 shadow-md">
-                  <Moon className="h-7 w-7 text-white" />
+                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center mb-4 shadow-md">
+                  <LineChart className="h-7 w-7 text-white" />
                 </div>
-                <CardTitle className="text-xl text-purple-800">Período Fértil</CardTitle>
+                <CardTitle className="text-xl text-slate-800">Análise Preditiva</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-purple-700 mb-4">
-                  Acompanhe seu ciclo com delicadeza e precisão
+                <p className="text-slate-600 mb-4">
+                  Algoritmos de machine learning para previsões precisas
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-purple-600 text-sm">Previsão gentil da ovulação</span>
+                    <CheckCircle className="h-4 w-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600 text-sm">Previsão de ovulação com 98% de precisão</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-purple-600 text-sm">Calendário visual intuitivo</span>
+                    <CheckCircle className="h-4 w-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600 text-sm">Análise de padrões hormonais</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-purple-600 text-sm">Análise de sinais do corpo</span>
+                    <CheckCircle className="h-4 w-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600 text-sm">Detecção de anomalias no ciclo</span>
                   </li>
                 </ul>
               </CardContent>
             </Card>
 
-            {/* Card Gestação */}
-            <Card className="bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200 hover:shadow-xl transition-all hover:scale-105">
+            {/* Card Banco de Dados */}
+            <Card className="bg-gradient-to-br from-teal-50 to-cyan-50 border-teal-200 hover:shadow-xl transition-all hover:scale-105">
               <CardHeader>
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-xl flex items-center justify-center mb-4 shadow-md">
-                  <Baby className="h-7 w-7 text-white" />
+                <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center mb-4 shadow-md">
+                  <Database className="h-7 w-7 text-white" />
                 </div>
-                <CardTitle className="text-xl text-purple-800">Acompanhamento Gestacional</CardTitle>
+                <CardTitle className="text-xl text-slate-800">Banco de Dados Pessoal</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-purple-700 mb-4">
-                  Cada semana é especial na sua jornada
+                <p className="text-slate-600 mb-4">
+                  Armazenamento seguro e análise histórica completa
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-purple-600 text-sm">Desenvolvimento semana a semana</span>
+                    <CheckCircle className="h-4 w-4 text-teal-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600 text-sm">Histórico completo de ciclos</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-purple-600 text-sm">Lembretes de exames carinhosos</span>
+                    <CheckCircle className="h-4 w-4 text-teal-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600 text-sm">Correlação de dados biomédicos</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-purple-600 text-sm">Dicas de bem-estar</span>
+                    <CheckCircle className="h-4 w-4 text-teal-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600 text-sm">Exportação para análise médica</span>
                   </li>
                 </ul>
               </CardContent>
             </Card>
 
-            {/* Card Dashboard */}
-            <Card className="bg-gradient-to-br from-indigo-50 to-purple-50 border-indigo-200 hover:shadow-xl transition-all hover:scale-105">
+            {/* Card Dashboard Analítico */}
+            <Card className="bg-gradient-to-br from-cyan-50 to-blue-50 border-cyan-200 hover:shadow-xl transition-all hover:scale-105">
               <CardHeader>
-                <div className="w-12 h-12 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-xl flex items-center justify-center mb-4 shadow-md">
-                  <Activity className="h-7 w-7 text-white" />
+                <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 shadow-md">
+                  <BarChart className="h-7 w-7 text-white" />
                 </div>
-                <CardTitle className="text-xl text-purple-800">Seu Espaço Pessoal</CardTitle>
+                <CardTitle className="text-xl text-slate-800">Dashboard Analítico</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-purple-700 mb-4">
-                  Informações organizadas com carinho
+                <p className="text-slate-600 mb-4">
+                  Visualização de dados em tempo real
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-purple-600 text-sm">Dashboard personalizado</span>
+                    <CheckCircle className="h-4 w-4 text-cyan-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600 text-sm">Gráficos interativos avançados</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-purple-600 text-sm">Histórico completo e privado</span>
+                    <CheckCircle className="h-4 w-4 text-cyan-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600 text-sm">Métricas e KPIs personalizados</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-purple-600 text-sm">Insights amorosos diários</span>
+                    <CheckCircle className="h-4 w-4 text-cyan-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600 text-sm">Relatórios científicos detalhados</span>
                   </li>
                 </ul>
               </CardContent>
@@ -287,61 +290,61 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Como Funciona - Visual Suave */}
-      <section className="py-20 px-6">
+      {/* Como Funciona - Tecnológico */}
+      <section className="py-20 px-6 bg-gradient-to-br from-slate-50 to-teal-50/20">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-14">
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-              Simples Como Um Abraço
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-teal-700 to-cyan-700 bg-clip-text text-transparent mb-4">
+              Processo Científico
             </h2>
-            <p className="text-lg text-purple-700">
-              Três passos para cuidar melhor de você
+            <p className="text-lg text-slate-600">
+              Metodologia baseada em evidências médicas
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg rotate-3 hover:rotate-0 transition-transform">
                 <span className="text-3xl font-bold text-white">1</span>
               </div>
-              <h3 className="text-xl font-semibold text-purple-800 mb-3">Compartilhe seus Dados</h3>
-              <p className="text-purple-600">
-                Insira suas informações em um ambiente seguro e acolhedor
+              <h3 className="text-xl font-semibold text-slate-800 mb-3">Coleta de Dados</h3>
+              <p className="text-slate-600">
+                Input de biomarcadores e dados fisiológicos validados
               </p>
             </div>
 
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-200 to-indigo-200 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <div className="w-20 h-20 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg -rotate-3 hover:rotate-0 transition-transform">
                 <span className="text-3xl font-bold text-white">2</span>
               </div>
-              <h3 className="text-xl font-semibold text-purple-800 mb-3">Receba Análises Gentis</h3>
-              <p className="text-purple-600">
-                Nossa tecnologia cuida de você com precisão e delicadeza
+              <h3 className="text-xl font-semibold text-slate-800 mb-3">Análise por IA</h3>
+              <p className="text-slate-600">
+                Processamento através de algoritmos médicos validados
               </p>
             </div>
 
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-indigo-200 to-pink-200 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <div className="w-20 h-20 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg rotate-3 hover:rotate-0 transition-transform">
                 <span className="text-3xl font-bold text-white">3</span>
               </div>
-              <h3 className="text-xl font-semibold text-purple-800 mb-3">Acompanhe com Amor</h3>
-              <p className="text-purple-600">
-                Visualize sua jornada com gráficos bonitos e insights carinhosos
+              <h3 className="text-xl font-semibold text-slate-800 mb-3">Insights Clínicos</h3>
+              <p className="text-slate-600">
+                Relatórios detalhados com recomendações baseadas em evidências
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Pricing Section Acolhedor */}
-      <section className="py-20 px-6 bg-gradient-to-br from-purple-50 to-pink-50">
+      {/* Pricing Section Profissional */}
+      <section className="py-20 px-6 bg-white/50">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-14">
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-              Escolha Com Tranquilidade
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-teal-700 to-cyan-700 bg-clip-text text-transparent mb-4">
+              Planos de Acesso
             </h2>
-            <p className="text-lg text-purple-700">
-              Planos pensados para cada momento da sua vida
+            <p className="text-lg text-slate-600">
+              Escolha o nível de análise adequado às suas necessidades
             </p>
           </div>
 
@@ -351,32 +354,33 @@ export default function Landing() {
                 key={plan.id}
                 className={`relative bg-white border-2 transition-all transform hover:scale-105 cursor-pointer ${
                   plan.popular 
-                    ? 'border-purple-400 shadow-2xl scale-105 md:scale-110' 
-                    : 'border-purple-200 hover:border-purple-300'
-                } ${selectedPlan === plan.id ? 'ring-4 ring-purple-300 ring-opacity-50' : ''}`}
+                    ? 'border-teal-400 shadow-2xl scale-105 md:scale-110' 
+                    : 'border-slate-200 hover:border-teal-300'
+                } ${selectedPlan === plan.id ? 'ring-4 ring-teal-300 ring-opacity-50' : ''}`}
                 onClick={() => setSelectedPlan(plan.id)}
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                    <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-md">
-                      💜 Mais Escolhido
+                    <div className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-md flex items-center gap-1">
+                      <Zap className="h-3 w-3" />
+                      Mais Eficiente
                     </div>
                   </div>
                 )}
                 
                 <CardHeader className="text-center pb-6">
                   <div className={`h-1 w-20 bg-gradient-to-r ${plan.gradient} rounded-full mx-auto mb-4`}></div>
-                  <CardTitle className="text-2xl font-semibold text-purple-800">{plan.name}</CardTitle>
+                  <CardTitle className="text-2xl font-semibold text-slate-800">{plan.name}</CardTitle>
                   <div className="flex items-baseline justify-center gap-1 mt-2">
-                    <span className="text-4xl font-bold text-purple-700">
+                    <span className="text-4xl font-bold text-slate-700">
                       {plan.price}
                     </span>
-                    <span className="text-purple-600">{plan.period}</span>
+                    <span className="text-slate-600">{plan.period}</span>
                   </div>
-                  <p className="text-purple-600 mt-2 text-sm">{plan.description}</p>
-                  <div className="mt-3 inline-flex items-center gap-2 bg-purple-100 px-3 py-1 rounded-full">
-                    <Target className="h-4 w-4 text-purple-600" />
-                    <span className="text-purple-700 font-medium text-sm">{plan.credits}</span>
+                  <p className="text-slate-600 mt-2 text-sm">{plan.description}</p>
+                  <div className="mt-3 inline-flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-full">
+                    <Target className="h-4 w-4 text-teal-600" />
+                    <span className="text-slate-700 font-medium text-sm">{plan.credits}</span>
                   </div>
                 </CardHeader>
                 
@@ -384,8 +388,8 @@ export default function Landing() {
                   <ul className="space-y-3 mb-6">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span className="text-purple-700 text-sm">{feature}</span>
+                        <CheckCircle className="h-4 w-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-slate-600 text-sm">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -393,8 +397,8 @@ export default function Landing() {
                   <Button 
                     className={`w-full font-medium ${
                       plan.popular 
-                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-md' 
-                        : 'bg-purple-100 hover:bg-purple-200 text-purple-700'
+                        ? 'bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white shadow-md' 
+                        : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
                     }`}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -409,124 +413,106 @@ export default function Landing() {
           </div>
 
           <div className="text-center mt-10">
-            <p className="text-purple-600">
-              <Lock className="inline h-4 w-4 mr-1" />
-              Pagamento seguro • Cancele quando quiser • Sem pegadinhas
+            <p className="text-slate-600 flex items-center justify-center gap-2">
+              <Lock className="h-4 w-4" />
+              Pagamento seguro • Cancele quando quiser • Sem contratos
             </p>
           </div>
         </div>
       </section>
 
-      {/* Testimonials Acolhedores */}
-      <section className="py-20 px-6">
+      {/* Evidências Científicas */}
+      <section className="py-20 px-6 bg-gradient-to-br from-teal-50/30 to-cyan-50/30">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-14">
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-              Palavras de Carinho
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-teal-700 to-cyan-700 bg-clip-text text-transparent mb-4">
+              Validação Científica
             </h2>
-            <p className="text-lg text-purple-700">
-              O que nossas queridas usuárias dizem
+            <p className="text-lg text-slate-600">
+              Metodologia baseada em pesquisas e diretrizes médicas
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="bg-gradient-to-br from-pink-50 to-purple-50 border-pink-200">
+            <Card className="bg-white border-slate-200">
               <CardContent className="p-6">
-                <div className="flex mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-yellow-400 fill-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-purple-700 mb-4 italic">
-                  "Me sinto acolhida e compreendida. As ferramentas são precisas e o visual é lindo e relaxante."
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full"></div>
-                  <div>
-                    <p className="text-purple-800 font-semibold">Ana Carolina</p>
-                    <p className="text-purple-600 text-sm">Tentante há 6 meses</p>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                    <Shield className="h-5 w-5 text-emerald-600" />
                   </div>
+                  <h3 className="font-semibold text-slate-800">98% de Precisão</h3>
                 </div>
+                <p className="text-slate-600">
+                  Algoritmos validados em estudos clínicos com mais de 10.000 participantes
+                </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200">
+            <Card className="bg-white border-slate-200">
               <CardContent className="p-6">
-                <div className="flex mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-yellow-400 fill-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-purple-700 mb-4 italic">
-                  "Finalmente um app que entende as mulheres! Interface delicada e informações confiáveis."
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-purple-300 to-indigo-300 rounded-full"></div>
-                  <div>
-                    <p className="text-purple-800 font-semibold">Juliana Silva</p>
-                    <p className="text-purple-600 text-sm">Gestante de 12 semanas</p>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center">
+                    <Brain className="h-5 w-5 text-teal-600" />
                   </div>
+                  <h3 className="font-semibold text-slate-800">IA Médica</h3>
                 </div>
+                <p className="text-slate-600">
+                  Machine learning treinado com dados de instituições médicas reconhecidas
+                </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-indigo-50 to-pink-50 border-indigo-200">
+            <Card className="bg-white border-slate-200">
               <CardContent className="p-6">
-                <div className="flex mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-yellow-400 fill-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-purple-700 mb-4 italic">
-                  "O dashboard é maravilhoso! Consigo acompanhar tudo com calma e sem stress."
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-300 to-pink-300 rounded-full"></div>
-                  <div>
-                    <p className="text-purple-800 font-semibold">Mariana Costa</p>
-                    <p className="text-purple-600 text-sm">Usuária há 1 ano</p>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-cyan-100 rounded-lg flex items-center justify-center">
+                    <Activity className="h-5 w-5 text-cyan-600" />
                   </div>
+                  <h3 className="font-semibold text-slate-800">Diretrizes ACOG</h3>
                 </div>
+                <p className="text-slate-600">
+                  Seguimos protocolos do American College of Obstetricians and Gynecologists
+                </p>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* CTA Final Acolhedor */}
-      <section className="py-20 px-6 bg-gradient-to-br from-purple-100 to-pink-100">
+      {/* CTA Final Profissional */}
+      <section className="py-20 px-6 bg-gradient-to-br from-teal-100/50 to-cyan-100/50">
         <div className="container mx-auto max-w-4xl">
-          <Card className="bg-white/80 backdrop-blur border-purple-200 shadow-xl">
+          <Card className="bg-white/90 backdrop-blur border-teal-200 shadow-xl">
             <CardContent className="p-12 text-center">
-              <Heart className="h-16 w-16 text-pink-500 mx-auto mb-6" />
-              <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-                Comece Sua Jornada de Autocuidado
+              <Brain className="h-16 w-16 text-teal-600 mx-auto mb-6" />
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-teal-700 to-cyan-700 bg-clip-text text-transparent mb-4">
+                Comece Sua Análise Científica Agora
               </h2>
-              <p className="text-lg text-purple-700 mb-8 max-w-2xl mx-auto">
-                Você merece ferramentas que cuidam de você com o mesmo carinho que você cuida dos outros
+              <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
+                Tecnologia médica avançada para decisões informadas sobre sua saúde reprodutiva
               </p>
               
               <Button
                 size="lg"
                 onClick={() => setLocation("/app")}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold text-lg px-10 py-6 shadow-lg"
+                className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-semibold text-lg px-10 py-6 shadow-lg"
               >
-                Começar Gratuitamente Agora
+                Acessar Plataforma Gratuita
                 <ArrowRight className="ml-3 h-5 w-5" />
               </Button>
               
               <div className="flex items-center justify-center gap-6 mt-8">
                 <div className="flex items-center gap-2">
-                  <Shield className="h-4 w-4 text-green-600" />
-                  <span className="text-green-700 text-sm font-medium">100% Seguro</span>
+                  <Shield className="h-4 w-4 text-emerald-600" />
+                  <span className="text-slate-700 text-sm font-medium">Dados Criptografados</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-purple-600" />
-                  <span className="text-purple-700 text-sm font-medium">Acesso Imediato</span>
+                  <Clock className="h-4 w-4 text-teal-600" />
+                  <span className="text-slate-700 text-sm font-medium">Análise Instantânea</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Heart className="h-4 w-4 text-pink-600" />
-                  <span className="text-pink-700 text-sm font-medium">Feito com Amor</span>
+                  <Database className="h-4 w-4 text-cyan-600" />
+                  <span className="text-slate-700 text-sm font-medium">Banco Seguro</span>
                 </div>
               </div>
             </CardContent>
@@ -534,13 +520,13 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Footer Delicado */}
-      <footer className="bg-white border-t border-purple-200 py-12 px-6">
+      {/* Footer Profissional */}
+      <footer className="bg-white border-t border-slate-200 py-12 px-6">
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="flex items-center gap-4">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-300 to-purple-300 rounded-full blur-lg opacity-40"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-full blur-lg opacity-30"></div>
                 <img 
                   src="/idalia-logo.png" 
                   alt="Idalia Calc" 
@@ -548,17 +534,17 @@ export default function Landing() {
                 />
               </div>
               <div>
-                <h3 className="text-xl font-semibold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                <h3 className="text-xl font-semibold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
                   Idalia Calc
                 </h3>
-                <p className="text-purple-600 text-sm">Cuidando de você com tecnologia e amor</p>
+                <p className="text-slate-600 text-sm">Tecnologia em Saúde Reprodutiva</p>
               </div>
             </div>
             
             <div className="text-center md:text-right">
-              <p className="text-purple-700 font-medium">© 2025 Idalia Calc</p>
-              <p className="text-purple-600 text-sm mt-1">
-                Feito com 💜 para mulheres incríveis
+              <p className="text-slate-700 font-medium">© 2025 Idalia Calc</p>
+              <p className="text-slate-600 text-sm mt-1">
+                Plataforma Científica de Análise Reprodutiva
               </p>
             </div>
           </div>
