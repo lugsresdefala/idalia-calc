@@ -799,7 +799,87 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // =================== ROTAS DE PAGAMENTO STRIPE ===================
   
-  // Criar sessão de checkout para assinatura
+  // Criar ou recuperar assinatura
+  app.post('/api/get-or-create-subscription', isAuthenticated, async (req: any, res) => {
+    if (!stripe) {
+      return res.status(503).json({ message: "Sistema de pagamento não configurado" });
+    }
+
+    try {
+      const userId = req.user.claims.sub;
+      let user = await storage.getUser(userId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "Usuário não encontrado" });
+      }
+
+      // Se já tem assinatura ativa, retornar
+      if (user.stripeSubscriptionId && user.subscriptionStatus === 'active') {
+        return res.json({
+          subscriptionId: user.stripeSubscriptionId,
+          status: 'active'
+        });
+      }
+
+      // Criar ou recuperar customer
+      let customerId = user.stripeCustomerId;
+      
+      if (!customerId) {
+        const customer = await stripe.customers.create({
+          email: user.email,
+          metadata: {
+            userId: userId
+          }
+        });
+        
+        await storage.updateUser(userId, {
+          stripeCustomerId: customer.id
+        });
+        
+        customerId = customer.id;
+      }
+
+      // Preço fixo para o plano Premium (você precisa criar este price ID no Stripe Dashboard)
+      const priceId = process.env.STRIPE_PRICE_ID || 'price_1QdVRhFRyKUci3hFTW6Nrntz';
+
+      // Criar subscription
+      const subscription = await stripe.subscriptions.create({
+        customer: customerId,
+        items: [
+          {
+            price: priceId,
+          },
+        ],
+        payment_behavior: 'default_incomplete',
+        payment_settings: { 
+          save_default_payment_method: 'on_subscription' 
+        },
+        expand: ['latest_invoice.payment_intent'],
+        metadata: {
+          userId: userId
+        }
+      });
+
+      const invoice = subscription.latest_invoice as Stripe.Invoice;
+      const paymentIntent = invoice.payment_intent as Stripe.PaymentIntent;
+
+      // Salvar subscription ID no banco
+      await storage.updateUser(userId, {
+        stripeSubscriptionId: subscription.id,
+        subscriptionStatus: 'incomplete'
+      });
+
+      return res.json({
+        subscriptionId: subscription.id,
+        clientSecret: paymentIntent.client_secret,
+      });
+    } catch (error: any) {
+      console.error('Erro ao criar assinatura:', error);
+      return res.status(500).json({ message: error.message });
+    }
+  });
+  
+  // Criar sessão de checkout para assinatura (rota antiga mantida para compatibilidade)
   app.post('/api/create-subscription', isAuthenticated, async (req: any, res) => {
     if (!stripe) {
       return res.status(503).json({ message: "Sistema de pagamento não configurado" });
@@ -859,6 +939,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error('Erro ao criar assinatura:', error);
       res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Confirmar assinatura após pagamento
+  app.post('/api/confirm-subscription', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { paymentIntentId } = req.body;
+      
+      if (!paymentIntentId) {
+        return res.status(400).json({ message: "ID do pagamento não fornecido" });
+      }
+      
+      // Atualizar status da assinatura para ativo
+      const user = await storage.getUser(userId);
+      if (user && user.stripeSubscriptionId) {
+        await storage.updateUser(userId, {
+          subscriptionStatus: 'active',
+          plan: 'premium',
+          hasUsedFreeTrial: true,
+          usedCredits: 0,
+          monthlyCredits: -1 // Ilimitado para assinantes
+        });
+      }
+      
+      return res.json({ success: true });
+    } catch (error: any) {
+      console.error('Erro ao confirmar assinatura:', error);
+      return res.status(500).json({ message: error.message });
     }
   });
 
