@@ -55,14 +55,44 @@ export interface IStorage {
   getUserCycles(userId: string, limit?: number): Promise<Cycle[]>;
   getCurrentCycle(userId: string): Promise<Cycle | undefined>;
   updateCycle(id: string, data: Partial<InsertCycle>): Promise<Cycle>;
+  getCycle(id: string): Promise<Cycle | undefined>;
+  deleteCycle(id: string): Promise<boolean>;
+  // Aliases para compatibilidade
+  getMenstrualCycles(userId: string, limit?: number): Promise<Cycle[]>;
+  getMenstrualCycle(id: string): Promise<Cycle | undefined>;
+  createMenstrualCycle(cycle: InsertCycle): Promise<Cycle>;
+  updateMenstrualCycle(id: string, data: Partial<InsertCycle>): Promise<Cycle>;
+  deleteMenstrualCycle(id: string): Promise<boolean>;
   
   // Temperature operations
   createTemperature(temp: InsertBasalTemperature): Promise<BasalTemperature>;
   getUserTemperatures(userId: string, cycleId?: string, limit?: number): Promise<BasalTemperature[]>;
+  getTemperature(id: string): Promise<BasalTemperature | undefined>;
+  updateTemperature(id: string, data: Partial<InsertBasalTemperature>): Promise<BasalTemperature>;
+  deleteTemperature(id: string): Promise<boolean>;
+  // Aliases para compatibilidade
+  getBasalTemperatures(userId: string, cycleId?: string, limit?: number): Promise<BasalTemperature[]>;
+  getBasalTemperature(id: string): Promise<BasalTemperature | undefined>;
+  createBasalTemperature(temp: InsertBasalTemperature): Promise<BasalTemperature>;
+  updateBasalTemperature(id: string, data: Partial<InsertBasalTemperature>): Promise<BasalTemperature>;
+  deleteBasalTemperature(id: string): Promise<boolean>;
   
   // Mucus operations
   createMucusObservation(mucus: InsertMucusObservation): Promise<MucusObservation>;
   getUserMucusObservations(userId: string, cycleId?: string, limit?: number): Promise<MucusObservation[]>;
+  getMucusObservation(id: string): Promise<MucusObservation | undefined>;
+  updateMucusObservation(id: string, data: Partial<InsertMucusObservation>): Promise<MucusObservation>;
+  deleteMucusObservation(id: string): Promise<boolean>;
+  // Aliases para compatibilidade
+  getCervicalMucusEntries(userId: string, cycleId?: string, limit?: number): Promise<MucusObservation[]>;
+  getCervicalMucus(id: string): Promise<MucusObservation | undefined>;
+  createCervicalMucus(mucus: InsertMucusObservation): Promise<MucusObservation>;
+  updateCervicalMucus(id: string, data: Partial<InsertMucusObservation>): Promise<MucusObservation>;
+  deleteCervicalMucus(id: string): Promise<boolean>;
+  
+  // Fetal development operations
+  getAllFetalDevelopment(): Promise<any[]>;
+  getFetalDevelopmentByWeek(week: number): Promise<any | undefined>;
   
   // Pregnancy operations
   createPregnancy(pregnancy: InsertPregnancy): Promise<Pregnancy>;
@@ -72,6 +102,8 @@ export interface IStorage {
   // Calculation operations
   createCalculation(calc: InsertCalculation): Promise<Calculation>;
   getUserCalculations(userId: string, type?: string, limit?: number): Promise<Calculation[]>;
+  saveCalculatorHistory(userId: string, type: string, inputData: any, resultData: any): Promise<Calculation>;
+  getCalculatorHistory(userId: string, type?: string): Promise<Calculation[]>;
   
   // Notification operations
   createNotification(notification: InsertNotification): Promise<Notification>;
@@ -281,6 +313,37 @@ export class DatabaseStorage implements IStorage {
     return cycle;
   }
 
+  async getCycle(id: string): Promise<Cycle | undefined> {
+    const [cycle] = await db.select().from(cycles).where(eq(cycles.id, id));
+    return cycle;
+  }
+
+  async deleteCycle(id: string): Promise<boolean> {
+    const result = await db.delete(cycles).where(eq(cycles.id, id));
+    return true;
+  }
+
+  // Aliases para compatibilidade com routes.ts
+  async getMenstrualCycles(userId: string, limit?: number): Promise<Cycle[]> {
+    return this.getUserCycles(userId, limit);
+  }
+
+  async getMenstrualCycle(id: string): Promise<Cycle | undefined> {
+    return this.getCycle(id);
+  }
+
+  async createMenstrualCycle(cycle: InsertCycle): Promise<Cycle> {
+    return this.createCycle(cycle);
+  }
+
+  async updateMenstrualCycle(id: string, data: Partial<InsertCycle>): Promise<Cycle> {
+    return this.updateCycle(id, data);
+  }
+
+  async deleteMenstrualCycle(id: string): Promise<boolean> {
+    return this.deleteCycle(id);
+  }
+
   // Temperature operations
   async createTemperature(tempData: InsertBasalTemperature): Promise<BasalTemperature> {
     const [temp] = await db.insert(basalTemperatures).values(tempData).returning();
@@ -308,6 +371,46 @@ export class DatabaseStorage implements IStorage {
       .limit(limit);
   }
 
+  async getTemperature(id: string): Promise<BasalTemperature | undefined> {
+    const [temp] = await db.select().from(basalTemperatures).where(eq(basalTemperatures.id, id));
+    return temp;
+  }
+
+  async updateTemperature(id: string, data: Partial<InsertBasalTemperature>): Promise<BasalTemperature> {
+    const [temp] = await db
+      .update(basalTemperatures)
+      .set(data)
+      .where(eq(basalTemperatures.id, id))
+      .returning();
+    return temp;
+  }
+
+  async deleteTemperature(id: string): Promise<boolean> {
+    await db.delete(basalTemperatures).where(eq(basalTemperatures.id, id));
+    return true;
+  }
+
+  // Aliases para compatibilidade
+  async getBasalTemperatures(userId: string, cycleId?: string, limit?: number): Promise<BasalTemperature[]> {
+    return this.getUserTemperatures(userId, cycleId, limit);
+  }
+
+  async getBasalTemperature(id: string): Promise<BasalTemperature | undefined> {
+    return this.getTemperature(id);
+  }
+
+  async createBasalTemperature(temp: InsertBasalTemperature): Promise<BasalTemperature> {
+    return this.createTemperature(temp);
+  }
+
+  async updateBasalTemperature(id: string, data: Partial<InsertBasalTemperature>): Promise<BasalTemperature> {
+    return this.updateTemperature(id, data);
+  }
+
+  async deleteBasalTemperature(id: string): Promise<boolean> {
+    return this.deleteTemperature(id);
+  }
+
   // Mucus operations
   async createMucusObservation(mucusData: InsertMucusObservation): Promise<MucusObservation> {
     const [mucus] = await db.insert(mucusObservations).values(mucusData).returning();
@@ -333,6 +436,62 @@ export class DatabaseStorage implements IStorage {
       .where(eq(mucusObservations.userId, userId))
       .orderBy(desc(mucusObservations.date))
       .limit(limit);
+  }
+
+  async getMucusObservation(id: string): Promise<MucusObservation | undefined> {
+    const [mucus] = await db.select().from(mucusObservations).where(eq(mucusObservations.id, id));
+    return mucus;
+  }
+
+  async updateMucusObservation(id: string, data: Partial<InsertMucusObservation>): Promise<MucusObservation> {
+    const [mucus] = await db
+      .update(mucusObservations)
+      .set(data)
+      .where(eq(mucusObservations.id, id))
+      .returning();
+    return mucus;
+  }
+
+  async deleteMucusObservation(id: string): Promise<boolean> {
+    await db.delete(mucusObservations).where(eq(mucusObservations.id, id));
+    return true;
+  }
+
+  // Aliases para compatibilidade
+  async getCervicalMucusEntries(userId: string, cycleId?: string, limit?: number): Promise<MucusObservation[]> {
+    return this.getUserMucusObservations(userId, cycleId, limit);
+  }
+
+  async getCervicalMucus(id: string): Promise<MucusObservation | undefined> {
+    return this.getMucusObservation(id);
+  }
+
+  async createCervicalMucus(mucus: InsertMucusObservation): Promise<MucusObservation> {
+    return this.createMucusObservation(mucus);
+  }
+
+  async updateCervicalMucus(id: string, data: Partial<InsertMucusObservation>): Promise<MucusObservation> {
+    return this.updateMucusObservation(id, data);
+  }
+
+  async deleteCervicalMucus(id: string): Promise<boolean> {
+    return this.deleteMucusObservation(id);
+  }
+
+  // Dados de desenvolvimento fetal (mock por enquanto)
+  async getAllFetalDevelopment(): Promise<any[]> {
+    // Retorna dados mock de desenvolvimento fetal
+    return [];
+  }
+
+  async getFetalDevelopmentByWeek(week: number): Promise<any | undefined> {
+    // Retorna dados mock para a semana específica
+    return {
+      week,
+      size: "Dados em desenvolvimento",
+      weight: "Dados em desenvolvimento",
+      development: ["Dados em desenvolvimento"]
+    };
   }
 
   // Pregnancy operations
@@ -396,6 +555,20 @@ export class DatabaseStorage implements IStorage {
       .where(eq(calculations.userId, userId))
       .orderBy(desc(calculations.createdAt))
       .limit(limit);
+  }
+
+  // Aliases para compatibilidade
+  async saveCalculatorHistory(userId: string, type: string, inputData: any, resultData: any): Promise<Calculation> {
+    return this.createCalculation({
+      userId,
+      type,
+      inputData,
+      resultData
+    });
+  }
+
+  async getCalculatorHistory(userId: string, type?: string): Promise<Calculation[]> {
+    return this.getUserCalculations(userId, type);
   }
 
   // Notification operations

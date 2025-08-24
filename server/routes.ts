@@ -17,7 +17,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
   console.warn('WARNING: STRIPE_SECRET_KEY not set - payment features disabled');
 }
 const stripe = process.env.STRIPE_SECRET_KEY 
-  ? new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-12-18.acacia" })
+  ? new Stripe(process.env.STRIPE_SECRET_KEY)
   : null;
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -148,8 +148,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Obter um ciclo menstrual específico
   app.get('/api/menstrual-cycles/detail/:id', async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
-      if (isNaN(id)) {
+      const id = req.params.id;
+      if (!id) {
         return res.status(400).json({ message: 'ID inválido' });
       }
       
@@ -839,8 +839,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         customerId = customer.id;
       }
 
-      // Preço fixo para o plano Premium (você precisa criar este price ID no Stripe Dashboard)
-      const priceId = process.env.STRIPE_PRICE_ID || 'price_1QdVRhFRyKUci3hFTW6Nrntz';
+      // Preço fixo para o plano Premium
+      const priceId = process.env.STRIPE_PRICE_ID || 'price_1RzROsFRyKUci3hFcnmaZAUr';
 
       // Criar subscription
       const subscription = await stripe.subscriptions.create({
@@ -919,7 +919,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         customer: customerId,
         items: [
           {
-            price: priceId, // Este price ID deve ser criado no Dashboard do Stripe
+            price: priceId || 'price_1RzROsFRyKUci3hFcnmaZAUr', // Price ID configurado para R$ 29,90/mês
           },
         ],
         payment_behavior: 'default_incomplete',

@@ -226,6 +226,29 @@ export const insertMucusSchema = createInsertSchema(mucusObservations).omit({
   createdAt: true,
 });
 
+// Aliases para compatibilidade com routes.ts
+export const menstrualCycleSchema = z.object({
+  periodStart: z.string().or(z.date()),
+  periodEnd: z.string().or(z.date()).optional(),
+  cycleLength: z.number().optional(),
+  notes: z.string().optional(),
+});
+
+export const basalTemperatureSchema = z.object({
+  date: z.string().or(z.date()),
+  temperature: z.number(),
+  time: z.string().optional(),
+  notes: z.string().optional(),
+});
+
+export const cervicalMucusSchema = z.object({
+  date: z.string().or(z.date()),
+  consistency: z.string().optional(),
+  amount: z.string().optional(),
+  notes: z.string().optional(),
+  createdAt: true,
+});
+
 export const insertPregnancySchema = createInsertSchema(pregnancies).omit({
   id: true,
   createdAt: true,
