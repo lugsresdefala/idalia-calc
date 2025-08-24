@@ -39,28 +39,13 @@ const DashboardPage = () => {
   // Versão desktop
   return (
     <div className="min-h-screen tech-bg">
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        {/* Hero Section */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel tech-border mb-6">
-            <span className="text-cyan-300 font-medium text-sm tech-text-glow">
-              Central de Controle
-            </span>
-          </div>
-          <h1 className="text-5xl font-bold mb-4 text-cyan-200">
-            Seu Dashboard Pessoal
-          </h1>
-          <p className="text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
-            Acompanhe seus dados, registre informações e visualize suas tendências de saúde reprodutiva
-          </p>
-        </div>
-        
+      <div className="max-w-6xl mx-auto px-4 py-8">        
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
             <Dashboard userId={userId} />
             
             <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-5 glass-card p-1 tech-border">
+            <TabsList className="grid w-full grid-cols-5 glass-card p-1">
               <TabsTrigger value="overview" className="text-cyan-300">Visão Geral</TabsTrigger>
               <TabsTrigger value="entry" className="text-yellow-300">Registrar</TabsTrigger>
               <TabsTrigger value="cycles" className="text-blue-300">Ciclos</TabsTrigger>
@@ -70,7 +55,7 @@ const DashboardPage = () => {
             
             <TabsContent value="overview" className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
-                <Card className="glass-card tech-border hover:shadow-xl transition-all">
+                <Card className="glass-card border-cyan-500/20">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-cyan-300">
                       <Activity className="h-5 w-5" />
@@ -97,7 +82,7 @@ const DashboardPage = () => {
                   </CardContent>
                 </Card>
                 
-                <Card className="glass-card tech-border hover:shadow-xl transition-all">
+                <Card className="glass-card border-yellow-500/20">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-yellow-300">
                       <TrendingUp className="h-5 w-5" />
@@ -127,7 +112,7 @@ const DashboardPage = () => {
             </TabsContent>
             
             <TabsContent value="cycles" className="space-y-4">
-              <Card className="glass-card tech-border hover:shadow-xl transition-all">
+              <Card className="glass-card border-blue-500/20">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-blue-300">
                     <Calendar className="h-5 w-5" />

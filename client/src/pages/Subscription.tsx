@@ -137,36 +137,52 @@ export default function Subscription() {
       name: 'Básico',
       price: 0,
       priceId: null,
-      credits: 0,
+      credits: 5,
       features: [
-        'Resultados parciais das calculadoras',
-        'Calculadora de Fertilidade (básica)',
-        'Calculadora Gestacional (básica)',
-        'Visualização limitada'
+        '5 cálculos por mês',
+        'Calculadora de Fertilidade',
+        'Calculadora Gestacional',
+        'Histórico limitado (30 dias)',
+        'Suporte por email'
       ],
       limitations: [
-        'Sem resultados completos',
-        'Sem histórico',
         'Sem relatórios PDF',
         'Sem análise avançada',
-        'Sem suporte prioritário'
+        'Sem prioridade no suporte'
       ]
     },
     {
       id: 'professional',
-      name: 'Assinatura',
-      price: 29.90,
+      name: 'Profissional',
+      price: 19.90,
       priceId: 'price_professional', // Substituir com ID real do Stripe
-      credits: -1,
+      credits: 100,
       popular: true,
       features: [
-        'Cálculos ilimitados',
+        '100 cálculos por mês',
         'Todas as calculadoras',
         'Histórico completo',
         'Relatórios em PDF',
         'Análise avançada de ciclos',
         'Gráficos interativos',
         'Suporte prioritário'
+      ],
+      limitations: []
+    },
+    {
+      id: 'premium',
+      name: 'Premium',
+      price: 39.90,
+      priceId: 'price_premium', // Substituir com ID real do Stripe
+      credits: -1, // Ilimitado
+      features: [
+        'Cálculos ilimitados',
+        'Todas as funcionalidades',
+        'API para integração',
+        'Dados exportáveis',
+        'Análise preditiva com IA',
+        'Suporte 24/7',
+        'Consultoria personalizada'
       ],
       limitations: []
     }
@@ -270,32 +286,26 @@ export default function Subscription() {
     : ((subscriptionStatus?.monthlyCredits || 0) - (subscriptionStatus?.usedCredits || 0)) / (subscriptionStatus?.monthlyCredits || 1) * 100;
 
   return (
-    <div className="min-h-screen tech-bg">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-emerald-50 py-12 px-4">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel tech-border mb-6">
-            <CreditCard className="h-4 w-4 text-cyan-400" />
-            <span className="text-cyan-300 font-medium text-sm tech-text-glow">
-              Planos e Assinaturas
-            </span>
-          </div>
-          <h1 className="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 tech-text-glow">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent mb-4">
             Gerenciar Assinatura
           </h1>
-          <p className="text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
-            Escolha o plano ideal para suas necessidades de saúde reprodutiva
+          <p className="text-gray-600 text-lg">
+            Escolha o plano ideal para suas necessidades
           </p>
         </div>
 
         {/* Status atual */}
-        <Card className="mb-8 glass-card tech-border hover:shadow-xl transition-all">
+        <Card className="mb-8 border-cyan-200 bg-white/80 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <span>Status da Assinatura</span>
               <Badge 
                 variant={subscriptionStatus?.subscriptionStatus === 'active' ? 'default' : 'secondary'}
-                className="bg-cyan-600 text-white"
+                className="bg-gradient-to-r from-cyan-500 to-teal-500"
               >
                 {subscriptionStatus?.subscriptionStatus === 'active' ? 'Ativa' : 
                  subscriptionStatus?.subscriptionStatus === 'past_due' ? 'Pagamento Pendente' :
@@ -305,9 +315,9 @@ export default function Subscription() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-blue-300">Plano atual:</span>
+              <span className="text-gray-600">Plano atual:</span>
               <span className="font-semibold flex items-center">
-                {currentPlan.id === 'free' && <Shield className="h-4 w-4 mr-2 text-blue-400" />}
+                {currentPlan.id === 'free' && <Shield className="h-4 w-4 mr-2 text-gray-500" />}
                 {currentPlan.id === 'professional' && <Sparkles className="h-4 w-4 mr-2 text-cyan-500" />}
                 {currentPlan.id === 'premium' && <Crown className="h-4 w-4 mr-2 text-yellow-500" />}
                 {currentPlan.name}
@@ -316,7 +326,7 @@ export default function Subscription() {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-blue-300">Créditos disponíveis:</span>
+                <span className="text-gray-600">Créditos disponíveis:</span>
                 <span className="font-semibold">
                   {subscriptionStatus?.monthlyCredits === -1 ? 
                     'Ilimitados' : 
@@ -331,7 +341,7 @@ export default function Subscription() {
 
             {subscriptionStatus?.subscriptionEndDate && (
               <div className="flex items-center justify-between">
-                <span className="text-blue-300">Próxima renovação:</span>
+                <span className="text-gray-600">Próxima renovação:</span>
                 <span className="font-semibold">
                   {new Date(subscriptionStatus.subscriptionEndDate).toLocaleDateString('pt-BR')}
                 </span>
@@ -393,7 +403,7 @@ export default function Subscription() {
             >
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-cyan-600 text-white">
+                  <Badge className="bg-gradient-to-r from-cyan-500 to-teal-500">
                     Mais Popular
                   </Badge>
                 </div>
@@ -438,7 +448,7 @@ export default function Subscription() {
                     currentPlan.id === plan.id 
                       ? 'bg-gray-300 cursor-not-allowed' 
                       : plan.popular 
-                        ? 'bg-cyan-600 hover:bg-cyan-700 text-white'
+                        ? 'bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600'
                         : ''
                   }`}
                   disabled={currentPlan.id === plan.id || createSubscriptionMutation.isPending}

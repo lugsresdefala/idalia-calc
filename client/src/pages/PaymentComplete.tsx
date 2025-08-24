@@ -147,7 +147,7 @@ export default function PaymentComplete() {
               </div>
               
               <div className="flex gap-3">
-                <Link href="/app" className="flex-1">
+                <Link href="/" className="flex-1">
                   <Button className="w-full tech-button">
                     <Home className="mr-2 h-4 w-4" />
                     Ir para Início
@@ -168,7 +168,7 @@ export default function PaymentComplete() {
               <p className="text-sm text-blue-300">
                 Isso pode levar alguns minutos. Você receberá um email de confirmação quando o processo for concluído.
               </p>
-              <Link href="/app">
+              <Link href="/">
                 <Button className="w-full" variant="outline">
                   <Home className="mr-2 h-4 w-4" />
                   Voltar ao Início
@@ -185,7 +185,7 @@ export default function PaymentComplete() {
                     Tentar Novamente
                   </Button>
                 </Link>
-                <Link href="/app" className="flex-1">
+                <Link href="/" className="flex-1">
                   <Button className="w-full" variant="outline">
                     <Home className="mr-2 h-4 w-4" />
                     Voltar ao Início

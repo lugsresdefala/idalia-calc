@@ -4,31 +4,23 @@ const Algorithms = () => {
   return (
     <div className="min-h-screen tech-bg">
       <div className="max-w-5xl mx-auto px-4 py-8">
-        <header className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel tech-border mb-6">
-            <span className="text-cyan-300 font-medium text-sm tech-text-glow">
-              Base Científica e Metodologia
-            </span>
-          </div>
-          <h1 className="text-5xl font-bold mb-4 text-cyan-200">
-            Nossos Algoritmos
+        <header className="text-center mb-8">
+          <h1 className="text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-400 tech-text-glow">
+            Idalia Calc - Algoritmos
           </h1>
-          <p className="text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
-            Conheça a ciência por trás dos nossos cálculos, baseados em métodos médicos estabelecidos
+          <p className="text-blue-100 max-w-2xl mx-auto text-lg">
+            Descrição detalhada dos algoritmos e metodologias científicas utilizadas
           </p>
         </header>
 
-        <nav className="glass-card rounded-lg mb-8 p-6 text-center tech-border shadow-xl">
-          <Link href="/app" className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold px-8 py-3 rounded-lg inline-flex items-center gap-2 transition-all duration-300 shadow-lg">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
+        <nav className="glass-card rounded-lg mb-8 p-4 text-center">
+          <Link href="/" className="tech-button px-6 py-2 tech-glow inline-block">
             Voltar para Calculadoras
           </Link>
         </nav>
 
-        <div className="glass-card rounded-lg shadow-xl p-6 sm:p-8 mb-6 text-blue-100 max-w-full overflow-hidden tech-border hover:shadow-2xl transition-all">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-cyan-200">
+        <div className="glass-card rounded-lg shadow-md p-4 sm:p-6 mb-6 text-blue-100 max-w-full overflow-hidden">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">
             Cálculo do Período Fértil
           </h2>
           
@@ -39,8 +31,8 @@ const Algorithms = () => {
             </p>
             <ul className="list-disc pl-6 text-sm text-blue-200 space-y-2">
               <li>Duração do ciclo menstrual (variabilidade calculada com base no histórico)</li>
-              <li>Viabilidade do espermatozoide no trato reprodutivo feminino (até 5 dias)</li>
-              <li>Viabilidade do óvulo após ovulação (12-24 horas)</li>
+              <li>Viabilidade do espermatozoide no trato reprodutivo feminino (3-5 dias)</li>
+              <li>Viabilidade do óvulo após ovulação (24 horas)</li>
               <li>Fase lútea (geralmente 14 dias antes da próxima menstruação)</li>
             </ul>
             
@@ -53,8 +45,8 @@ const Algorithms = () => {
           </div>
         </div>
 
-        <div className="glass-card rounded-lg shadow-xl p-6 sm:p-8 mb-6 text-blue-100 max-w-full overflow-hidden tech-border hover:shadow-2xl transition-all">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-cyan-200">
+        <div className="glass-card rounded-lg shadow-md p-4 sm:p-6 mb-6 text-blue-100 max-w-full overflow-hidden">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">
             Cálculo da Idade Gestacional
           </h2>
           
@@ -93,24 +85,24 @@ const Algorithms = () => {
           </div>
         </div>
 
-        <div className="glass-card rounded-lg shadow-xl p-6 sm:p-8 mb-6 text-blue-100 max-w-full overflow-hidden tech-border hover:shadow-2xl transition-all">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-cyan-200">
+        <div className="glass-card rounded-lg shadow-md p-4 sm:p-6 mb-6 text-blue-100 max-w-full overflow-hidden">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">
             Referências Científicas
           </h2>
           
           <div className="glass-panel p-3 sm:p-4 rounded-lg tech-border">
             <ul className="list-disc pl-6 text-sm text-blue-200 space-y-3">
               <li>
-                <span className="font-medium text-cyan-300">Cálculo do Período Fértil</span> - 
-                Baseado na regularidade do ciclo menstrual e período de ovulação
+                <span className="font-medium text-cyan-300">Guia Prático de Atendimento em Obstetrícia</span> - 
+                Federação Brasileira das Associações de Ginecologia e Obstetrícia (Febrasgo)
               </li>
               <li>
-                <span className="font-medium text-cyan-300">Cálculo da Data do Parto</span> - 
-                Método padrão usado por médicos: adiciona 280 dias à data da última menstruação
+                <span className="font-medium text-cyan-300">Guidelines for Perinatal Care</span> - 
+                American College of Obstetricians and Gynecologists (ACOG)
               </li>
               <li>
-                <span className="font-medium text-cyan-300">Cálculo de Idade Gestacional</span> - 
-                Métodos padrão utilizados em obstetrícia: DUM, ultrassonografia e FIV
+                <span className="font-medium text-cyan-300">Manual Técnico de Gestação de Alto Risco</span> - 
+                Ministério da Saúde do Brasil
               </li>
               <li>
                 <span className="font-medium text-cyan-300">Baird DD, et al.</span> Using the ratio of urinary oestrogen and progesterone metabolites to estimate day of ovulation. Statistics in Medicine, 1991.
@@ -124,7 +116,7 @@ const Algorithms = () => {
 
         <footer className="mt-8 text-center text-sm text-blue-200 glass-panel p-4 rounded-lg shadow-md">
           <p className="mb-2">
-            Os algoritmos descritos são baseados em métodos estabelecidos na prática obstétrica.
+            Os algoritmos e metodologias descritos aqui são baseados em literatura científica e protocolos médicos.
           </p>
           <p>
             Consulte sempre um profissional de saúde para interpretação dos resultados e orientações específicas.

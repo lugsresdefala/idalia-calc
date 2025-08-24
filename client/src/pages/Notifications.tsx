@@ -1,9 +1,11 @@
+import Header from "@/components/ui/Header";
 import NotificationSystem from "@/components/ui/NotificationSystem";
 
 const NotificationsPage = () => {
   return (
     <div className="min-h-screen tech-bg">
       <div className="max-w-4xl mx-auto px-4 py-8">
+        <Header />
         <NotificationSystem userId={1} />
         
         <footer className="mt-8 text-center text-sm text-blue-200 glass-panel p-4 rounded-lg shadow-md">

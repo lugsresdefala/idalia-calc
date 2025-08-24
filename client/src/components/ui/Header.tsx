@@ -27,7 +27,7 @@ const Header = () => {
         
         {/* Navegação */}
         <nav className="flex justify-center gap-3 flex-wrap">
-          <Link href="/app" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass-panel text-cyan-300 hover:text-cyan-200 transition-all duration-300 tech-border-faint">
+          <Link href="/" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass-panel text-cyan-300 hover:text-cyan-200 transition-all duration-300 tech-border-faint">
             <Calculator className="h-4 w-4" />
             Calculadoras
           </Link>

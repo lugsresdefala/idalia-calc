@@ -80,11 +80,9 @@ const MobileHome = () => {
   ];
 
   return (
-    <div className="min-h-screen tech-bg">
-      
-      <div className="mobile-container pb-20">
-        {/* Hero Section */}
-        <div className="mobile-section">
+    <div className="mobile-container pb-20">
+      {/* Hero Section */}
+      <div className="mobile-section">
         <div className="text-center mb-6">
           <div className="mb-4">
             <Sparkles className="h-12 w-12 mx-auto text-yellow-400 mb-2" />
@@ -184,7 +182,6 @@ const MobileHome = () => {
           </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };
