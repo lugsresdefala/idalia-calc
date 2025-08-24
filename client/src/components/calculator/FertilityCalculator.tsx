@@ -95,7 +95,7 @@ const FertilityCalculator = () => {
       setHasFullAccess(data.hasFullAccess);
       setAccessMessage(data.message || '');
     } catch (error) {
-      console.error('Erro ao verificar acesso:', error);
+      // Error handled silently in production
       setHasFullAccess(false);
     }
   };
@@ -195,7 +195,7 @@ const FertilityCalculator = () => {
           // Revalidar acesso após uso
           await checkAccess();
         } catch (error) {
-          console.error('Erro ao registrar uso:', error);
+          // Error handled silently in production
         }
       }
       
@@ -213,11 +213,11 @@ const FertilityCalculator = () => {
             })
           });
         } catch (error) {
-          console.error('Erro ao salvar histórico:', error);
+          // Error handled silently in production
         }
       }
     } catch (error) {
-      console.error("Calculation error:", error);
+      // Calculation error handled
     }
   };
 

@@ -99,7 +99,7 @@ const GestationalCalculator = () => {
       setHasFullAccess(data.hasFullAccess);
       setAccessMessage(data.message || '');
     } catch (error) {
-      console.error('Erro ao verificar acesso:', error);
+      // Error handled silently in production
       setHasFullAccess(false);
     }
   };
@@ -170,7 +170,7 @@ const GestationalCalculator = () => {
             // Revalidar acesso após uso
             await checkAccess();
           } catch (error) {
-            console.error('Erro ao registrar uso:', error);
+            // Error handled silently in production
           }
         }
         

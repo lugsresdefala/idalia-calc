@@ -1,0 +1,17 @@
+# Robots.txt for IdaliaCalc
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.idaliareprodutiva.com/sitemap.xml
+
+# Disallow admin areas if any
+Disallow: /api/
+Disallow: /admin/
+
+# Allow search engines to crawl CSS and JS
+Allow: /assets/*.js
+Allow: /assets/*.css
+
+# Crawl delay to be respectful
+Crawl-delay: 1

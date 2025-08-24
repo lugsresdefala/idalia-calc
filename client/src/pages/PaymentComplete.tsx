@@ -56,7 +56,7 @@ export default function PaymentComplete() {
                 paymentIntentId: paymentIntent.id,
               });
             } catch (error) {
-              console.error("Erro ao confirmar assinatura:", error);
+              // Error handled silently
             }
             
             toast({
