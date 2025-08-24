@@ -155,7 +155,7 @@ export default function Subscription() {
       id: 'professional',
       name: 'Profissional',
       price: 29.90,
-      priceId: import.meta.env.VITE_STRIPE_PRICE_ID || 'price_1RzROsFRyKUci3hFcnmaZAUr', // ID do plano no Stripe
+      priceId: 'price_1RzROsFRyKUci3hFcnmaZAUr', // Price ID correto para R$ 29,90
       credits: 100,
       popular: true,
       features: [

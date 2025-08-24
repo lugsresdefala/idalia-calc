@@ -839,8 +839,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         customerId = customer.id;
       }
 
-      // Preço fixo para o plano Premium
-      const priceId = process.env.STRIPE_PRICE_ID || 'price_1RzROsFRyKUci3hFcnmaZAUr';
+      // Usar o Price ID correto (não o Product ID)
+      // O STRIPE_PRICE_ID no env está incorreto (é um product ID), usar o fallback correto
+      const priceId = 'price_1RzROsFRyKUci3hFcnmaZAUr'; // Price ID válido para R$ 29,90
 
       // Criar subscription
       const subscription = await stripe.subscriptions.create({
@@ -914,8 +915,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         customerId = customer.id;
       }
 
-      // Usar o priceId enviado pelo frontend ou fallback para o padrão
-      const finalPriceId = priceId || process.env.STRIPE_PRICE_ID || 'price_1RzROsFRyKUci3hFcnmaZAUr';
+      // Usar o priceId enviado pelo frontend ou o Price ID correto
+      const finalPriceId = priceId || 'price_1RzROsFRyKUci3hFcnmaZAUr'; // Price ID válido
       
       // Criar subscription com payment intent
       const subscription = await stripe.subscriptions.create({
