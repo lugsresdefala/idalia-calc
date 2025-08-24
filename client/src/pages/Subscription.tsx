@@ -137,52 +137,36 @@ export default function Subscription() {
       name: 'Básico',
       price: 0,
       priceId: null,
-      credits: 5,
+      credits: 0,
       features: [
-        '5 cálculos por mês',
-        'Calculadora de Fertilidade',
-        'Calculadora Gestacional',
-        'Histórico limitado (30 dias)',
-        'Suporte por email'
+        'Resultados parciais das calculadoras',
+        'Calculadora de Fertilidade (básica)',
+        'Calculadora Gestacional (básica)',
+        'Visualização limitada'
       ],
       limitations: [
+        'Sem resultados completos',
+        'Sem histórico',
         'Sem relatórios PDF',
         'Sem análise avançada',
-        'Sem prioridade no suporte'
+        'Sem suporte prioritário'
       ]
     },
     {
       id: 'professional',
-      name: 'Profissional',
-      price: 19.90,
+      name: 'Assinatura',
+      price: 29.90,
       priceId: 'price_professional', // Substituir com ID real do Stripe
-      credits: 100,
+      credits: -1,
       popular: true,
       features: [
-        '100 cálculos por mês',
+        'Cálculos ilimitados',
         'Todas as calculadoras',
         'Histórico completo',
         'Relatórios em PDF',
         'Análise avançada de ciclos',
         'Gráficos interativos',
         'Suporte prioritário'
-      ],
-      limitations: []
-    },
-    {
-      id: 'premium',
-      name: 'Premium',
-      price: 39.90,
-      priceId: 'price_premium', // Substituir com ID real do Stripe
-      credits: -1, // Ilimitado
-      features: [
-        'Cálculos ilimitados',
-        'Todas as funcionalidades',
-        'API para integração',
-        'Dados exportáveis',
-        'Análise de tendências do ciclo',
-        'Suporte 24/7',
-        'Relatórios detalhados'
       ],
       limitations: []
     }

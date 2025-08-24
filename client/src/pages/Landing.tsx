@@ -13,12 +13,12 @@ export default function Landing() {
       price: "R$ 0",
       period: "",
       description: "Experimente",
-      credits: "1 cálculo completo",
+      credits: "Resultados parciais",
       features: [
-        "1 cálculo completo grátis",
-        "Calculadora de fertilidade",
-        "Calculadora gestacional",
-        "Resultados instantâneos"
+        "Resultados parciais das calculadoras",
+        "Calculadora de fertilidade (básica)",
+        "Calculadora gestacional (básica)",
+        "Visualização limitada"
       ],
       cta: "Começar Grátis",
       popular: false
