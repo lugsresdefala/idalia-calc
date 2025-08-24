@@ -1,0 +1,190 @@
+# Checklist Operacional - Deploy para Produção
+## Plataforma Virtual e Mobile App
+
+### 1. Verificações de Funcionalidade Core
+
+#### 1.1 Autenticação e Autorização
+- [ ] **Sistema de Login/Logout**
+  - Validação de credenciais
+  - Redirecionamentos pós-login corretos
+  - Timeout de sessão funcionando
+  - Remember me / Manter logado
+  
+- [ ] **Cadastro de Usuários**
+  - Formulários de registro validando campos obrigatórios
+  - Verificação de email funcionando
+  - Políticas de senha implementadas
+  - Termos de uso e política de privacidade vinculados
+
+- [ ] **Recuperação de Senha**
+  - Fluxo de reset por email
+  - Links de recuperação com expiração
+  - Confirmação de alteração
+
+#### 1.2 Navegação e Interface
+
+- [ ] **Estrutura de Navegação**
+  - Menu principal funcional em todas as páginas
+  - Breadcrumbs implementados onde aplicável
+  - Links internos e externos funcionando
+  - Menu mobile responsivo
+
+- [ ] **Responsividade**
+  - Layout adaptativo para diferentes resoluções
+  - Testes em dispositivos móveis (iOS/Android)
+  - Orientação portrait/landscape
+  - Touch targets adequados (min. 44px)
+
+### 2. Verificações de E-commerce/Transações
+
+#### 2.1 Processo de Checkout
+- [ ] **Carrinho de Compras**
+  - Adicionar/remover itens funcionando
+  - Atualização de quantidades
+  - Cálculo de totais correto
+  - Persistência entre sessões
+
+- [ ] **Fluxo de Pagamento**
+  - Integração com gateways de pagamento
+  - Validação de dados de cartão
+  - Processamento de diferentes formas de pagamento
+  - Confirmação de pedido por email
+
+- [ ] **Gestão de Pedidos**
+  - Status de pedidos atualizando
+  - Histórico de compras acessível
+  - Cancelamento/alteração quando permitido
+
+#### 2.2 Gestão de Produtos/Conteúdo
+- [ ] **Catálogo de Produtos**
+  - Listagem e filtros funcionando
+  - Busca retornando resultados relevantes
+  - Páginas de produto com todas as informações
+  - Imagens carregando corretamente
+
+### 3. Verificações Técnicas
+
+#### 3.1 Performance e Otimização
+- [ ] **Velocidade de Carregamento**
+  - Páginas carregando < 3 segundos
+  - Imagens otimizadas e comprimidas
+  - CSS/JS minificados
+  - Cache configurado adequadamente
+
+- [ ] **SEO e Metadados**
+  - Title tags únicos para cada página
+  - Meta descriptions preenchidas
+  - Schema markup implementado
+  - Sitemap.xml atualizado
+
+#### 3.2 Segurança
+- [ ] **Certificados e Protocolos**
+  - SSL/HTTPS implementado
+  - Headers de segurança configurados
+  - Validação de entrada nos formulários
+  - Proteção contra CSRF/XSS
+
+- [ ] **Backup e Recuperação**
+  - Sistema de backup automatizado
+  - Procedimentos de recuperação testados
+  - Versionamento de código atualizado
+
+### 4. Verificações Específicas Mobile App
+
+#### 4.1 Funcionalidades Nativas
+- [ ] **Push Notifications**
+  - Configuração nos stores (iOS/Android)
+  - Permissões solicitadas corretamente
+  - Conteúdo das notificações adequado
+
+- [ ] **Integrações do Dispositivo**
+  - Câmera/galeria funcionando
+  - GPS/localização quando necessário
+  - Contactos/calendário se aplicável
+
+#### 4.2 Stores e Distribuição
+- [ ] **App Store/Google Play**
+  - Metadados completos (descrição, screenshots)
+  - Ícones em todas as resoluções necessárias
+  - Versioning adequado
+  - Políticas das stores cumpridas
+
+### 5. Testes de Qualidade
+
+#### 5.1 Testes Funcionais
+- [ ] **User Acceptance Testing (UAT)**
+  - Fluxos críticos testados por usuários reais
+  - Cenários de uso documentados
+  - Feedback incorporado
+
+- [ ] **Cross-browser Testing**
+  - Chrome, Firefox, Safari, Edge
+  - Versões móveis dos browsers
+  - Compatibilidade com versões anteriores
+
+#### 5.2 Monitoramento e Analytics
+- [ ] **Ferramentas de Análise**
+  - Google Analytics configurado
+  - Eventos customizados implementados
+  - Goals/conversões definidas
+
+- [ ] **Monitoramento de Erros**
+  - Sistema de logging implementado
+  - Alertas para erros críticos
+  - Dashboard de monitoramento ativo
+
+### 6. Preparação para Produção
+
+#### 6.1 Configurações de Ambiente
+- [ ] **Variáveis de Ambiente**
+  - URLs de produção configuradas
+  - Chaves de API de produção
+  - Configurações de email/SMS
+
+- [ ] **Base de Dados**
+  - Migração de dados testada
+  - Backup pré-deploy realizado
+  - Índices de performance criados
+
+#### 6.2 Documentação e Equipe
+- [ ] **Documentação Técnica**
+  - Manual de deployment atualizado
+  - Procedimentos de rollback documentados
+  - Contatos de emergência definidos
+
+- [ ] **Equipe e Suporte**
+  - Equipe de suporte treinada
+  - Escalation procedures definidos
+  - Monitoramento 24/7 configurado
+
+### 7. Checklist Final Pré-Deploy
+
+```bash
+# Comandos de verificação final
+npm run build --production
+npm run test:e2e
+npm audit --production
+npm run lighthouse:ci
+```
+
+- [ ] Build de produção sem erros
+- [ ] Todos os testes automatizados passando
+- [ ] Vulnerabilidades de segurança resolvidas
+- [ ] Performance score > 90 (Lighthouse)
+- [ ] Aprovação final dos stakeholders
+- [ ] Plano de rollback preparado
+
+### 8. Post-Deploy Monitoring
+
+#### Primeiras 24 horas
+- [ ] Verificação de uptime
+- [ ] Monitoramento de erros
+- [ ] Performance de páginas críticas
+- [ ] Feedback de usuários
+- [ ] Métricas de conversão
+
+---
+
+**Responsáveis:** Definir para cada seção
+**Timeline:** Estabelecer prazos para cada verificação
+**Critérios de Aprovação:** Definir métricas mínimas aceitáveis
