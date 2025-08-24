@@ -63,10 +63,10 @@ export default function Landing() {
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 tech-text-glow">
+              <span className="text-cyan-200">
                 Calculadoras de
               </span>
-              <span className="block text-4xl md:text-5xl text-cyan-200 mt-2">
+              <span className="block text-4xl md:text-5xl text-blue-100 mt-2">
                 Fertilidade e Gestação
               </span>
             </h1>
@@ -79,7 +79,7 @@ export default function Landing() {
               <Button
                 size="lg"
                 onClick={() => setLocation("/app")}
-                className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold text-lg px-8 py-6 shadow-xl tech-border"
+                className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-lg px-8 py-6 shadow-xl tech-border"
               >
                 Acessar Calculadoras
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -114,7 +114,7 @@ export default function Landing() {
         {/* Features Section */}
         <section className="py-16">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 tech-text-glow mb-4">
+            <h2 className="text-4xl font-bold text-cyan-200 mb-4">
               Recursos Avançados
             </h2>
             <p className="text-lg text-blue-200">
@@ -262,7 +262,7 @@ export default function Landing() {
         {/* How It Works */}
         <section className="py-16">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 tech-text-glow mb-4">
+            <h2 className="text-4xl font-bold text-cyan-200 mb-4">
               Como Funciona
             </h2>
           </div>
@@ -303,7 +303,7 @@ export default function Landing() {
         {/* Pricing */}
         <section className="py-16">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 tech-text-glow mb-4">
+            <h2 className="text-4xl font-bold text-cyan-200 mb-4">
               Planos de Acesso
             </h2>
             <p className="text-lg text-blue-200">
@@ -383,7 +383,7 @@ export default function Landing() {
         {/* Technology */}
         <section className="py-16">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 tech-text-glow mb-4">
+            <h2 className="text-4xl font-bold text-cyan-200 mb-4">
               Tecnologia Avançada
             </h2>
           </div>

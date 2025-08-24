@@ -10,7 +10,7 @@ const Algorithms = () => {
               Base Científica e Metodologia
             </span>
           </div>
-          <h1 className="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 tech-text-glow">
+          <h1 className="text-5xl font-bold mb-4 text-cyan-200">
             Nossos Algoritmos
           </h1>
           <p className="text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
@@ -19,7 +19,7 @@ const Algorithms = () => {
         </header>
 
         <nav className="glass-card rounded-lg mb-8 p-6 text-center tech-border shadow-xl">
-          <Link href="/app" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold px-8 py-3 rounded-lg inline-flex items-center gap-2 transition-all duration-300 shadow-lg">
+          <Link href="/app" className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold px-8 py-3 rounded-lg inline-flex items-center gap-2 transition-all duration-300 shadow-lg">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
@@ -28,7 +28,7 @@ const Algorithms = () => {
         </nav>
 
         <div className="glass-card rounded-lg shadow-xl p-6 sm:p-8 mb-6 text-blue-100 max-w-full overflow-hidden tech-border hover:shadow-2xl transition-all">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-cyan-200">
             Cálculo do Período Fértil
           </h2>
           
@@ -54,7 +54,7 @@ const Algorithms = () => {
         </div>
 
         <div className="glass-card rounded-lg shadow-xl p-6 sm:p-8 mb-6 text-blue-100 max-w-full overflow-hidden tech-border hover:shadow-2xl transition-all">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-cyan-200">
             Cálculo da Idade Gestacional
           </h2>
           
@@ -94,7 +94,7 @@ const Algorithms = () => {
         </div>
 
         <div className="glass-card rounded-lg shadow-xl p-6 sm:p-8 mb-6 text-blue-100 max-w-full overflow-hidden tech-border hover:shadow-2xl transition-all">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-cyan-200">
             Referências Científicas
           </h2>
           

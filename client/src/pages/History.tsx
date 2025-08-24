@@ -78,7 +78,7 @@ const History = () => {
           {/* Header com navegação */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8">
             <div>
-              <h1 className="text-4xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 tech-text-glow">
+              <h1 className="text-4xl font-bold mb-2 text-cyan-200">
                 Histórico de Cálculos
               </h1>
               <p className="text-blue-200">
@@ -169,7 +169,7 @@ const History = () => {
                 </p>
                 <Button
                   onClick={() => setLocation("/app")}
-                  className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white"
+                  className="bg-cyan-600 hover:bg-cyan-700 text-white"
                 >
                   Usar Calculadoras
                   <ChevronRight className="ml-2 h-4 w-4" />

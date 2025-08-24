@@ -295,7 +295,7 @@ export default function Subscription() {
               <span>Status da Assinatura</span>
               <Badge 
                 variant={subscriptionStatus?.subscriptionStatus === 'active' ? 'default' : 'secondary'}
-                className="bg-gradient-to-r from-cyan-500 to-teal-500"
+                className="bg-cyan-600 text-white"
               >
                 {subscriptionStatus?.subscriptionStatus === 'active' ? 'Ativa' : 
                  subscriptionStatus?.subscriptionStatus === 'past_due' ? 'Pagamento Pendente' :
@@ -393,7 +393,7 @@ export default function Subscription() {
             >
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-gradient-to-r from-cyan-500 to-teal-500">
+                  <Badge className="bg-cyan-600 text-white">
                     Mais Popular
                   </Badge>
                 </div>
@@ -438,7 +438,7 @@ export default function Subscription() {
                     currentPlan.id === plan.id 
                       ? 'bg-gray-300 cursor-not-allowed' 
                       : plan.popular 
-                        ? 'bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600'
+                        ? 'bg-cyan-600 hover:bg-cyan-700 text-white'
                         : ''
                   }`}
                   disabled={currentPlan.id === plan.id || createSubscriptionMutation.isPending}
