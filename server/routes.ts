@@ -914,12 +914,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         customerId = customer.id;
       }
 
+      // Usar o priceId enviado pelo frontend ou fallback para o padrão
+      const finalPriceId = priceId || process.env.STRIPE_PRICE_ID || 'price_1RzROsFRyKUci3hFcnmaZAUr';
+      
       // Criar subscription com payment intent
       const subscription = await stripe.subscriptions.create({
         customer: customerId,
         items: [
           {
-            price: priceId || 'price_1RzROsFRyKUci3hFcnmaZAUr', // Price ID configurado para R$ 29,90/mês
+            price: finalPriceId,
           },
         ],
         payment_behavior: 'default_incomplete',

@@ -154,8 +154,8 @@ export default function Subscription() {
     {
       id: 'professional',
       name: 'Profissional',
-      price: 19.90,
-      priceId: 'price_professional', // Substituir com ID real do Stripe
+      price: 29.90,
+      priceId: import.meta.env.VITE_STRIPE_PRICE_ID || 'price_1RzROsFRyKUci3hFcnmaZAUr', // ID do plano no Stripe
       credits: 100,
       popular: true,
       features: [
@@ -172,8 +172,8 @@ export default function Subscription() {
     {
       id: 'premium',
       name: 'Premium',
-      price: 39.90,
-      priceId: 'price_premium', // Substituir com ID real do Stripe
+      price: 49.90,
+      priceId: import.meta.env.VITE_STRIPE_PRICE_ID_PREMIUM || 'price_premium', // ID do plano Premium no Stripe
       credits: -1, // Ilimitado
       features: [
         'Cálculos ilimitados',

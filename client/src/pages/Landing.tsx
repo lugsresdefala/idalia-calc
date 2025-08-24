@@ -31,7 +31,7 @@ export default function Landing() {
     {
       id: "professional",
       name: "Essencial",
-      price: "R$ 19",
+      price: "R$ 29,90",
       period: "/mês",
       description: "Completo",
       credits: "100 usos/mês",
@@ -51,7 +51,7 @@ export default function Landing() {
     {
       id: "premium",
       name: "Premium",
-      price: "R$ 39",
+      price: "R$ 49,90",
       period: "/mês",
       description: "Ilimitado",
       credits: "Ilimitado",
