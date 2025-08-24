@@ -4,7 +4,6 @@ import { CalendarDays, Baby, ChevronRight, Clock, ArrowLeft, Filter, Download, C
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useAuth } from "@/hooks/useAuth";
-import Header from "@/components/ui/Header";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 import { Badge } from "@/components/ui/badge";
@@ -31,7 +30,6 @@ const History = () => {
     return (
       <div className="min-h-screen tech-bg">
         <div className="max-w-5xl mx-auto px-4 py-8">
-          <Header />
           <div className="flex items-center justify-center min-h-[400px]">
             <div className="relative">
               <div className="animate-spin rounded-full h-16 w-16 border-4 border-cyan-500 border-t-transparent"></div>
@@ -75,7 +73,6 @@ const History = () => {
   return (
     <div className="min-h-screen tech-bg">
       <div className="max-w-5xl mx-auto px-4 py-8">
-        <Header />
         
         <div className="glass-card rounded-lg p-8 mb-6">
           {/* Header com navegação */}

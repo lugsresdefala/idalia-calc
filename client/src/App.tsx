@@ -44,7 +44,7 @@ function Router() {
 
   return (
     <div className={`min-h-screen ${isMobile ? 'bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800' : ''}`}>
-      {isAuthenticated && (isMobile ? <MobileHeader /> : <Header />)}
+      {isMobile ? <MobileHeader /> : <Header />}
       
       <Switch>
         <Route path="/" component={Landing} />

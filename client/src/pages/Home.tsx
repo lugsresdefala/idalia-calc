@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import Header from "@/components/ui/Header";
 import MobileHome from "@/components/ui/MobileHome";
 import GestationalCalculator from "@/components/calculator/GestationalCalculator";
 import FertilityCalculator from "@/components/calculator/FertilityCalculator";
@@ -37,7 +36,6 @@ const Home = () => {
   return (
     <div className="min-h-screen tech-bg">
       <div className="max-w-5xl mx-auto px-4 py-8">
-        <Header />
 
         <div className="glass-card rounded-t-lg shadow-md flex border-b border-blue-400/20">
           <button

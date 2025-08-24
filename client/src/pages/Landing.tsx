@@ -2,7 +2,6 @@ import { ArrowRight, CheckCircle, Lock, Shield, Brain, Activity, Clock, Target, 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLocation } from "wouter";
-import Header from "@/components/ui/Header";
 
 export default function Landing() {
   const [, setLocation] = useLocation();
@@ -49,7 +48,6 @@ export default function Landing() {
   return (
     <div className="min-h-screen tech-bg">
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <Header />
         
         {/* Hero Section */}
         <section className="relative py-16 overflow-hidden">

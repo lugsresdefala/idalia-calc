@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import Header from "@/components/ui/Header";
 import { 
   Calculator, 
   Calendar, 
@@ -82,9 +81,6 @@ const MobileHome = () => {
 
   return (
     <div className="min-h-screen tech-bg">
-      <div className="max-w-2xl mx-auto px-4 py-4">
-        <Header />
-      </div>
       
       <div className="mobile-container pb-20">
         {/* Hero Section */}
