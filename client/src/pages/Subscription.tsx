@@ -180,9 +180,9 @@ export default function Subscription() {
         'Todas as funcionalidades',
         'API para integração',
         'Dados exportáveis',
-        'Análise preditiva com IA',
+        'Análise de tendências do ciclo',
         'Suporte 24/7',
-        'Consultoria personalizada'
+        'Relatórios detalhados'
       ],
       limitations: []
     }

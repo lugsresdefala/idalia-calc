@@ -70,7 +70,7 @@ const Home = () => {
 
         <footer className="mt-8 text-center text-sm text-blue-200 glass-panel p-4 rounded-lg shadow-md">
           <p className="mb-2">
-            Esta calculadora de precisão fornece análises baseadas em metodologias científicas e algoritmos avançados.
+            Esta calculadora fornece análises baseadas em métodos obstétricos estabelecidos.
           </p>
           <p className="mb-3">
             Consulte sempre um profissional de saúde para interpretação dos resultados e orientações específicas.
@@ -80,7 +80,7 @@ const Home = () => {
               <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
-              Saiba mais sobre nossos algoritmos
+              Saiba mais sobre os métodos de cálculo
             </Link>
           </div>
           <div className="text-xs text-blue-300/70 flex justify-center items-center gap-1">

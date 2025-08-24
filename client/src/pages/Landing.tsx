@@ -60,7 +60,7 @@ export default function Landing() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel tech-border mb-6">
               <Zap className="h-4 w-4 text-cyan-400" />
               <span className="text-cyan-300 font-medium text-sm tech-text-glow">
-                Plataforma Médica Avançada
+                Calculadoras Médicas Precisas
               </span>
             </div>
             
@@ -74,7 +74,7 @@ export default function Landing() {
             </h1>
             
             <p className="text-xl text-blue-200 mb-10 max-w-3xl mx-auto leading-relaxed">
-              Tecnologia avançada para acompanhamento da saúde reprodutiva com algoritmos médicos precisos baseados em protocolos Febrasgo e ACOG
+              Calculadoras baseadas no método de Ogino-Knaus e cálculos obstétricos padrão para acompanhamento reprodutivo
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
@@ -107,7 +107,7 @@ export default function Landing() {
               </div>
               <div className="flex items-center gap-2 glass-panel px-4 py-2 rounded-full tech-border">
                 <Brain className="h-4 w-4 text-teal-400" />
-                <span className="text-teal-300 font-medium text-sm">IA Médica</span>
+                <span className="text-teal-300 font-medium text-sm">Cálculos Precisos</span>
               </div>
             </div>
           </div>
@@ -414,7 +414,7 @@ export default function Landing() {
                   <h3 className="font-semibold text-cyan-200">Algoritmos Médicos</h3>
                 </div>
                 <p className="text-blue-300 text-sm">
-                  Baseados em protocolos Febrasgo e ACOG com validação clínica
+                  Cálculos baseados em métodos obstétricos estabelecidos e validados
                 </p>
               </CardContent>
             </Card>
@@ -444,7 +444,7 @@ export default function Landing() {
                 Comece Agora Mesmo
               </h2>
               <p className="text-xl text-blue-200 mb-8 max-w-2xl mx-auto">
-                Junte-se a milhares de usuárias que já utilizam nossa plataforma para acompanhar sua saúde reprodutiva
+                Comece a utilizar nossas calculadoras para acompanhar sua saúde reprodutiva de forma precisa
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
@@ -474,7 +474,7 @@ export default function Landing() {
             © 2025 Idalia Calc - Plataforma de Saúde Reprodutiva
           </p>
           <p className="mb-3">
-            Desenvolvido com tecnologia médica avançada • Protocolos Febrasgo e ACOG
+            Calculadoras baseadas em métodos científicos estabelecidos na literatura médica
           </p>
           <div className="flex justify-center items-center gap-4 text-cyan-300">
             <button onClick={() => setLocation("/algoritmos")} className="hover:text-cyan-200 transition-colors">

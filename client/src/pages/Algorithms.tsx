@@ -31,8 +31,8 @@ const Algorithms = () => {
             </p>
             <ul className="list-disc pl-6 text-sm text-blue-200 space-y-2">
               <li>Duração do ciclo menstrual (variabilidade calculada com base no histórico)</li>
-              <li>Viabilidade do espermatozoide no trato reprodutivo feminino (3-5 dias)</li>
-              <li>Viabilidade do óvulo após ovulação (24 horas)</li>
+              <li>Viabilidade do espermatozoide no trato reprodutivo feminino (até 5 dias)</li>
+              <li>Viabilidade do óvulo após ovulação (12-24 horas)</li>
               <li>Fase lútea (geralmente 14 dias antes da próxima menstruação)</li>
             </ul>
             
@@ -93,16 +93,16 @@ const Algorithms = () => {
           <div className="glass-panel p-3 sm:p-4 rounded-lg tech-border">
             <ul className="list-disc pl-6 text-sm text-blue-200 space-y-3">
               <li>
-                <span className="font-medium text-cyan-300">Guia Prático de Atendimento em Obstetrícia</span> - 
-                Federação Brasileira das Associações de Ginecologia e Obstetrícia (Febrasgo)
+                <span className="font-medium text-cyan-300">Método de Ogino-Knaus</span> - 
+                Método do ritmo ou tabelinha, base científica para cálculo de período fértil
               </li>
               <li>
-                <span className="font-medium text-cyan-300">Guidelines for Perinatal Care</span> - 
-                American College of Obstetricians and Gynecologists (ACOG)
+                <span className="font-medium text-cyan-300">Regra de Naegele</span> - 
+                Método padrão para cálculo da data provável do parto (DPP)
               </li>
               <li>
-                <span className="font-medium text-cyan-300">Manual Técnico de Gestação de Alto Risco</span> - 
-                Ministério da Saúde do Brasil
+                <span className="font-medium text-cyan-300">Cálculo de Idade Gestacional</span> - 
+                Métodos padrão utilizados em obstetrícia: DUM, ultrassonografia e FIV
               </li>
               <li>
                 <span className="font-medium text-cyan-300">Baird DD, et al.</span> Using the ratio of urinary oestrogen and progesterone metabolites to estimate day of ovulation. Statistics in Medicine, 1991.
@@ -116,7 +116,7 @@ const Algorithms = () => {
 
         <footer className="mt-8 text-center text-sm text-blue-200 glass-panel p-4 rounded-lg shadow-md">
           <p className="mb-2">
-            Os algoritmos e metodologias descritos aqui são baseados em literatura científica e protocolos médicos.
+            Os algoritmos descritos são baseados em métodos estabelecidos na prática obstétrica.
           </p>
           <p>
             Consulte sempre um profissional de saúde para interpretação dos resultados e orientações específicas.
