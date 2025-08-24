@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ArrowRight, CheckCircle, Lock, Shield, Brain, Activity, Clock, Target, BarChart, Zap, Database, LineChart, Calendar, Thermometer, FileText, Menu, X } from "lucide-react";
+import Footer from "@/components/ui/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLocation } from "wouter";
@@ -580,32 +581,8 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Mobile Footer */}
-      <footer className="bg-white border-t border-slate-200 py-8 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="flex flex-col items-center gap-4">
-            <div className="flex items-center gap-3">
-              <img 
-                src="/idalia-logo.png" 
-                alt="Idalia Calc" 
-                className="h-10 w-10 drop-shadow-md"
-              />
-              <div>
-                <h3 className="text-lg font-semibold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
-                  Idalia Calc
-                </h3>
-              </div>
-            </div>
-            
-            <div className="text-center">
-              <p className="text-slate-700 text-sm font-medium">© 2025 Idalia Calc</p>
-              <p className="text-slate-600 text-xs mt-1">
-                Calculadoras de Saúde Reprodutiva
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      {/* Footer com links legais */}
+      <Footer />
     </div>
   );
 }

@@ -14,6 +14,8 @@ import History from "@/pages/History";
 import Subscription from "@/pages/Subscription";
 import Checkout from "@/pages/Checkout";
 import PaymentComplete from "@/pages/PaymentComplete";
+import Terms from "@/pages/Terms";
+import Privacy from "@/pages/Privacy";
 import Header from "./components/ui/Header";
 import MobileHeader from "./components/ui/MobileHeader";
 import "./styles/global.css";
@@ -57,6 +59,8 @@ function Router() {
         <Route path="/payment-complete" component={PaymentComplete} />
         <Route path="/algorithms" component={Algorithms} />
         <Route path="/algoritmos" component={Algorithms} />
+        <Route path="/terms" component={Terms} />
+        <Route path="/privacy" component={Privacy} />
         <Route component={NotFound} />
       </Switch>
     </div>
