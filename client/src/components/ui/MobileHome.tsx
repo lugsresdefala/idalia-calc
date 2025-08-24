@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
+import Header from "@/components/ui/Header";
 import { 
   Calculator, 
   Calendar, 
@@ -80,9 +81,14 @@ const MobileHome = () => {
   ];
 
   return (
-    <div className="mobile-container pb-20">
-      {/* Hero Section */}
-      <div className="mobile-section">
+    <div className="min-h-screen tech-bg">
+      <div className="max-w-2xl mx-auto px-4 py-4">
+        <Header />
+      </div>
+      
+      <div className="mobile-container pb-20">
+        {/* Hero Section */}
+        <div className="mobile-section">
         <div className="text-center mb-6">
           <div className="mb-4">
             <Sparkles className="h-12 w-12 mx-auto text-yellow-400 mb-2" />
@@ -182,6 +188,7 @@ const MobileHome = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
