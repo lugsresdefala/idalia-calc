@@ -4,22 +4,30 @@ const Algorithms = () => {
   return (
     <div className="min-h-screen tech-bg">
       <div className="max-w-5xl mx-auto px-4 py-8">
-        <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-400 tech-text-glow">
-            Idalia Calc - Algoritmos
+        <header className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel tech-border mb-6">
+            <span className="text-cyan-300 font-medium text-sm tech-text-glow">
+              Base Científica e Metodologia
+            </span>
+          </div>
+          <h1 className="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 tech-text-glow">
+            Nossos Algoritmos
           </h1>
-          <p className="text-blue-100 max-w-2xl mx-auto text-lg">
-            Descrição detalhada dos algoritmos e metodologias científicas utilizadas
+          <p className="text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
+            Conheça a ciência por trás dos nossos cálculos, baseados em métodos médicos estabelecidos
           </p>
         </header>
 
-        <nav className="glass-card rounded-lg mb-8 p-4 text-center">
-          <Link href="/" className="tech-button px-6 py-2 tech-glow inline-block">
+        <nav className="glass-card rounded-lg mb-8 p-6 text-center tech-border shadow-xl">
+          <Link href="/app" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold px-8 py-3 rounded-lg inline-flex items-center gap-2 transition-all duration-300 shadow-lg">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
             Voltar para Calculadoras
           </Link>
         </nav>
 
-        <div className="glass-card rounded-lg shadow-md p-4 sm:p-6 mb-6 text-blue-100 max-w-full overflow-hidden">
+        <div className="glass-card rounded-lg shadow-xl p-6 sm:p-8 mb-6 text-blue-100 max-w-full overflow-hidden tech-border hover:shadow-2xl transition-all">
           <h2 className="text-xl sm:text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">
             Cálculo do Período Fértil
           </h2>
@@ -45,7 +53,7 @@ const Algorithms = () => {
           </div>
         </div>
 
-        <div className="glass-card rounded-lg shadow-md p-4 sm:p-6 mb-6 text-blue-100 max-w-full overflow-hidden">
+        <div className="glass-card rounded-lg shadow-xl p-6 sm:p-8 mb-6 text-blue-100 max-w-full overflow-hidden tech-border hover:shadow-2xl transition-all">
           <h2 className="text-xl sm:text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">
             Cálculo da Idade Gestacional
           </h2>
@@ -85,7 +93,7 @@ const Algorithms = () => {
           </div>
         </div>
 
-        <div className="glass-card rounded-lg shadow-md p-4 sm:p-6 mb-6 text-blue-100 max-w-full overflow-hidden">
+        <div className="glass-card rounded-lg shadow-xl p-6 sm:p-8 mb-6 text-blue-100 max-w-full overflow-hidden tech-border hover:shadow-2xl transition-all">
           <h2 className="text-xl sm:text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 tech-text-glow">
             Referências Científicas
           </h2>

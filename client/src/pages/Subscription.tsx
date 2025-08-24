@@ -270,20 +270,26 @@ export default function Subscription() {
     : ((subscriptionStatus?.monthlyCredits || 0) - (subscriptionStatus?.usedCredits || 0)) / (subscriptionStatus?.monthlyCredits || 1) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-emerald-50 py-12 px-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen tech-bg">
+      <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel tech-border mb-6">
+            <CreditCard className="h-4 w-4 text-cyan-400" />
+            <span className="text-cyan-300 font-medium text-sm tech-text-glow">
+              Planos e Assinaturas
+            </span>
+          </div>
+          <h1 className="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 tech-text-glow">
             Gerenciar Assinatura
           </h1>
-          <p className="text-gray-600 text-lg">
-            Escolha o plano ideal para suas necessidades
+          <p className="text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
+            Escolha o plano ideal para suas necessidades de saúde reprodutiva
           </p>
         </div>
 
         {/* Status atual */}
-        <Card className="mb-8 border-cyan-200 bg-white/80 backdrop-blur-sm">
+        <Card className="mb-8 glass-card tech-border hover:shadow-xl transition-all">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <span>Status da Assinatura</span>
@@ -299,9 +305,9 @@ export default function Subscription() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">Plano atual:</span>
+              <span className="text-blue-300">Plano atual:</span>
               <span className="font-semibold flex items-center">
-                {currentPlan.id === 'free' && <Shield className="h-4 w-4 mr-2 text-gray-500" />}
+                {currentPlan.id === 'free' && <Shield className="h-4 w-4 mr-2 text-blue-400" />}
                 {currentPlan.id === 'professional' && <Sparkles className="h-4 w-4 mr-2 text-cyan-500" />}
                 {currentPlan.id === 'premium' && <Crown className="h-4 w-4 mr-2 text-yellow-500" />}
                 {currentPlan.name}
@@ -310,7 +316,7 @@ export default function Subscription() {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-gray-600">Créditos disponíveis:</span>
+                <span className="text-blue-300">Créditos disponíveis:</span>
                 <span className="font-semibold">
                   {subscriptionStatus?.monthlyCredits === -1 ? 
                     'Ilimitados' : 
@@ -325,7 +331,7 @@ export default function Subscription() {
 
             {subscriptionStatus?.subscriptionEndDate && (
               <div className="flex items-center justify-between">
-                <span className="text-gray-600">Próxima renovação:</span>
+                <span className="text-blue-300">Próxima renovação:</span>
                 <span className="font-semibold">
                   {new Date(subscriptionStatus.subscriptionEndDate).toLocaleDateString('pt-BR')}
                 </span>

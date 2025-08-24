@@ -36,6 +36,15 @@ const Home = () => {
   return (
     <div className="min-h-screen tech-bg">
       <div className="max-w-5xl mx-auto px-4 py-8">
+        {/* Hero Section */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 tech-text-glow">
+            Suas Calculadoras de Saúde
+          </h1>
+          <p className="text-lg text-blue-200 max-w-2xl mx-auto">
+            Selecione abaixo a calculadora desejada para obter análises precisas e personalizadas
+          </p>
+        </div>
 
         <div className="glass-card rounded-t-lg shadow-md flex border-b border-blue-400/20">
           <button
@@ -66,12 +75,12 @@ const Home = () => {
           <FertilityCalculator />
         )}
 
-        <footer className="mt-8 text-center text-sm text-blue-200 glass-panel p-4 rounded-lg shadow-md">
-          <p className="mb-2">
-            Esta calculadora fornece análises baseadas em métodos obstétricos estabelecidos.
+        <footer className="mt-8 text-center text-sm text-blue-200 glass-card p-6 rounded-lg shadow-xl tech-border">
+          <p className="mb-3 text-cyan-300 font-medium">
+            💙 Esta calculadora fornece análises baseadas em métodos obstétricos estabelecidos
           </p>
-          <p className="mb-3">
-            Consulte sempre um profissional de saúde para interpretação dos resultados e orientações específicas.
+          <p className="mb-4 text-blue-200">
+            Consulte sempre um profissional de saúde para interpretação dos resultados e orientações específicas
           </p>
           <div className="mb-4">
             <Link href="/algoritmos" className="inline-flex items-center text-cyan-300 hover:text-cyan-200 transition-colors tech-text-glow px-3 py-1 rounded-md glass-panel tech-border-faint">
