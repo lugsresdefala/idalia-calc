@@ -93,12 +93,12 @@ const Algorithms = () => {
           <div className="glass-panel p-3 sm:p-4 rounded-lg tech-border">
             <ul className="list-disc pl-6 text-sm text-blue-200 space-y-3">
               <li>
-                <span className="font-medium text-cyan-300">Método de Ogino-Knaus</span> - 
-                Método do ritmo ou tabelinha, base científica para cálculo de período fértil
+                <span className="font-medium text-cyan-300">Cálculo do Período Fértil</span> - 
+                Baseado na regularidade do ciclo menstrual e período de ovulação
               </li>
               <li>
-                <span className="font-medium text-cyan-300">Regra de Naegele</span> - 
-                Método padrão para cálculo da data provável do parto (DPP)
+                <span className="font-medium text-cyan-300">Cálculo da Data do Parto</span> - 
+                Método padrão usado por médicos: adiciona 280 dias à data da última menstruação
               </li>
               <li>
                 <span className="font-medium text-cyan-300">Cálculo de Idade Gestacional</span> - 

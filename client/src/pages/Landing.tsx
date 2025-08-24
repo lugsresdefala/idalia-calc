@@ -74,7 +74,7 @@ export default function Landing() {
             </h1>
             
             <p className="text-xl text-blue-200 mb-10 max-w-3xl mx-auto leading-relaxed">
-              Calculadoras baseadas no método de Ogino-Knaus e cálculos obstétricos padrão para acompanhamento reprodutivo
+              Ferramentas precisas para calcular período fértil e acompanhar a gestação com métodos médicos confiáveis
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
