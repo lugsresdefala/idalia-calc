@@ -17,9 +17,9 @@ export default function Landing() {
       price: "R$ 0",
       period: "",
       description: "Experimente",
-      credits: "5 usos/mês",
+      credits: "1 cálculo completo",
       features: [
-        "5 cálculos mensais",
+        "1 cálculo completo gratuito",
         "Calculadora de fertilidade",
         "Calculadora gestacional",
         "Resultados instantâneos"
@@ -30,41 +30,23 @@ export default function Landing() {
     },
     {
       id: "professional",
-      name: "Essencial",
+      name: "Premium",
       price: "R$ 29,90",
       period: "/mês",
       description: "Completo",
-      credits: "100 usos/mês",
+      credits: "Ilimitado",
       features: [
-        "100 cálculos mensais",
+        "Cálculos ilimitados",
         "Histórico completo",
         "Dashboard pessoal",
         "Temperatura basal",
         "Notificações",
         "Exportar dados",
-        "Suporte email"
+        "Suporte prioritário"
       ],
       cta: "Assinar",
       popular: true,
       gradient: "from-emerald-500 to-teal-600"
-    },
-    {
-      id: "premium",
-      name: "Premium",
-      price: "R$ 49,90",
-      period: "/mês",
-      description: "Ilimitado",
-      credits: "Ilimitado",
-      features: [
-        "Uso ilimitado",
-        "Tudo do Essencial",
-        "Análises avançadas",
-        "Suporte prioritário",
-        "Backup automático"
-      ],
-      cta: "Premium",
-      popular: false,
-      gradient: "from-cyan-500 to-blue-600"
     }
   ];
 

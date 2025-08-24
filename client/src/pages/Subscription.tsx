@@ -134,55 +134,39 @@ export default function Subscription() {
   const plans = [
     {
       id: 'free',
-      name: 'Básico',
+      name: 'Gratuito',
       price: 0,
       priceId: null,
-      credits: 5,
+      credits: 1,
       features: [
-        '5 cálculos por mês',
+        '1 cálculo completo gratuito',
         'Calculadora de Fertilidade',
         'Calculadora Gestacional',
-        'Histórico limitado (30 dias)',
-        'Suporte por email'
+        'Resultados instantâneos'
       ],
       limitations: [
-        'Sem relatórios PDF',
-        'Sem análise avançada',
-        'Sem prioridade no suporte'
+        'Sem histórico',
+        'Sem dashboard',
+        'Sem suporte prioritário'
       ]
     },
     {
       id: 'professional',
-      name: 'Profissional',
+      name: 'Premium',
       price: 29.90,
-      priceId: 'price_1RzROsFRyKUci3hFcnmaZAUr', // Price ID correto para R$ 29,90
-      credits: 100,
+      priceId: 'price_1RzROsFRyKUci3hFcnmaZAUr', // Price ID correto
+      credits: -1, // Ilimitado
       popular: true,
       features: [
-        '100 cálculos por mês',
+        'Cálculos ilimitados',
         'Todas as calculadoras',
         'Histórico completo',
-        'Relatórios em PDF',
-        'Análise avançada de ciclos',
-        'Gráficos interativos',
+        'Dashboard pessoal',
+        'Temperatura basal',
+        'Análise de muco cervical',
+        'Notificações',
+        'Exportar dados',
         'Suporte prioritário'
-      ],
-      limitations: []
-    },
-    {
-      id: 'premium',
-      name: 'Premium',
-      price: 49.90,
-      priceId: import.meta.env.VITE_STRIPE_PRICE_ID_PREMIUM || 'price_premium', // ID do plano Premium no Stripe
-      credits: -1, // Ilimitado
-      features: [
-        'Cálculos ilimitados',
-        'Todas as funcionalidades',
-        'API para integração',
-        'Dados exportáveis',
-        'Análise preditiva com IA',
-        'Suporte 24/7',
-        'Consultoria personalizada'
       ],
       limitations: []
     }
