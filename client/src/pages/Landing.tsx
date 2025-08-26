@@ -49,6 +49,28 @@ export default function Landing() {
       gradient: "from-teal-500 to-teal-600"
     },
     {
+      id: "professional_plus",
+      name: "Premium Plus",
+      price: "R$ 39,90",
+      period: "/mês",
+      description: "Premium + Estimulação",
+      credits: "Ilimitado + Módulo Estimulação",
+      features: [
+        "Tudo do plano Premium",
+        "Módulo de Estimulação Ovariana",
+        "Protocolos personalizados",
+        "Cálculo de doses de medicamentos",
+        "Acompanhamento de resposta ovariana",
+        "Gráficos de evolução hormonal",
+        "Relatórios para médicos",
+        "Suporte prioritário Plus"
+      ],
+      cta: "Assinar Plus",
+      popular: false,
+      gradient: "from-purple-500 to-purple-600",
+      badge: "RECOMENDADO"
+    },
+    {
       id: "fetalpro",
       name: "FetalPro Bundle",
       price: "R$ 49,90",
@@ -56,7 +78,7 @@ export default function Landing() {
       description: "Completo + FetalPro",
       credits: "Ilimitado em ambas plataformas",
       features: [
-        "Tudo do plano Premium",
+        "Tudo do plano Premium Plus",
         "Acesso completo ao FetalPro",
         "Calculadoras fetais avançadas",
         "Banco de dados de medidas fetais",
@@ -68,7 +90,7 @@ export default function Landing() {
       cta: "Bundle Completo",
       popular: false,
       gradient: "from-blue-500 to-blue-600",
-      badge: "NOVO"
+      badge: "MAIS COMPLETO"
     }
   ];
 
