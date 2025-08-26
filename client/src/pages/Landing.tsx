@@ -73,9 +73,9 @@ export default function Landing() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-white to-slate-50/50">
       {/* Mobile-First Header */}
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-sm">
         <div className="container mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
             {/* Logo Section */}
@@ -114,7 +114,7 @@ export default function Landing() {
               </Button>
               <Button
                 onClick={() => window.location.href = "/api/login"}
-                className="bg-teal-600 hover:bg-teal-700 text-white font-medium transition-colors rounded-md px-4 py-2"
+                className="bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white font-medium transition-all shadow-sm rounded-lg px-4 py-2"
               >
                 Criar Conta
               </Button>
@@ -136,7 +136,7 @@ export default function Landing() {
                   Entrar na Plataforma
                 </Button>
                 <Button
-                  className="w-full bg-teal-600 hover:bg-teal-700 text-white shadow-lg font-semibold transition-all rounded-md"
+                  className="w-full bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white shadow-lg font-semibold transition-all rounded-lg"
                   onClick={() => {
                     window.location.href = "/api/login";
                     setMobileMenuOpen(false);
@@ -184,7 +184,7 @@ export default function Landing() {
               <Button
                 size="lg"
                 onClick={() => setLocation("/app")}
-                className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold text-base py-6 shadow-lg transition-all rounded-md"
+                className="w-full bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white font-semibold text-base py-6 shadow-xl transition-all rounded-lg"
               >
                 Usar Calculadoras
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -415,19 +415,19 @@ export default function Landing() {
                 key={plan.id}
                 className={`min-w-[280px] flex-shrink-0 snap-center bg-white border-2 ${
                   plan.popular 
-                    ? 'border-teal-500 shadow-xl scale-105 ring-2 ring-teal-100' 
+                    ? 'border-slate-400 shadow-xl scale-105' 
                     : plan.badge
-                    ? 'border-blue-500 shadow-lg ring-2 ring-blue-100'
-                    : 'border-gray-200'
+                    ? 'border-blue-400 shadow-lg'
+                    : 'border-slate-200'
                 }`}
               >
                 {plan.popular && (
-                  <div className="bg-teal-600 text-white px-4 py-2 text-xs font-semibold text-center tracking-wide">
+                  <div className="bg-gradient-to-r from-slate-700 to-slate-800 text-white px-4 py-2 text-xs font-semibold text-center tracking-wide">
                     Mais Popular
                   </div>
                 )}
                 {plan.badge && (
-                  <div className="bg-blue-600 text-white px-4 py-2 text-xs font-semibold text-center tracking-wide">
+                  <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 text-xs font-semibold text-center tracking-wide">
                     {plan.badge}
                   </div>
                 )}
@@ -440,9 +440,9 @@ export default function Landing() {
                     </span>
                     <span className="text-gray-500 text-sm">{plan.period}</span>
                   </div>
-                  <div className="mt-2 inline-flex items-center gap-1.5 bg-teal-50 px-3 py-1.5 rounded-full">
-                    <Target className="h-3.5 w-3.5 text-teal-700" />
-                    <span className="text-teal-800 font-semibold text-xs">{plan.credits}</span>
+                  <div className="mt-2 inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-full">
+                    <Target className="h-3.5 w-3.5 text-slate-600" />
+                    <span className="text-slate-700 font-semibold text-xs">{plan.credits}</span>
                   </div>
                 </CardHeader>
                 
@@ -450,7 +450,7 @@ export default function Landing() {
                   <ul className="space-y-2 mb-4">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-1.5">
-                        <CheckCircle className="h-4 w-4 text-teal-600 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-slate-600 mt-0.5 flex-shrink-0" />
                         <span className="text-gray-700 text-sm">{feature}</span>
                       </li>
                     ))}
@@ -459,10 +459,10 @@ export default function Landing() {
                   <Button 
                     className={`w-full font-medium text-sm py-5 ${
                       plan.popular 
-                        ? 'bg-teal-600 hover:bg-teal-700 text-white shadow-lg transition-all font-semibold'
+                        ? 'bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white shadow-lg transition-all font-semibold'
                         : plan.badge
-                        ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md transition-all font-semibold' 
-                        : 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-200'
+                        ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-md transition-all font-semibold' 
+                        : 'bg-white hover:bg-slate-50 text-slate-700 border border-slate-200'
                     }`}
                     onClick={() => {
                       if (plan.id === 'free') {
@@ -484,7 +484,7 @@ export default function Landing() {
 
           <div className="text-center mt-6">
             <p className="text-slate-500 text-xs flex items-center justify-center gap-1.5">
-              <Lock className="h-3.5 w-3.5 text-teal-600" />
+              <Lock className="h-3.5 w-3.5 text-slate-600" />
               Pagamento seguro • Cancele quando quiser
             </p>
           </div>
@@ -563,7 +563,7 @@ export default function Landing() {
                 <Button
                   size="lg"
                   onClick={() => setLocation("/app")}
-                  className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-6 shadow-lg transition-all rounded-md"
+                  className="w-full bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white font-semibold py-6 shadow-xl transition-all rounded-lg"
                 >
                   Usar Grátis
                   <ArrowRight className="ml-2 h-4 w-4" />

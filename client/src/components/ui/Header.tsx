@@ -18,7 +18,7 @@ const Header = () => {
       </div>
       
       <div className="text-center">
-        <h1 className="text-3xl font-semibold mb-2 text-slate-800">
+        <h1 className="text-3xl font-semibold mb-2 text-slate-900">
           Idalia Calc
         </h1>
         <p className="text-slate-600 max-w-2xl mx-auto text-base mb-4">
@@ -27,27 +27,27 @@ const Header = () => {
         
         {/* Navegação */}
         <nav className="flex justify-center gap-3 flex-wrap">
-          <Link href="/" className="inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-teal-600 font-medium transition-colors">
+          <Link href="/" className="inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-slate-900 font-medium transition-colors">
             <Calculator className="h-4 w-4" />
             Calculadoras
           </Link>
-          <Link href="/dashboard" className="inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-teal-600 font-medium transition-colors">
+          <Link href="/dashboard" className="inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-slate-900 font-medium transition-colors">
             <BarChart3 className="h-4 w-4" />
             Dashboard
           </Link>
-          <Link href="/notifications" className="inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-teal-600 font-medium transition-colors">
+          <Link href="/notifications" className="inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-slate-900 font-medium transition-colors">
             <Bell className="h-4 w-4" />
             Notificações
           </Link>
-          <Link href="/history" className="inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-teal-600 font-medium transition-colors">
+          <Link href="/history" className="inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-slate-900 font-medium transition-colors">
             <FileText className="h-4 w-4" />
             Histórico
           </Link>
-          <Link href="/subscription" className="inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-teal-600 font-medium transition-colors">
+          <Link href="/subscription" className="inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-slate-900 font-medium transition-colors">
             <CreditCard className="h-4 w-4" />
             Assinatura
           </Link>
-          <Link href="/algoritmos" className="inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-teal-600 font-medium transition-colors">
+          <Link href="/algoritmos" className="inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-slate-900 font-medium transition-colors">
             <Activity className="h-4 w-4" />
             Algoritmos
           </Link>
