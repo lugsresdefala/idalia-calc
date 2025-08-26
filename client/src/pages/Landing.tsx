@@ -26,7 +26,7 @@ export default function Landing() {
       ],
       cta: "Começar Grátis",
       popular: false,
-      gradient: "from-gray-200 to-gray-300"
+      gradient: "from-slate-50 to-slate-100"
     },
     {
       id: "professional",
@@ -46,7 +46,7 @@ export default function Landing() {
       ],
       cta: "Assinar",
       popular: true,
-      gradient: "from-indigo-500 to-purple-500"
+      gradient: "from-teal-500 to-teal-600"
     },
     {
       id: "fetalpro",
@@ -67,21 +67,21 @@ export default function Landing() {
       ],
       cta: "Bundle Completo",
       popular: false,
-      gradient: "from-blue-500 to-teal-500",
+      gradient: "from-blue-500 to-blue-600",
       badge: "NOVO"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50/50">
+    <div className="min-h-screen bg-gray-50">
       {/* Mobile-First Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-sm bg-white/98 border-b border-gray-100">
+      <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
         <div className="container mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
             {/* Logo Section */}
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-100 via-blue-100 to-teal-100 rounded-full blur-2xl opacity-40"></div>
+                <div className="absolute inset-0"></div>
                 <img 
                   src="/idalia-logo-new.png" 
                   alt="Idalia Calc" 
@@ -89,7 +89,7 @@ export default function Landing() {
                 />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">
+                <h1 className="text-xl font-medium text-slate-800">
                   Idalia Calc
                 </h1>
               </div>
@@ -107,14 +107,14 @@ export default function Landing() {
             <div className="hidden md:flex items-center gap-3">
               <Button
                 variant="ghost"
-                className="text-gray-600 hover:text-gray-800 transition-colors"
+                className="text-slate-600 hover:text-slate-800 font-medium"
                 onClick={() => setLocation("/app")}
               >
                 Entrar
               </Button>
               <Button
                 onClick={() => window.location.href = "/api/login"}
-                className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white shadow-lg font-medium transition-all"
+                className="bg-teal-600 hover:bg-teal-700 text-white font-medium transition-colors rounded-md px-4 py-2"
               >
                 Criar Conta
               </Button>
@@ -136,7 +136,7 @@ export default function Landing() {
                   Entrar na Plataforma
                 </Button>
                 <Button
-                  className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white shadow-lg font-semibold transform hover:scale-105 transition-all"
+                  className="w-full bg-teal-600 hover:bg-teal-700 text-white shadow-lg font-semibold transition-all rounded-md"
                   onClick={() => {
                     window.location.href = "/api/login";
                     setMobileMenuOpen(false);
@@ -184,7 +184,7 @@ export default function Landing() {
               <Button
                 size="lg"
                 onClick={() => setLocation("/app")}
-                className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold text-base py-6 shadow-xl transform hover:scale-105 transition-all"
+                className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold text-base py-6 shadow-lg transition-all rounded-md"
               >
                 Usar Calculadoras
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -415,19 +415,19 @@ export default function Landing() {
                 key={plan.id}
                 className={`min-w-[280px] flex-shrink-0 snap-center bg-white border-2 ${
                   plan.popular 
-                    ? 'border-indigo-400 shadow-xl ring-4 ring-indigo-100 scale-105' 
+                    ? 'border-teal-500 shadow-xl scale-105 ring-2 ring-teal-100' 
                     : plan.badge
-                    ? 'border-teal-400 shadow-lg ring-2 ring-teal-100'
+                    ? 'border-blue-500 shadow-lg ring-2 ring-blue-100'
                     : 'border-gray-200'
                 }`}
               >
                 {plan.popular && (
-                  <div className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-3 py-1 text-xs font-semibold text-center uppercase tracking-wide">
+                  <div className="bg-teal-600 text-white px-4 py-2 text-xs font-semibold text-center tracking-wide">
                     Mais Popular
                   </div>
                 )}
                 {plan.badge && (
-                  <div className="bg-gradient-to-r from-teal-500 to-blue-500 text-white px-3 py-1 text-xs font-semibold text-center uppercase tracking-wide">
+                  <div className="bg-blue-600 text-white px-4 py-2 text-xs font-semibold text-center tracking-wide">
                     {plan.badge}
                   </div>
                 )}
@@ -440,9 +440,9 @@ export default function Landing() {
                     </span>
                     <span className="text-gray-500 text-sm">{plan.period}</span>
                   </div>
-                  <div className="mt-2 inline-flex items-center gap-1 bg-indigo-50 px-3 py-1.5 rounded-full">
-                    <Target className="h-3 w-3 text-indigo-600" />
-                    <span className="text-indigo-700 font-semibold text-xs">{plan.credits}</span>
+                  <div className="mt-2 inline-flex items-center gap-1.5 bg-teal-50 px-3 py-1.5 rounded-full">
+                    <Target className="h-3.5 w-3.5 text-teal-700" />
+                    <span className="text-teal-800 font-semibold text-xs">{plan.credits}</span>
                   </div>
                 </CardHeader>
                 
@@ -450,7 +450,7 @@ export default function Landing() {
                   <ul className="space-y-2 mb-4">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-1.5">
-                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-teal-600 mt-0.5 flex-shrink-0" />
                         <span className="text-gray-700 text-sm">{feature}</span>
                       </li>
                     ))}
@@ -459,10 +459,10 @@ export default function Landing() {
                   <Button 
                     className={`w-full font-medium text-sm py-5 ${
                       plan.popular 
-                        ? 'bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white shadow-lg transform hover:scale-105 transition-all'
+                        ? 'bg-teal-600 hover:bg-teal-700 text-white shadow-lg transition-all font-semibold'
                         : plan.badge
-                        ? 'bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white shadow-md transform hover:scale-105 transition-all' 
-                        : 'bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200'
+                        ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md transition-all font-semibold' 
+                        : 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-200'
                     }`}
                     onClick={() => {
                       if (plan.id === 'free') {
@@ -483,8 +483,8 @@ export default function Landing() {
           </div>
 
           <div className="text-center mt-6">
-            <p className="text-slate-600 text-xs flex items-center justify-center gap-1">
-              <Lock className="h-3 w-3" />
+            <p className="text-slate-500 text-xs flex items-center justify-center gap-1.5">
+              <Lock className="h-3.5 w-3.5 text-teal-600" />
               Pagamento seguro • Cancele quando quiser
             </p>
           </div>
@@ -563,7 +563,7 @@ export default function Landing() {
                 <Button
                   size="lg"
                   onClick={() => setLocation("/app")}
-                  className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-6 shadow-xl transform hover:scale-105 transition-all"
+                  className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-6 shadow-lg transition-all rounded-md"
                 >
                   Usar Grátis
                   <ArrowRight className="ml-2 h-4 w-4" />
