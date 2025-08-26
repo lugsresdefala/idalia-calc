@@ -1,7 +1,7 @@
 # IdaliaCalc - Plataforma de Saúde Reprodutiva
 
 ## Visão Geral
-IdaliaCalc é uma plataforma médica especializada em saúde reprodutiva, oferecendo calculadoras avançadas e análise de dados para acompanhamento da fertilidade e gestação.
+IdaliaCalc é uma plataforma médica especializada em saúde reprodutiva, oferecendo calculadoras avançadas e análise de dados para acompanhamento da fertilidade e gestação. Agora integrada com FetalPro para oferecer um pacote completo de saúde materno-fetal.
 
 ### Tecnologias Core
 - Frontend: React + TypeScript + Vite
@@ -50,12 +50,14 @@ IdaliaCalc é uma plataforma médica especializada em saúde reprodutiva, oferec
 
 ## Preferências do Usuário
 - Nome da aplicação: "Idalia Calc"
-- Cores: Gradientes azul-verde, sem elementos rosa
+- Cores: Paleta inspirada no logo - roxo, azul, verde-azulado, verde (baseada na nova identidade visual)
 - Estética: Calculadora tecnológica/científica com efeitos de vidro
 - Idioma: Português
 - Base médica: Recomendações Febrasgo e ACOG
 
 ## Mudanças Recentes
+- **Janeiro 2025**: Nova identidade visual com logo colorido e paleta atualizada
+- **Janeiro 2025**: Integração com FetalPro - plano Bundle disponível (R$ 49,90/mês)
 - **Janeiro 2025**: Implementação completa do banco de dados PostgreSQL
 - **Janeiro 2025**: Criação de APIs REST para todas as funcionalidades
 - **Janeiro 2025**: Migração de MemStorage para DatabaseStorage

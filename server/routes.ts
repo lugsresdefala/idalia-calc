@@ -839,9 +839,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         customerId = customer.id;
       }
 
-      // Usar o Price ID correto (não o Product ID)
-      // O STRIPE_PRICE_ID no env está incorreto (é um product ID), usar o fallback correto
-      const priceId = 'price_1RzROsFRyKUci3hFcnmaZAUr'; // Price ID válido para R$ 29,90
+      // Determinar o price ID baseado no plano
+      let priceId = 'price_1RzROsFRyKUci3hFcnmaZAUr'; // Price ID padrão para Premium (R$ 29,90)
+      
+      // TODO: Adicionar price ID para FetalPro Bundle quando criado no Stripe
+      // if (req.body.planId === 'fetalpro') {
+      //   priceId = 'price_fetalpro_bundle'; // R$ 49,90
+      // }
 
       // Criar subscription
       const subscription = await stripe.subscriptions.create({
@@ -915,8 +919,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         customerId = customer.id;
       }
 
-      // Usar o priceId enviado pelo frontend ou o Price ID correto
-      const finalPriceId = priceId || 'price_1RzROsFRyKUci3hFcnmaZAUr'; // Price ID válido
+      // Usar o priceId enviado pelo frontend ou determinar baseado no plano
+      let finalPriceId = priceId || 'price_1RzROsFRyKUci3hFcnmaZAUr'; // Price ID padrão
+      
+      // Mapear planos para price IDs
+      if (planId === 'fetalpro') {
+        finalPriceId = 'price_fetalpro_bundle'; // TODO: Criar este price ID no Stripe
+      }
       
       // Criar subscription com payment intent
       const subscription = await stripe.subscriptions.create({

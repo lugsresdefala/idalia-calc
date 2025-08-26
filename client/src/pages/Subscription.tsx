@@ -169,6 +169,25 @@ export default function Subscription() {
         'Suporte prioritário'
       ],
       limitations: []
+    },
+    {
+      id: 'fetalpro',
+      name: 'FetalPro Bundle',
+      price: 49.90,
+      priceId: 'price_fetalpro_bundle', // Precisa criar este price ID no Stripe
+      credits: -1, // Ilimitado
+      badge: 'NOVO',
+      features: [
+        'Tudo do plano Premium',
+        'Acesso completo ao FetalPro',
+        'Calculadoras fetais avançadas',
+        'Banco de dados de medidas fetais',
+        'Curvas de crescimento personalizadas',
+        'Relatórios médicos detalhados',
+        'Integração entre plataformas',
+        'Suporte prioritário VIP'
+      ],
+      limitations: []
     }
   ];
 

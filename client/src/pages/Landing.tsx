@@ -26,7 +26,7 @@ export default function Landing() {
       ],
       cta: "Começar Grátis",
       popular: false,
-      gradient: "from-teal-500 to-cyan-600"
+      gradient: "from-purple-400 to-blue-500"
     },
     {
       id: "professional",
@@ -46,28 +46,50 @@ export default function Landing() {
       ],
       cta: "Assinar",
       popular: true,
-      gradient: "from-emerald-500 to-teal-600"
+      gradient: "from-blue-500 to-teal-500"
+    },
+    {
+      id: "fetalpro",
+      name: "FetalPro Bundle",
+      price: "R$ 49,90",
+      period: "/mês",
+      description: "Completo + FetalPro",
+      credits: "Ilimitado em ambas plataformas",
+      features: [
+        "Tudo do plano Premium",
+        "Acesso completo ao FetalPro",
+        "Calculadoras fetais avançadas",
+        "Banco de dados de medidas fetais",
+        "Curvas de crescimento personalizadas",
+        "Relatórios médicos detalhados",
+        "Integração entre plataformas",
+        "Suporte prioritário VIP"
+      ],
+      cta: "Bundle Completo",
+      popular: false,
+      gradient: "from-teal-500 to-green-500",
+      badge: "NOVO"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50/30 to-cyan-50/20">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50/20 via-blue-50/30 to-green-50/20">
       {/* Mobile-First Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-teal-200/30 shadow-sm">
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-purple-200/30 shadow-sm">
         <div className="container mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
             {/* Logo Section */}
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-full blur-md opacity-40"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full blur-md opacity-40"></div>
                 <img 
-                  src="/idalia-logo.png" 
+                  src="/idalia-logo-new.png" 
                   alt="Idalia Calc" 
-                  className="relative h-10 w-10 drop-shadow-md"
+                  className="relative h-12 w-auto drop-shadow-md"
                 />
               </div>
               <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+                <h1 className="text-xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-teal-600 bg-clip-text text-transparent">
                   Idalia Calc
                 </h1>
               </div>
@@ -85,14 +107,14 @@ export default function Landing() {
             <div className="hidden md:flex items-center gap-3">
               <Button
                 variant="ghost"
-                className="text-teal-700 hover:text-teal-800"
+                className="text-purple-700 hover:text-purple-800"
                 onClick={() => setLocation("/app")}
               >
                 Entrar
               </Button>
               <Button
                 onClick={() => window.location.href = "/api/login"}
-                className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white"
+                className="bg-gradient-to-r from-purple-600 to-blue-600 text-white"
               >
                 Criar Conta
               </Button>
@@ -114,7 +136,7 @@ export default function Landing() {
                   Entrar na Plataforma
                 </Button>
                 <Button
-                  className="w-full bg-gradient-to-r from-teal-600 to-cyan-600 text-white"
+                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white"
                   onClick={() => {
                     window.location.href = "/api/login";
                     setMobileMenuOpen(false);
@@ -162,7 +184,7 @@ export default function Landing() {
               <Button
                 size="lg"
                 onClick={() => setLocation("/app")}
-                className="w-full bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-semibold text-base py-6 shadow-lg"
+                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold text-base py-6 shadow-lg"
               >
                 Usar Calculadoras
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -393,13 +415,20 @@ export default function Landing() {
                 key={plan.id}
                 className={`min-w-[280px] flex-shrink-0 snap-center bg-white border-2 ${
                   plan.popular 
-                    ? 'border-teal-400 shadow-xl scale-105' 
+                    ? 'border-purple-400 shadow-xl scale-105' 
+                    : plan.badge
+                    ? 'border-green-400'
                     : 'border-slate-200'
                 }`}
               >
                 {plan.popular && (
-                  <div className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white px-3 py-1 text-xs font-semibold text-center">
+                  <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-3 py-1 text-xs font-semibold text-center">
                     MAIS POPULAR
+                  </div>
+                )}
+                {plan.badge && (
+                  <div className="bg-gradient-to-r from-green-600 to-teal-600 text-white px-3 py-1 text-xs font-semibold text-center">
+                    {plan.badge}
                   </div>
                 )}
                 
@@ -430,12 +459,17 @@ export default function Landing() {
                   <Button 
                     className={`w-full font-medium text-sm py-5 ${
                       plan.popular 
-                        ? 'bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white shadow-md' 
+                        ? 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-md'
+                        : plan.badge
+                        ? 'bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white shadow-md' 
                         : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
                     }`}
                     onClick={() => {
                       if (plan.id === 'free') {
                         setLocation("/app");
+                      } else if (plan.id === 'fetalpro') {
+                        // Redirecionar para checkout com plano FetalPro Bundle
+                        window.location.href = "/api/login?plan=fetalpro";
                       } else {
                         window.location.href = "/api/login";
                       }
@@ -529,7 +563,7 @@ export default function Landing() {
                 <Button
                   size="lg"
                   onClick={() => setLocation("/app")}
-                  className="w-full bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-semibold py-6 shadow-lg"
+                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-6 shadow-lg"
                 >
                   Usar Grátis
                   <ArrowRight className="ml-2 h-4 w-4" />

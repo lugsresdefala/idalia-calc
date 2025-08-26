@@ -8,9 +8,9 @@ const Header = () => {
         {/* Logo oficial da Idalia */}
         <div className="relative">
           <img 
-            src="/idalia-logo.png" 
+            src="/idalia-logo-new.png" 
             alt="Idalia Calc - Logo" 
-            className="w-20 h-20 drop-shadow-lg hover:scale-105 transition-transform duration-300"
+            className="h-16 w-auto drop-shadow-lg hover:scale-105 transition-transform duration-300"
           />
           {/* Efeito de brilho sutil */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/10 to-transparent"></div>
