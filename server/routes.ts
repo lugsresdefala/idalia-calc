@@ -7,7 +7,10 @@ import {
   insertCycleSchema,
   insertTemperatureSchema,
   insertMucusSchema,
-  insertCalculationSchema
+  insertCalculationSchema,
+  menstrualCycleSchema,
+  basalTemperatureSchema,
+  cervicalMucusSchema
 } from "@shared/schema";
 import { z } from "zod";
 import Stripe from "stripe";
@@ -186,8 +189,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const cycle = await storage.createMenstrualCycle({
         userId,
-        periodStartDate: periodStartDate,
-        periodEndDate: periodEndDate,
+        periodStart: periodStartDate,
+        periodEnd: periodEndDate,
         cycleLength,
         periodLength,
         notes
@@ -203,12 +206,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Atualizar um ciclo menstrual
   app.put('/api/menstrual-cycles/:id', async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
-      if (isNaN(id)) {
-        return res.status(400).json({ message: 'ID inválido' });
-      }
+      const id = req.params.id;
       
-      const result = menstrualCycleSchema.partial().safeParse(req.body);
+      const result = menstrualCycleSchema.safeParse(req.body);
       
       if (!result.success) {
         return res.status(400).json({ 
@@ -256,10 +256,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Excluir um ciclo menstrual
   app.delete('/api/menstrual-cycles/:id', async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
-      if (isNaN(id)) {
-        return res.status(400).json({ message: 'ID inválido' });
-      }
+      const id = req.params.id;
       
       const existingCycle = await storage.getMenstrualCycle(id);
       if (!existingCycle) {
@@ -297,10 +294,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Obter uma temperatura basal específica
   app.get('/api/basal-temperatures/detail/:id', async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
-      if (isNaN(id)) {
-        return res.status(400).json({ message: 'ID inválido' });
-      }
+      const id = req.params.id;
       
       const temperature = await storage.getBasalTemperature(id);
       if (!temperature) {
@@ -326,14 +320,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      const { measurementDate, temperature, measurementTime } = result.data;
+      const { date: measurementDate, temperature, time: measurementTime } = result.data;
       const userId = req.user.claims.sub;
       
       const newTemperature = await storage.createBasalTemperature({
         userId,
-        measurementDate: measurementDate,
+        date: measurementDate,
         temperature,
-        measurementTime
+        time: measurementTime
       });
       
       return res.status(201).json(newTemperature);
@@ -346,12 +340,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Atualizar uma temperatura basal
   app.put('/api/basal-temperatures/:id', async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
-      if (isNaN(id)) {
-        return res.status(400).json({ message: 'ID inválido' });
-      }
+      const id = req.params.id;
       
-      const result = basalTemperatureSchema.partial().safeParse(req.body);
+      const result = basalTemperatureSchema.safeParse(req.body);
       
       if (!result.success) {
         return res.status(400).json({ 
@@ -464,7 +455,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      const { observationDate, consistency, amount, notes } = result.data;
+      const { date: observationDate, consistency, amount, notes } = result.data;
       const userId = req.body.userId;
       
       if (!userId) {
@@ -473,7 +464,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const newEntry = await storage.createCervicalMucus({
         userId,
-        observationDate: observationDate,
+        date: observationDate,
         consistency,
         amount,
         notes
@@ -489,12 +480,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Atualizar uma entrada de muco cervical
   app.put('/api/cervical-mucus/:id', async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
-      if (isNaN(id)) {
-        return res.status(400).json({ message: 'ID inválido' });
-      }
+      const id = req.params.id;
       
-      const result = cervicalMucusSchema.partial().safeParse(req.body);
+      const result = cervicalMucusSchema.safeParse(req.body);
       
       if (!result.success) {
         return res.status(400).json({ 
@@ -510,8 +498,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const updateData: any = {};
       
-      if (result.data.observationDate) {
-        updateData.observationDate = new Date(result.data.observationDate);
+      if (result.data.date) {
+        updateData.date = new Date(result.data.date);
       }
       
       if (result.data.consistency !== undefined) {
@@ -840,12 +828,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Determinar o price ID baseado no plano
-      let priceId = 'price_1RzROsFRyKUci3hFcnmaZAUr'; // Price ID padrão para Premium (R$ 29,90)
+      let priceId = process.env.STRIPE_PRICE_ID || 'price_1RzROsFRyKUci3hFcnmaZAUr'; // Price ID padrão para Premium (R$ 29,90)
       
-      // TODO: Adicionar price ID para FetalPro Bundle quando criado no Stripe
-      // if (req.body.planId === 'fetalpro') {
-      //   priceId = 'price_fetalpro_bundle'; // R$ 49,90
-      // }
+      // Price ID para FetalPro Bundle
+      if (req.body.planId === 'fetalpro') {
+        priceId = 'price_1S0PDqFRyKUci3hFM86f7qmM'; // FetalPro Bundle (R$ 49,90)
+      }
 
       // Criar subscription
       const subscription = await stripe.subscriptions.create({
@@ -920,11 +908,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Usar o priceId enviado pelo frontend ou determinar baseado no plano
-      let finalPriceId = priceId || 'price_1RzROsFRyKUci3hFcnmaZAUr'; // Price ID padrão
+      let finalPriceId = priceId || process.env.STRIPE_PRICE_ID || 'price_1RzROsFRyKUci3hFcnmaZAUr'; // Price ID padrão
       
       // Mapear planos para price IDs
       if (planId === 'fetalpro') {
-        finalPriceId = 'price_fetalpro_bundle'; // TODO: Criar este price ID no Stripe
+        finalPriceId = 'price_1S0PDqFRyKUci3hFM86f7qmM'; // FetalPro Bundle (R$ 49,90)
       }
       
       // Criar subscription com payment intent
