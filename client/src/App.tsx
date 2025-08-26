@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
-import Landing from "@/pages/Landing";
+import Landing from "@/pages/LandingNew";
 import Home from "@/pages/Home";
 import Algorithms from "@/pages/Algorithms";
 import Dashboard from "@/pages/Dashboard";
