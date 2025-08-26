@@ -26,7 +26,7 @@ export default function Landing() {
       ],
       cta: "Começar Grátis",
       popular: false,
-      gradient: "from-slate-400 to-slate-500"
+      gradient: "from-gray-200 to-gray-300"
     },
     {
       id: "professional",
@@ -46,7 +46,7 @@ export default function Landing() {
       ],
       cta: "Assinar",
       popular: true,
-      gradient: "from-purple-600 to-purple-700"
+      gradient: "from-indigo-500 to-purple-500"
     },
     {
       id: "fetalpro",
@@ -67,21 +67,21 @@ export default function Landing() {
       ],
       cta: "Bundle Completo",
       popular: false,
-      gradient: "from-blue-600 to-teal-600",
+      gradient: "from-blue-500 to-teal-500",
       badge: "NOVO"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/10 to-blue-50/10">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50/50">
       {/* Mobile-First Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/95 border-b border-slate-200 shadow-sm">
+      <header className="sticky top-0 z-50 backdrop-blur-sm bg-white/98 border-b border-gray-100">
         <div className="container mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
             {/* Logo Section */}
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-blue-200 rounded-full blur-lg opacity-30"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-100 via-blue-100 to-teal-100 rounded-full blur-2xl opacity-40"></div>
                 <img 
                   src="/idalia-logo-new.png" 
                   alt="Idalia Calc" 
@@ -89,7 +89,7 @@ export default function Landing() {
                 />
               </div>
               <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-purple-700 via-blue-700 to-teal-700 bg-clip-text text-transparent">
+                <h1 className="text-xl font-bold text-gray-900">
                   Idalia Calc
                 </h1>
               </div>
@@ -107,14 +107,14 @@ export default function Landing() {
             <div className="hidden md:flex items-center gap-3">
               <Button
                 variant="ghost"
-                className="text-slate-600 hover:text-slate-800"
+                className="text-gray-600 hover:text-gray-800 transition-colors"
                 onClick={() => setLocation("/app")}
               >
                 Entrar
               </Button>
               <Button
                 onClick={() => window.location.href = "/api/login"}
-                className="bg-purple-600 hover:bg-purple-700 text-white shadow-lg font-medium"
+                className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white shadow-lg font-medium transition-all"
               >
                 Criar Conta
               </Button>
@@ -136,7 +136,7 @@ export default function Landing() {
                   Entrar na Plataforma
                 </Button>
                 <Button
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white shadow-lg font-semibold"
+                  className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white shadow-lg font-semibold transform hover:scale-105 transition-all"
                   onClick={() => {
                     window.location.href = "/api/login";
                     setMobileMenuOpen(false);
@@ -184,7 +184,7 @@ export default function Landing() {
               <Button
                 size="lg"
                 onClick={() => setLocation("/app")}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-base py-6 shadow-xl"
+                className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold text-base py-6 shadow-xl transform hover:scale-105 transition-all"
               >
                 Usar Calculadoras
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -415,34 +415,34 @@ export default function Landing() {
                 key={plan.id}
                 className={`min-w-[280px] flex-shrink-0 snap-center bg-white border-2 ${
                   plan.popular 
-                    ? 'border-purple-500 shadow-2xl scale-105' 
+                    ? 'border-indigo-400 shadow-xl ring-4 ring-indigo-100 scale-105' 
                     : plan.badge
-                    ? 'border-blue-400 shadow-lg'
-                    : 'border-slate-200'
+                    ? 'border-teal-400 shadow-lg ring-2 ring-teal-100'
+                    : 'border-gray-200'
                 }`}
               >
                 {plan.popular && (
-                  <div className="bg-purple-600 text-white px-3 py-1 text-xs font-bold text-center uppercase tracking-wider">
+                  <div className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-3 py-1 text-xs font-semibold text-center uppercase tracking-wide">
                     Mais Popular
                   </div>
                 )}
                 {plan.badge && (
-                  <div className="bg-blue-600 text-white px-3 py-1 text-xs font-bold text-center uppercase tracking-wider">
+                  <div className="bg-gradient-to-r from-teal-500 to-blue-500 text-white px-3 py-1 text-xs font-semibold text-center uppercase tracking-wide">
                     {plan.badge}
                   </div>
                 )}
                 
                 <CardHeader className="text-center pb-4">
-                  <CardTitle className="text-xl text-slate-800">{plan.name}</CardTitle>
+                  <CardTitle className="text-xl font-bold text-gray-900">{plan.name}</CardTitle>
                   <div className="flex items-baseline justify-center gap-1 mt-2">
-                    <span className="text-3xl font-bold text-slate-700">
+                    <span className="text-3xl font-bold text-gray-900">
                       {plan.price}
                     </span>
-                    <span className="text-slate-600 text-sm">{plan.period}</span>
+                    <span className="text-gray-500 text-sm">{plan.period}</span>
                   </div>
-                  <div className="mt-2 inline-flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-full">
-                    <Target className="h-3 w-3 text-teal-600" />
-                    <span className="text-slate-700 font-medium text-xs">{plan.credits}</span>
+                  <div className="mt-2 inline-flex items-center gap-1 bg-indigo-50 px-3 py-1.5 rounded-full">
+                    <Target className="h-3 w-3 text-indigo-600" />
+                    <span className="text-indigo-700 font-semibold text-xs">{plan.credits}</span>
                   </div>
                 </CardHeader>
                 
@@ -450,8 +450,8 @@ export default function Landing() {
                   <ul className="space-y-2 mb-4">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-1.5">
-                        <CheckCircle className="h-3.5 w-3.5 text-emerald-500 mt-0.5 flex-shrink-0" />
-                        <span className="text-slate-600 text-xs">{feature}</span>
+                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700 text-sm">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -459,10 +459,10 @@ export default function Landing() {
                   <Button 
                     className={`w-full font-medium text-sm py-5 ${
                       plan.popular 
-                        ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg'
+                        ? 'bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white shadow-lg transform hover:scale-105 transition-all'
                         : plan.badge
-                        ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md' 
-                        : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                        ? 'bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white shadow-md transform hover:scale-105 transition-all' 
+                        : 'bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200'
                     }`}
                     onClick={() => {
                       if (plan.id === 'free') {
@@ -563,7 +563,7 @@ export default function Landing() {
                 <Button
                   size="lg"
                   onClick={() => setLocation("/app")}
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-6 shadow-xl"
+                  className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-6 shadow-xl transform hover:scale-105 transition-all"
                 >
                   Usar Grátis
                   <ArrowRight className="ml-2 h-4 w-4" />
