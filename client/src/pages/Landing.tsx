@@ -78,7 +78,7 @@ export default function Landing() {
       description: "Completo + FetalPro",
       credits: "Ilimitado em ambas plataformas",
       features: [
-        "Tudo do plano Premium Plus",
+        "Tudo do plano Premium",
         "Acesso completo ao FetalPro",
         "Calculadoras fetais avançadas",
         "Banco de dados de medidas fetais",

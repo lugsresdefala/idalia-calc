@@ -154,7 +154,7 @@ export default function Subscription() {
       id: 'professional',
       name: 'Premium',
       price: 29.90,
-      priceId: 'price_1RzROsFRyKUci3hFcnmaZAUr', // Price ID correto
+      priceId: 'price_premium_monthly', // Price ID para Premium
       credits: -1, // Ilimitado
       popular: true,
       features: [
@@ -171,10 +171,29 @@ export default function Subscription() {
       limitations: []
     },
     {
+      id: 'premium_plus',
+      name: 'Premium Plus',
+      price: 39.90,
+      priceId: 'price_premium_plus_monthly', // Price ID para Premium Plus
+      credits: -1, // Ilimitado
+      badge: 'RECOMENDADO',
+      features: [
+        'Tudo do plano Premium',
+        'Módulo de Estimulação Ovariana',
+        'Protocolos personalizados',
+        'Cálculo de doses de medicamentos',
+        'Acompanhamento de resposta ovariana',
+        'Gráficos de evolução hormonal',
+        'Relatórios para médicos',
+        'Suporte prioritário Plus'
+      ],
+      limitations: []
+    },
+    {
       id: 'fetalpro',
       name: 'FetalPro Bundle',
       price: 49.90,
-      priceId: 'price_fetalpro_bundle', // Precisa criar este price ID no Stripe
+      priceId: 'price_fetalpro_bundle_monthly', // Price ID para FetalPro Bundle
       credits: -1, // Ilimitado
       badge: 'NOVO',
       features: [
