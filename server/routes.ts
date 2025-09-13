@@ -974,15 +974,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Webhook do Stripe para atualizar status de assinatura
   app.post('/api/stripe-webhook', express.raw({type: 'application/json'}), async (req, res) => {
-    if (!stripe) {
-      return res.status(503).json({ message: "Sistema de pagamento não configurado" });
-    }
-
     const sig = req.headers['stripe-signature'] as string;
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
     if (!webhookSecret) {
-      console.warn('STRIPE_WEBHOOK_SECRET não configurado');
+      console.warn('STRIPE_WEBHOOK_SECRET não configurado - webhook será ignorado');
       return res.status(200).json({ received: true });
     }
 
