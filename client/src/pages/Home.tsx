@@ -54,8 +54,8 @@ const Home = () => {
             onClick={() => setActiveTab("gestational")}
             className={`flex-1 py-4 px-6 text-center font-medium transition-all duration-300 ${
               activeTab === "gestational" 
-                ? "text-teal-200 border-b-2 border-teal-500 bg-gradient-to-r from-blue-900/50 to-teal-900/30 tech-text-glow" 
-                : "text-teal-300 hover:bg-blue-900/30"
+                ? "text-rose-200 border-b-2 border-rose-500 bg-gradient-to-r from-rose-900/50 to-pink-900/30 warm-text-glow" 
+                : "text-rose-300 hover:bg-rose-900/30"
             }`}
           >
             Idade Gestacional

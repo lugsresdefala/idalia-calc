@@ -44,8 +44,22 @@ const History = () => {
         ) : (
           <div className="space-y-4">
             {history.map((item) => {
-              const inputData = JSON.parse(item.inputData);
-              const resultData = JSON.parse(item.resultData);
+              let inputData, resultData;
+              try {
+                inputData = JSON.parse(item.inputData);
+                resultData = JSON.parse(item.resultData);
+              } catch (error) {
+                console.error('Error parsing calculation data:', error);
+                return (
+                  <Card key={item.id} className="glass-panel tech-border">
+                    <CardContent className="pt-6">
+                      <div className="text-center text-yellow-400" role="alert">
+                        <p>Erro ao carregar este cálculo. Dados corrompidos.</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              }
               
               return (
                 <Card key={item.id} className="glass-panel tech-border">
