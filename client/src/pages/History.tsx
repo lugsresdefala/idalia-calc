@@ -53,7 +53,7 @@ const History = () => {
                 return (
                   <Card key={item.id} className="glass-panel tech-border">
                     <CardContent className="pt-6">
-                      <div className="text-center text-yellow-400">
+                      <div className="text-center text-yellow-400" role="alert">
                         <p>Erro ao carregar este cálculo. Dados corrompidos.</p>
                       </div>
                     </CardContent>
