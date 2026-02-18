@@ -1108,6 +1108,155 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // =================== ROTAS DE STATUS E REIMPORTAÇÃO ===================
+
+  app.get('/api/data-status', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const status = await storage.getDataStatus(userId);
+      return res.json(status);
+    } catch (error) {
+      console.error('Erro ao buscar status dos dados:', error);
+      return res.status(500).json({ message: 'Erro ao buscar status dos dados' });
+    }
+  });
+
+  const importCycleSchema = z.object({
+    periodStart: z.string().min(1, 'periodStart é obrigatório'),
+    periodEnd: z.string().optional().nullable(),
+    cycleLength: z.number().int().min(15).max(60).optional().nullable(),
+    ovulationDate: z.string().optional().nullable(),
+    fertileStart: z.string().optional().nullable(),
+    fertileEnd: z.string().optional().nullable(),
+    notes: z.string().optional().nullable(),
+  });
+
+  const importTemperatureSchema = z.object({
+    date: z.string().min(1, 'date é obrigatório'),
+    temperature: z.number().min(35).max(42),
+    time: z.string().optional().nullable(),
+    notes: z.string().optional().nullable(),
+  });
+
+  const importMucusSchema = z.object({
+    date: z.string().min(1, 'date é obrigatório'),
+    consistency: z.enum(['dry', 'sticky', 'creamy', 'watery', 'eggwhite']).optional().nullable(),
+    amount: z.enum(['none', 'light', 'moderate', 'heavy']).optional().nullable(),
+    color: z.string().optional().nullable(),
+    notes: z.string().optional().nullable(),
+  });
+
+  app.post('/api/reimport/cycles', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { records } = req.body;
+
+      if (!Array.isArray(records) || records.length === 0) {
+        return res.status(400).json({ message: 'records deve ser um array não vazio' });
+      }
+
+      if (records.length > 500) {
+        return res.status(400).json({ message: 'Máximo de 500 registros por importação' });
+      }
+
+      const validated: any[] = [];
+      const parseErrors: Array<{ index: number; error: string }> = [];
+
+      records.forEach((rec, i) => {
+        const result = importCycleSchema.safeParse(rec);
+        if (result.success) {
+          validated.push(result.data);
+        } else {
+          parseErrors.push({ index: i, error: result.error.issues.map(e => e.message).join('; ') });
+        }
+      });
+
+      if (parseErrors.length > 0) {
+        return res.status(400).json({ message: 'Registros inválidos', parseErrors });
+      }
+
+      const importResult = await storage.bulkUpsertCycles(userId, validated);
+      return res.json(importResult);
+    } catch (error) {
+      console.error('Erro ao reimportar ciclos:', error);
+      return res.status(500).json({ message: 'Erro ao reimportar ciclos' });
+    }
+  });
+
+  app.post('/api/reimport/temperatures', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { records } = req.body;
+
+      if (!Array.isArray(records) || records.length === 0) {
+        return res.status(400).json({ message: 'records deve ser um array não vazio' });
+      }
+
+      if (records.length > 500) {
+        return res.status(400).json({ message: 'Máximo de 500 registros por importação' });
+      }
+
+      const validated: any[] = [];
+      const parseErrors: Array<{ index: number; error: string }> = [];
+
+      records.forEach((rec, i) => {
+        const result = importTemperatureSchema.safeParse(rec);
+        if (result.success) {
+          validated.push(result.data);
+        } else {
+          parseErrors.push({ index: i, error: result.error.issues.map(e => e.message).join('; ') });
+        }
+      });
+
+      if (parseErrors.length > 0) {
+        return res.status(400).json({ message: 'Registros inválidos', parseErrors });
+      }
+
+      const importResult = await storage.bulkUpsertTemperatures(userId, validated);
+      return res.json(importResult);
+    } catch (error) {
+      console.error('Erro ao reimportar temperaturas:', error);
+      return res.status(500).json({ message: 'Erro ao reimportar temperaturas' });
+    }
+  });
+
+  app.post('/api/reimport/mucus', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { records } = req.body;
+
+      if (!Array.isArray(records) || records.length === 0) {
+        return res.status(400).json({ message: 'records deve ser um array não vazio' });
+      }
+
+      if (records.length > 500) {
+        return res.status(400).json({ message: 'Máximo de 500 registros por importação' });
+      }
+
+      const validated: any[] = [];
+      const parseErrors: Array<{ index: number; error: string }> = [];
+
+      records.forEach((rec, i) => {
+        const result = importMucusSchema.safeParse(rec);
+        if (result.success) {
+          validated.push(result.data);
+        } else {
+          parseErrors.push({ index: i, error: result.error.issues.map(e => e.message).join('; ') });
+        }
+      });
+
+      if (parseErrors.length > 0) {
+        return res.status(400).json({ message: 'Registros inválidos', parseErrors });
+      }
+
+      const importResult = await storage.bulkUpsertMucusObservations(userId, validated);
+      return res.json(importResult);
+    } catch (error) {
+      console.error('Erro ao reimportar muco cervical:', error);
+      return res.status(500).json({ message: 'Erro ao reimportar muco cervical' });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;

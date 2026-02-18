@@ -28,7 +28,22 @@ import {
   type InsertUsageHistory,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, and, gte, lte, desc, sql } from "drizzle-orm";
+import { eq, and, gte, lte, desc, sql, max } from "drizzle-orm";
+
+export type ReimportResult = {
+  inserted: number;
+  updated: number;
+  skipped: number;
+  errors: Array<{ record: any; error: string }>;
+};
+
+export type DataStatus = {
+  cycles: string | null;
+  temperatures: string | null;
+  mucus: string | null;
+  calculations: string | null;
+  lastSync: string;
+};
 
 // Interface for storage operations
 export interface IStorage {
@@ -113,6 +128,12 @@ export interface IStorage {
   // User update operations
   updateUser(userId: string, data: Partial<User>): Promise<User>;
   updateUserSubscription(userId: string, data: Partial<User>): Promise<User>;
+
+  // Reimport / bulk upsert operations
+  getDataStatus(userId: string): Promise<DataStatus>;
+  bulkUpsertCycles(userId: string, records: Array<Omit<InsertCycle, 'userId'>>): Promise<ReimportResult>;
+  bulkUpsertTemperatures(userId: string, records: Array<Omit<InsertBasalTemperature, 'userId'>>): Promise<ReimportResult>;
+  bulkUpsertMucusObservations(userId: string, records: Array<Omit<InsertMucusObservation, 'userId'>>): Promise<ReimportResult>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -630,6 +651,144 @@ export class DatabaseStorage implements IStorage {
       .where(eq(users.id, userId))
       .returning();
     return user;
+  }
+
+  async getDataStatus(userId: string): Promise<DataStatus> {
+    const [cycleRow] = await db
+      .select({ latest: max(cycles.createdAt) })
+      .from(cycles)
+      .where(eq(cycles.userId, userId));
+
+    const [tempRow] = await db
+      .select({ latest: max(basalTemperatures.createdAt) })
+      .from(basalTemperatures)
+      .where(eq(basalTemperatures.userId, userId));
+
+    const [mucusRow] = await db
+      .select({ latest: max(mucusObservations.createdAt) })
+      .from(mucusObservations)
+      .where(eq(mucusObservations.userId, userId));
+
+    const [calcRow] = await db
+      .select({ latest: max(calculations.createdAt) })
+      .from(calculations)
+      .where(eq(calculations.userId, userId));
+
+    return {
+      cycles: cycleRow?.latest ? cycleRow.latest.toISOString() : null,
+      temperatures: tempRow?.latest ? tempRow.latest.toISOString() : null,
+      mucus: mucusRow?.latest ? mucusRow.latest.toISOString() : null,
+      calculations: calcRow?.latest ? calcRow.latest.toISOString() : null,
+      lastSync: new Date().toISOString(),
+    };
+  }
+
+  async bulkUpsertCycles(userId: string, records: Array<Omit<InsertCycle, 'userId'>>): Promise<ReimportResult> {
+    const result: ReimportResult = { inserted: 0, updated: 0, skipped: 0, errors: [] };
+
+    for (const record of records) {
+      try {
+        if (!record.periodStart) {
+          result.errors.push({ record, error: 'periodStart é obrigatório' });
+          result.skipped++;
+          continue;
+        }
+
+        const [existing] = await db
+          .select({ id: cycles.id })
+          .from(cycles)
+          .where(and(eq(cycles.userId, userId), eq(cycles.periodStart, record.periodStart)))
+          .limit(1);
+
+        if (existing) {
+          await db
+            .update(cycles)
+            .set({ ...record, userId, updatedAt: new Date() })
+            .where(eq(cycles.id, existing.id));
+          result.updated++;
+        } else {
+          await db.insert(cycles).values({ ...record, userId });
+          result.inserted++;
+        }
+      } catch (e) {
+        result.errors.push({ record, error: String(e) });
+        result.skipped++;
+      }
+    }
+
+    return result;
+  }
+
+  async bulkUpsertTemperatures(userId: string, records: Array<Omit<InsertBasalTemperature, 'userId'>>): Promise<ReimportResult> {
+    const result: ReimportResult = { inserted: 0, updated: 0, skipped: 0, errors: [] };
+
+    for (const record of records) {
+      try {
+        if (!record.date || record.temperature === undefined) {
+          result.errors.push({ record, error: 'date e temperature são obrigatórios' });
+          result.skipped++;
+          continue;
+        }
+
+        const [existing] = await db
+          .select({ id: basalTemperatures.id })
+          .from(basalTemperatures)
+          .where(and(eq(basalTemperatures.userId, userId), eq(basalTemperatures.date, record.date)))
+          .limit(1);
+
+        if (existing) {
+          await db
+            .update(basalTemperatures)
+            .set({ ...record, userId })
+            .where(eq(basalTemperatures.id, existing.id));
+          result.updated++;
+        } else {
+          await db.insert(basalTemperatures).values({ ...record, userId });
+          result.inserted++;
+        }
+      } catch (e) {
+        result.errors.push({ record, error: String(e) });
+        result.skipped++;
+      }
+    }
+
+    return result;
+  }
+
+  async bulkUpsertMucusObservations(userId: string, records: Array<Omit<InsertMucusObservation, 'userId'>>): Promise<ReimportResult> {
+    const result: ReimportResult = { inserted: 0, updated: 0, skipped: 0, errors: [] };
+
+    for (const record of records) {
+      try {
+        if (!record.date) {
+          result.errors.push({ record, error: 'date é obrigatório' });
+          result.skipped++;
+          continue;
+        }
+
+        const [existing] = await db
+          .select({ id: mucusObservations.id })
+          .from(mucusObservations)
+          .where(and(eq(mucusObservations.userId, userId), eq(mucusObservations.date, record.date)))
+          .limit(1);
+
+        if (existing) {
+          await db
+            .update(mucusObservations)
+            .set({ ...record, userId })
+            .where(eq(mucusObservations.id, existing.id));
+          result.updated++;
+        } else {
+          await db.insert(mucusObservations).values({ ...record, userId });
+          result.inserted++;
+        }
+      } catch (e) {
+        result.errors.push({ record, error: String(e) });
+        result.skipped++;
+      }
+    }
+
+    return result;
   }
 }
 
