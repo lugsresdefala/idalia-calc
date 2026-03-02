@@ -10,10 +10,9 @@ import { ArrowLeft, CheckCircle, Shield, Lock, CreditCard, Sparkles, Baby, Calcu
 import { Link, useLocation } from "wouter";
 
 // Carregar Stripe com a chave pública
-if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
-  throw new Error('Missing required Stripe key: VITE_STRIPE_PUBLIC_KEY');
-}
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY
+  ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
+  : null;
 
 const CheckoutForm = () => {
   const stripe = useStripe();

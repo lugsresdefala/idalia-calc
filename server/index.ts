@@ -26,7 +26,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json());
+// Skip JSON parsing for Stripe webhook (needs raw body for signature verification)
+app.use((req, res, next) => {
+  if (req.path === '/api/stripe-webhook') {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
 app.use(express.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
@@ -66,8 +73,10 @@ app.use((req, res, next) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
-    res.status(status).json({ message });
-    throw err;
+    if (!res.headersSent) {
+      res.status(status).json({ message });
+    }
+    console.error("Unhandled error:", err);
   });
 
   // importantly only setup vite in development and after

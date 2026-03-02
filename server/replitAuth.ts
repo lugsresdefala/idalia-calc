@@ -9,7 +9,7 @@ import connectPg from "connect-pg-simple";
 import { storage } from "./storage";
 
 if (!process.env.REPLIT_DOMAINS) {
-  throw new Error("Environment variable REPLIT_DOMAINS not provided");
+  console.warn("WARNING: REPLIT_DOMAINS not set - authentication will not work");
 }
 
 const getOidcConfig = memoize(

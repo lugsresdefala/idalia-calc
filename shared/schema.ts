@@ -245,8 +245,8 @@ export const cervicalMucusSchema = z.object({
   date: z.string().or(z.date()),
   consistency: z.string().optional(),
   amount: z.string().optional(),
+  color: z.string().optional(),
   notes: z.string().optional(),
-  createdAt: true,
 });
 
 export const insertPregnancySchema = createInsertSchema(pregnancies).omit({
