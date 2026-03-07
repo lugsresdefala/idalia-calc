@@ -6,7 +6,7 @@ hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
 channel = "stable-24_05"
 
 [env]
-DATABASE_URL = "file:./database.sqlite"
+DATABASE_URL = "postgresql://postgres:[YOUR_DB_PASSWORD]@db.facffwnilksrlheyhgqe.supabase.co:5432/postgres"
 
 [deployment]
 deploymentTarget = "cloudrun"
