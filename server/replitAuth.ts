@@ -6,10 +6,13 @@ import session from "express-session";
 import type { Express, RequestHandler } from "express";
 import memoize from "memoizee";
 import connectPg from "connect-pg-simple";
+import MemoryStore from "memorystore";
 import { storage } from "./storage";
 
-if (!process.env.REPLIT_DOMAINS) {
-  console.warn("WARNING: REPLIT_DOMAINS not set - authentication will not work");
+const isReplitEnv = !!(process.env.REPLIT_DOMAINS && process.env.REPL_ID);
+
+if (!isReplitEnv) {
+  console.warn("WARNING: REPLIT_DOMAINS/REPL_ID not set - authentication will not work");
 }
 
 const getOidcConfig = memoize(
@@ -23,22 +26,41 @@ const getOidcConfig = memoize(
 );
 
 export function getSession() {
-  const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
-  const pgStore = connectPg(session);
-  const sessionStore = new pgStore({
-    conString: process.env.DATABASE_URL,
-    createTableIfMissing: false,
-    ttl: sessionTtl,
-    tableName: "sessions",
-  });
+  const sessionTtl = 7 * 24 * 60 * 60 * 1000;
+
+  const dbUrl = process.env.DATABASE_URL;
+  const dbReady = dbUrl && !dbUrl.includes('[YOUR_DB_PASSWORD]') && !dbUrl.includes('placeholder');
+
+  if (dbReady) {
+    const pgStore = connectPg(session);
+    const sessionStore = new pgStore({
+      conString: dbUrl,
+      createTableIfMissing: false,
+      ttl: sessionTtl,
+      tableName: "sessions",
+    });
+    return session({
+      secret: process.env.SESSION_SECRET || 'dev-secret-change-in-production',
+      store: sessionStore,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: sessionTtl,
+      },
+    });
+  }
+
+  const MemStore = MemoryStore(session);
   return session({
-    secret: process.env.SESSION_SECRET!,
-    store: sessionStore,
+    secret: process.env.SESSION_SECRET || 'dev-secret-change-in-production',
+    store: new MemStore({ checkPeriod: sessionTtl }),
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       maxAge: sessionTtl,
     },
   });
@@ -54,9 +76,7 @@ function updateUserSession(
   user.expires_at = user.claims?.exp;
 }
 
-async function upsertUser(
-  claims: any,
-) {
+async function upsertUser(claims: any) {
   await storage.upsertUser({
     id: claims["sub"],
     email: claims["email"],
@@ -72,6 +92,12 @@ export async function setupAuth(app: Express) {
   app.use(passport.initialize());
   app.use(passport.session());
 
+  if (!isReplitEnv) {
+    passport.serializeUser((user: Express.User, cb) => cb(null, user));
+    passport.deserializeUser((user: Express.User, cb) => cb(null, user));
+    return;
+  }
+
   const config = await getOidcConfig();
 
   const verify: VerifyFunction = async (
@@ -84,8 +110,7 @@ export async function setupAuth(app: Express) {
     verified(null, user);
   };
 
-  for (const domain of process.env
-    .REPLIT_DOMAINS!.split(",")) {
+  for (const domain of process.env.REPLIT_DOMAINS!.split(",")) {
     const strategy = new Strategy(
       {
         name: `replitauth:${domain}`,
