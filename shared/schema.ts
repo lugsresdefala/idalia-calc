@@ -230,7 +230,7 @@ export const insertMucusSchema = createInsertSchema(mucusObservations).omit({
 export const menstrualCycleSchema = z.object({
   periodStart: z.string().or(z.date()),
   periodEnd: z.string().or(z.date()).optional(),
-  cycleLength: z.number().optional(),
+  cycleLength: z.number().int().min(15).max(60).optional(),
   notes: z.string().optional(),
 });
 

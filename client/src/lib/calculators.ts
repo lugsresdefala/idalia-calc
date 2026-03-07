@@ -109,8 +109,13 @@ export function calculateFertilePeriod(
   cycleLength: number = 28,
   previousCycles: CycleHistory[] = []
 ) {
+  // Use weighted moving average from cycle history if available, otherwise fall back to provided cycleLength
+  const effectiveCycleLength = previousCycles.length >= 3
+    ? predictNextCycle(previousCycles)
+    : cycleLength;
+
   // Cálculo padrão da ovulação (14 dias antes do próximo período)
-  const ovulationDay = addDays(lastPeriodStart, cycleLength - 14);
+  const ovulationDay = addDays(lastPeriodStart, effectiveCycleLength - 14);
   
   // Cálculo padrão da janela fértil (5 dias antes da ovulação mais o dia da ovulação)
   const fertileStart = addDays(ovulationDay, -5);
@@ -119,7 +124,7 @@ export function calculateFertilePeriod(
   const fertileEnd = addDays(ovulationDay, 1);
   
   // Cálculo do próximo período
-  const nextPeriodStart = addDays(lastPeriodStart, cycleLength);
+  const nextPeriodStart = addDays(lastPeriodStart, effectiveCycleLength);
   const periodLength = differenceInDays(lastPeriodEnd, lastPeriodStart);
   const nextPeriodEnd = addDays(nextPeriodStart, periodLength);
   

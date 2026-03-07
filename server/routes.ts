@@ -196,10 +196,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      if (cycleLength && (cycleLength < 21 || cycleLength > 45)) {
+      if (cycleLength && (cycleLength < 15 || cycleLength > 60)) {
         return res.status(400).json({
           valid: false,
-          message: 'A duração do ciclo deve estar entre 21 e 45 dias.'
+          message: 'A duração do ciclo deve estar entre 15 e 60 dias.'
         });
       }
 
@@ -218,19 +218,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get('/api/menstrual-cycles', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const cycles = await storage.getMenstrualCycles(userId);
-      return res.status(200).json(cycles);
-    } catch (error) {
-      console.error('Erro ao buscar ciclos menstruais:', error);
-      return res.status(500).json({ message: 'Erro interno ao buscar ciclos menstruais' });
-    }
-  });
-
-  // Legacy route kept for backward compatibility
-  app.get('/api/menstrual-cycles/:userId', isAuthenticated, async (req: any, res) => {
-    try {
-      // SECURITY: Always use session userId, ignore URL param
       const userId = req.user.claims.sub;
       const cycles = await storage.getMenstrualCycles(userId);
       return res.status(200).json(cycles);
@@ -259,6 +246,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Erro ao buscar ciclo menstrual:', error);
       return res.status(500).json({ message: 'Erro interno ao buscar ciclo menstrual' });
+    }
+  });
+
+  // Legacy route kept for backward compatibility - registered AFTER detail route to avoid conflict
+  app.get('/api/menstrual-cycles/:userId', isAuthenticated, async (req: any, res) => {
+    try {
+      // SECURITY: Always use session userId, ignore URL param
+      const userId = req.user.claims.sub;
+      const cycles = await storage.getMenstrualCycles(userId);
+      return res.status(200).json(cycles);
+    } catch (error) {
+      console.error('Erro ao buscar ciclos menstruais:', error);
+      return res.status(500).json({ message: 'Erro interno ao buscar ciclos menstruais' });
     }
   });
 
@@ -377,19 +377,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Legacy route kept for backward compatibility
-  app.get('/api/basal-temperatures/:userId', isAuthenticated, async (req: any, res) => {
-    try {
-      // SECURITY: Always use session userId, ignore URL param
-      const userId = req.user.claims.sub;
-      const temperatures = await storage.getBasalTemperatures(userId);
-      return res.status(200).json(temperatures);
-    } catch (error) {
-      console.error('Erro ao buscar temperaturas basais:', error);
-      return res.status(500).json({ message: 'Erro interno ao buscar temperaturas basais' });
-    }
-  });
-
   app.get('/api/basal-temperatures/detail/:id', isAuthenticated, async (req: any, res) => {
     try {
       const id = req.params.id;
@@ -409,6 +396,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Erro ao buscar temperatura basal:', error);
       return res.status(500).json({ message: 'Erro interno ao buscar temperatura basal' });
+    }
+  });
+
+  // Legacy route kept for backward compatibility - registered AFTER detail route to avoid conflict
+  app.get('/api/basal-temperatures/:userId', isAuthenticated, async (req: any, res) => {
+    try {
+      // SECURITY: Always use session userId, ignore URL param
+      const userId = req.user.claims.sub;
+      const temperatures = await storage.getBasalTemperatures(userId);
+      return res.status(200).json(temperatures);
+    } catch (error) {
+      console.error('Erro ao buscar temperaturas basais:', error);
+      return res.status(500).json({ message: 'Erro interno ao buscar temperaturas basais' });
     }
   });
 
@@ -522,19 +522,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Legacy route kept for backward compatibility
-  app.get('/api/cervical-mucus/:userId', isAuthenticated, async (req: any, res) => {
-    try {
-      // SECURITY: Always use session userId, ignore URL param
-      const userId = req.user.claims.sub;
-      const entries = await storage.getCervicalMucusEntries(userId);
-      return res.status(200).json(entries);
-    } catch (error) {
-      console.error('Erro ao buscar entradas de muco cervical:', error);
-      return res.status(500).json({ message: 'Erro interno ao buscar entradas de muco cervical' });
-    }
-  });
-
   app.get('/api/cervical-mucus/detail/:id', isAuthenticated, async (req: any, res) => {
     try {
       const id = req.params.id;
@@ -554,6 +541,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Erro ao buscar entrada de muco cervical:', error);
       return res.status(500).json({ message: 'Erro interno ao buscar entrada de muco cervical' });
+    }
+  });
+
+  // Legacy route kept for backward compatibility - registered AFTER detail route to avoid conflict
+  app.get('/api/cervical-mucus/:userId', isAuthenticated, async (req: any, res) => {
+    try {
+      // SECURITY: Always use session userId, ignore URL param
+      const userId = req.user.claims.sub;
+      const entries = await storage.getCervicalMucusEntries(userId);
+      return res.status(200).json(entries);
+    } catch (error) {
+      console.error('Erro ao buscar entradas de muco cervical:', error);
+      return res.status(500).json({ message: 'Erro interno ao buscar entradas de muco cervical' });
     }
   });
 
@@ -769,7 +769,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.json({
           hasFullAccess: true,
           reason: 'subscription_active',
-          remainingCredits: user.monthlyCredits === -1 ? 'unlimited' : ((user.monthlyCredits || 5) - (user.usedCredits || 0))
+          remainingCredits: user.monthlyCredits === -1 ? 'unlimited' : Math.max(0, (user.monthlyCredits || 5) - (user.usedCredits || 0))
         });
       }
 
@@ -826,7 +826,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         const remainingCredits = user.monthlyCredits === -1 ?
           'unlimited' :
-          ((user.monthlyCredits || 5) - (user.usedCredits || 0) - 1);
+          Math.max(0, (user.monthlyCredits || 5) - (user.usedCredits || 0) - 1);
 
         return res.json({
           success: true,
@@ -974,6 +974,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.post('/api/confirm-subscription', isAuthenticated, async (req: any, res) => {
+    if (!stripe) {
+      return res.status(503).json({ message: "Sistema de pagamento não configurado" });
+    }
+
     try {
       const userId = req.user.claims.sub;
       const { paymentIntentId } = req.body;
@@ -984,9 +988,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const user = await storage.getUser(userId);
       if (user && user.stripeSubscriptionId) {
+        // Retrieve the actual subscription to determine the correct plan
+        const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
+        const planMetadata = subscription.items.data[0]?.price?.metadata?.plan;
+        const priceId = subscription.items.data[0]?.price?.id;
+
+        // Determine plan from metadata or price ID
+        let plan = planMetadata || 'premium';
+        if (priceId === 'price_1S0PDqFRyKUci3hFM86f7qmM') {
+          plan = 'fetalpro';
+        }
+
         await storage.updateUser(userId, {
           subscriptionStatus: 'active',
-          plan: 'premium',
+          plan,
           hasUsedFreeTrial: true,
           usedCredits: 0,
           monthlyCredits: -1

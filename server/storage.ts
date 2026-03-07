@@ -340,8 +340,8 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteCycle(id: string): Promise<boolean> {
-    const result = await db.delete(cycles).where(eq(cycles.id, id));
-    return true;
+    const result = await db.delete(cycles).where(eq(cycles.id, id)).returning({ id: cycles.id });
+    return result.length > 0;
   }
 
   // Aliases para compatibilidade com routes.ts
