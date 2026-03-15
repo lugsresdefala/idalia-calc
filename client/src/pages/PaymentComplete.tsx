@@ -2,16 +2,14 @@ import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, XCircle, Clock, Home, Calculator } from "lucide-react";
+import { CircleCheck as CheckCircle, Circle as XCircle, Clock, Chrome as Home, Calculator } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
-if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
-  throw new Error("Missing required Stripe key: VITE_STRIPE_PUBLIC_KEY");
-}
-
-const stripe = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+const stripe = import.meta.env.VITE_STRIPE_PUBLIC_KEY
+  ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
+  : null;
 
 export default function PaymentComplete() {
   const [status, setStatus] = useState<"loading" | "success" | "processing" | "error">("loading");
